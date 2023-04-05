@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+<head th:fragment="head(tema)">
+	<meta charset="UTF-8"/>
+	<title th:text="TFG-web"></title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/estilos.css}">
+	<link rel="stylesheet" th:href="@{/css/tema_} + ${tema} + .css">
+	<link rel="icon" type="image/png" th:href="@{/img/logo.png}"/>
+</head>
+
+<body>
+
+	<!-- Cabecera -->
+	<header th:fragment="header(tema)">
+		<nav th:class="|navbar navbar-expand-lg navbar-${tema} bg-${tema}|">
+		  <a class="navbar-brand" href="#">
+	    	<img th:src="@{/img/logo.png}" width="30" height="30" alt="">
+	  	  </a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse"
+		  	data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+			  aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		      <li class="nav-item active">
+		        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" th:href="@{/lista}" th:text="#{menu.tfgs}"></a>
+		      </li>
+		    </ul>
+			
+			<!--h2 th:inline="text">[[${#httpServletRequest.remoteUser}]]</h2-->
+			<span sec:authorize="isAuthenticated()">
+				<form th:action="@{/logout}" method="post">
+					<label><span sec:authentication="name"></span></label>
+					<!--label> Roles: <span sec:authentication="principal.authorities"></span></label-->
+					<button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:text="#{salir}"></button>
+				</form> 
+			</span>
+			<span sec:authorize="!isAuthenticated()">
+				<form th:action="@{/login}" method="post">
+					<label> <input type="text" name="username"/></label>
+					<label> <input type="password" name="password"/></label>		
+					<button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:text="#{entrar}"></button>
+				</form>
+			</span>
+	
+		    <span class="idiomas">
+		    	<a th:href="|@{/}?idioma=es|"><img th:src="@{/img/idiomas/spain.svg}" width="20" height="20" alt="Español"></a>
+				<a th:href="|@{/}?idioma=en|"><img th:src="@{/img/idiomas/usa.svg}" width="20" height="20" alt="English"></a>
+		    </span>
+		    <!--form class="form-inline my-2 my-lg-0">
+		      <input class="form-control mr-sm-2" type="search" th:placeholder="#{buscador.placeholder}" aria-label="Search">
+		      <button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:text="#{buscador.boton}"></button>
+		    </form -->
+		  </div>
+		</nav>
+	</header>
+	
+
+	<!-- Contenido -->
+	<div class="container">
+	</div>
+
+	<!-- Pie de pagina 
+	<footer th:fragment="footer(tema)" th:class="|bg-${tema}|"></footer>
+	<div th:if="${param.error}">
+		Invalid username and password.
+	</div>
+	<div th:if="${param.logout}">
+		You have been logged out.
+	</div>
+	<form th:action="@{/login}" method="post">
+		<div><label> User Name: <input type="text" name="username"/> </label></div>
+		<div><label> Password: <input type="password" name="password"/> </label></div>
+		<div><input type="submit" value="Sign In"/></div>
+	</form>
+	</footer> -->
+
+	<footer th:fragment="footer(tema)" th:class="|bg-${tema}|">
+		<span class="info-copyrigth"><a href="https://programadoointentandolo.com">programadoointentandolo.com</a> &copy; 2019</span>
+		<div>Flag icons made by <a href="https://www.flaticon.com/<?=_('authors').'/'?>freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 		    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 		    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+	</footer>
+</body>
+</html>
