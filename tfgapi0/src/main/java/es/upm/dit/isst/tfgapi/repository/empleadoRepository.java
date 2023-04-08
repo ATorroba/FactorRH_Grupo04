@@ -7,6 +7,7 @@ import es.upm.dit.isst.tfgapi.model.Empleado;
 
 public interface empleadoRepository extends CrudRepository<Empleado, String> {
 
-    List<Empleado> findByEmail(String email);
+    List<Empleado> findByidEmpleado(String id);
 
+    Empleado findByEmail(String email);
 }

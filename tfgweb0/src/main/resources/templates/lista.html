@@ -17,7 +17,7 @@
 					<thead>
 						<tr><div class="wrap">
 							<th th:text="#{empleados.Empleado.email}">email</th>
-							<th th:text="#{empleados.Empleado.password}">password</th>
+							<th th:text="#{empleados.Empleado.password}">contraseña</th>
 						
 						
 							<th>-</th>
@@ -32,25 +32,25 @@
 					<tbody>
 						<tr th:each="Empleado: ${empleados}">
 							<div class="wrap">
-							<td th:text="${Empleado.email}"></td>
+							<td th:text="${Empleado.idEmpleado}"></td>
 							<td th:text="${Empleado.password}"></td>
 				
 								<td>
 									<form method="post" th:action="@{/upload}" th:object="${Empleado}" enctype="multipart/form-data">
 										<div class="form-group">
-											<input type="hidden" th:value="${Empleado.email}" name="email">
+											<input type="hidden" th:value="${Empleado.idEmpleado}" name="idEmpleado">
 											<input type="file" name="file" class="form-control-file">
 										<button type="submit" th:text="#{empleados.acciones.subir}"  class="btn btn-outline-primary"></button>
 									</div></form>
 								</td>
-								<td><a th:href="@{download/} + ${Empleado.email}" th:text="#{empleados.acciones.memoria}" class="btn btn-outline-primary"></a>
+								<td><a th:href="@{download/} + ${Empleado.idEmpleado}" th:text="#{empleados.acciones.memoria}" class="btn btn-outline-primary"></a>
 								</td>
 								<td>
-									<a th:href="@{editar/} + ${Empleado.email}" th:text="#{empleados.acciones.editar}" class="btn btn-outline-primary"></a>
+									<a th:href="@{editar/} + ${Empleado.idEmpleado}" th:text="#{empleados.acciones.editar}" class="btn btn-outline-primary"></a>
 								</td><td>	
-									<a th:href="@{eliminar/} + ${Empleado.email}" th:text="#{empleados.acciones.eliminar}" class="btn btn-outline-danger"></a>
+									<a th:href="@{eliminar/} + ${Empleado.idEmpleado}" th:text="#{empleados.acciones.eliminar}" class="btn btn-outline-danger"></a>
 								</td><td>
-									<a th:href="@{aceptar/} + ${Empleado.email}" th:text="#{empleados.acciones.aceptar}" class="btn btn-outline-danger"></a>
+									<a th:href="@{aceptar/} + ${Empleado.idEmpleado}" th:text="#{empleados.acciones.aceptar}" class="btn btn-outline-danger"></a>
 								</td>
 							</div>
 							</span>

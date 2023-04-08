@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layouts/base::head(dark)">
+<head th:replace="layouts/base::head(light)">
 	<meta charset="UTF-8">
 </head>
 <body>
@@ -9,7 +9,7 @@
 	
 	
 	<div class="container">
-		<div class="card bg-dark">
+		<div class="card bg-light">
 			<div class="card-header">
 				<h3 th:text="${accion} == 'guardar' ? #{empleados.formulario.titulo.nuevo} : #{empleados.formulario.titulo.editar}"></h3>
 			</div>
@@ -27,11 +27,12 @@
 				<form th:action="@{${accion}}" th:object="${Empleado}" method="post">
 					<!-- <input type="hidden" th:field="*{email}" /> -->
 		
+				
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.email}"></label>
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.idEmpleado}"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{email}">
-							<small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+							<input type="text" th:field="*{idEmpleado}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('idEmpleado')}" th:errors="*{idEmpleado}"></small>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -41,6 +42,119 @@
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.email}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{email}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.nombre}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{nombre}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.apellido1}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{apellido_1}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('apellido_1')}" th:errors="*{apellido_1}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.apellido2}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{apellido_2}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('apellido_2')}" th:errors="*{apellido_2}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.NIF}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{NIF}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('NIF')}" th:errors="*{NIF}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.NASS}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{NASS}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('NASS')}" th:errors="*{NASS}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.direccion}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{direccion}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.CP}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{CP}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('CP')}" th:errors="*{CP}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.email2}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{email_particular}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('email_particular')}" th:errors="*{email_particular}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.telefono}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{telefono}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.fechaa}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{fecha_alta}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('fecha_alta')}" th:errors="*{fecha_alta}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.fechab}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{fecha_baja}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('fecha_baja')}" th:errors="*{fecha_baja}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.IBAN}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{IBAN}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('IBAN')}" th:errors="*{IBAN}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.SWIFT}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{SWIFT}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('SWIFT')}" th:errors="*{SWIFT}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.sueldo}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{sueldo_base}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('sueldo_base')}" th:errors="*{sueldo_base}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.antiguedad}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{antiguedad}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('antiguedad')}" th:errors="*{antiguedad}"></small>
+						</div>
+					</div>
+					
 				
 					<div class="form-group">
 						<div class="col-sm-6">
@@ -56,6 +170,6 @@
 	</div>
 
 
-	<footer th:replace="layouts/base::footer(dark)"></footer>
+	<!--footer th:replace="layouts/base::footer(dark)"></footer-->
 </body>
 </html>

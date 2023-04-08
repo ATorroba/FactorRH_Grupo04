@@ -42,10 +42,10 @@ public class EmpleadoController {
 
     ResponseEntity<Empleado> create(@RequestBody Empleado newTFG) throws URISyntaxException {
         Empleado result = empleadoRepository.save(newTFG);
-        return ResponseEntity.created(new URI("/empleados/" + result.getEmail())).body(result);
+        return ResponseEntity.created(new URI("/empleados/" + result.getIdEmpleado())).body(result);
     }
 
-    @GetMapping("/empleados/{id}")
+    @GetMapping("/empleados/{idEmpleado}")
 
     ResponseEntity<Empleado> read(@PathVariable String id) {
 
@@ -54,11 +54,19 @@ public class EmpleadoController {
 
     }
 
-    @PutMapping("/empleados/{id}")
+    @GetMapping("/datos/{mail}")
+
+    Empleado readEmail(@PathVariable String mail) {
+
+        return (Empleado) empleadoRepository.findByEmail(mail);
+
+    }
+
+    @PutMapping("/empleados/{idEmpleado}")
 
     ResponseEntity<Empleado> update(@RequestBody Empleado newEmpleado, @PathVariable String id) {
         return empleadoRepository.findById(id).map(empleado -> {
-            empleado.setEmail(newEmpleado.getEmail());
+            empleado.setIdEmpleado(newEmpleado.getIdEmpleado());
             empleado.setPassword(newEmpleado.getPassword());
 
             empleadoRepository.save(empleado);
@@ -67,9 +75,9 @@ public class EmpleadoController {
 
     }
 
-    @DeleteMapping("empleados/{id}")
-    ResponseEntity<Empleado> delete(@PathVariable String id) {
-        empleadoRepository.deleteById(id);
+    @DeleteMapping("empleados/{idEmpleado}")
+    ResponseEntity<Empleado> delete(@PathVariable String idEmpleado) {
+        empleadoRepository.deleteById(idEmpleado);
         return ResponseEntity.ok().body(null);
     }
 

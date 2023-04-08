@@ -48,7 +48,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class EmpleadoController {
-    public final String TFGMANAGER_STRING = "http://localhost:8083/empleados/";
+    public final String RHMANAGERGER_STRING = "http://localhost:8083/empleados/";
 
     public static final String VISTA_LISTA = "lista";
 
@@ -110,7 +110,7 @@ public class EmpleadoController {
             try {
                 System.out.println(principal.getName());
 
-                Empleado empleado2 = restTemplate.getForObject(TFGMANAGER_STRING
+                Empleado empleado2 = restTemplate.getForObject("http://localhost:8083/datos/"
 
                         + principal.getName(), Empleado.class);
 
@@ -135,13 +135,13 @@ public class EmpleadoController {
 
         if (principal == null || principal.getName().equals(""))
 
-            lista = Arrays.asList(restTemplate.getForEntity(TFGMANAGER_STRING,
+            lista = Arrays.asList(restTemplate.getForEntity(RHMANAGERGER_STRING,
 
                     Empleado[].class).getBody());
         else if (principal.getName().contains("@empleado.es"))
 
         {
-            lista = Arrays.asList(restTemplate.getForEntity(TFGMANAGER_STRING
+            lista = Arrays.asList(restTemplate.getForEntity(RHMANAGERGER_STRING
 
             // + "profesor/" + principal.getName()
 
@@ -152,7 +152,7 @@ public class EmpleadoController {
         else if (principal.getName().contains("@controlador.es")) {
 
             {
-                lista = Arrays.asList(restTemplate.getForEntity(TFGMANAGER_STRING
+                lista = Arrays.asList(restTemplate.getForEntity(RHMANAGERGER_STRING
 
                 // + "profesor/" + principal.getName()
 
@@ -161,14 +161,14 @@ public class EmpleadoController {
             }
 
         } else {
-            lista = Arrays.asList(restTemplate.getForEntity(TFGMANAGER_STRING,
+            lista = Arrays.asList(restTemplate.getForEntity(RHMANAGERGER_STRING,
 
                     Empleado[].class).getBody());
 
         }
 
         model.addAttribute("empleados", lista);
-
+        // System.out.println(lista.get(0).getPassword());
         return VISTA_LISTA;
 
     }
@@ -198,7 +198,7 @@ public class EmpleadoController {
         }
 
         try {
-            restTemplate.postForObject(TFGMANAGER_STRING, Empleado, Empleado.class);
+            restTemplate.postForObject(RHMANAGERGER_STRING, Empleado, Empleado.class);
 
         } catch (Exception e) {
         }
@@ -220,7 +220,7 @@ public class EmpleadoController {
         Empleado empleado = null;
 
         try {
-            empleado = restTemplate.getForObject(TFGMANAGER_STRING + id, Empleado.class);
+            empleado = restTemplate.getForObject(RHMANAGERGER_STRING + id, Empleado.class);
 
         } catch (HttpClientErrorException.NotFound ex) {
         }
@@ -244,7 +244,7 @@ public class EmpleadoController {
         }
 
         try {
-            restTemplate.put(TFGMANAGER_STRING + empleado.getEmail(),
+            restTemplate.put(RHMANAGERGER_STRING + empleado.getEmail(),
 
                     empleado, Empleado.class);
 
@@ -255,36 +255,36 @@ public class EmpleadoController {
 
     }
 
-    @GetMapping("/eliminar/{id}")
+    @GetMapping("/eliminar/{idEmpleado}")
 
-    public String eliminar(@PathVariable(value = "id") String id) {
+    public String eliminar(@PathVariable(value = "idEmpleado") String id) {
 
-        restTemplate.delete(TFGMANAGER_STRING + id);
+        restTemplate.delete(RHMANAGERGER_STRING + id);
 
         return "redirect:/" + VISTA_LISTA;
 
     }
 
-    @GetMapping("/aceptar/{id}")
+    @GetMapping("/aceptar/{idEmpleado}")
 
-    public String aceptar(@PathVariable(value = "id") String id,
+    public String aceptar(@PathVariable(value = "idEmpleado") String idEmpleado,
 
             Map<String, Object> model, Principal principal) {
 
         if (principal != null) {
 
             try {
-                Empleado empleado = restTemplate.getForObject(TFGMANAGER_STRING + id,
+                Empleado empleado = restTemplate.getForObject(RHMANAGERGER_STRING + idEmpleado,
 
                         Empleado.class);
 
                 if (empleado != null
 
-                        && principal.getName().equals(empleado.getEmail())) {
+                        && principal.getName().equals(empleado.getIdEmpleado())) {
 
-                    restTemplate.postForObject(TFGMANAGER_STRING
+                    restTemplate.postForObject(RHMANAGERGER_STRING
 
-                            + empleado.getEmail() + "/incrementa", empleado, Empleado.class);
+                            + empleado.getIdEmpleado() + "/incrementa", empleado, Empleado.class);
 
                     model.put("Empleado", empleado);
 
@@ -312,7 +312,7 @@ public class EmpleadoController {
      * return "redirect:/" + VISTA_LISTA;
      * 
      * try {
-     * Empleado empleado = restTemplate.getForObject(TFGMANAGER_STRING + email,
+     * Empleado empleado = restTemplate.getForObject(RHMANAGERGER_STRING + email,
      * Empleado.class);
      * 
      * if (empleado != null && empleado.getStatus() == 3) {
@@ -321,7 +321,7 @@ public class EmpleadoController {
      * 
      * tfg.setMemoria(file.getBytes());
      * 
-     * restTemplate.put(TFGMANAGER_STRING + tfg.getEmail(),
+     * restTemplate.put(RHMANAGERGER_STRING + tfg.getEmail(),
      * 
      * tfg, TFG.class);
      * 
@@ -342,7 +342,7 @@ public class EmpleadoController {
         * {
         * 
         * try {
-        * TFG tfg = restTemplate.getForObject(TFGMANAGER_STRING + email, TFG.class);
+        * TFG tfg = restTemplate.getForObject(RHMANAGERGER_STRING + email, TFG.class);
         * 
         * if (tfg != null && tfg.getMemoria() != null) {
         * 

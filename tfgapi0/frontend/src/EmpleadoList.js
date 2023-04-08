@@ -17,15 +17,15 @@ class EmpleadoList extends Component {
             .then(data => this.setState({empleados: data}));
     }
 
-    async remove(email) {
-        await fetch(`/empleados/${email}`, {
+    async remove(idEmpleado) {
+        await fetch(`/empleados/${idEmpleado}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         }).then(() => {
-            let updatedEmpleados = [...this.state.empleados].filter(i => i.email !== email);
+            let updatedEmpleados = [...this.state.empleados].filter(i => i.idEmpleado !== idEmpleado);
             this.setState({empleados: updatedEmpleados});
         });
     }
@@ -34,14 +34,14 @@ class EmpleadoList extends Component {
         const {empleados} = this.state;
 
         const empleadoList = empleados.map(empleado => {
-            return <tr key={empleado.email}>
-                <td style={{whiteSpace: 'nowrap'}}>{empleado.email}</td>
+            return <tr key={empleado.idEmpleado}>
+                <td style={{whiteSpace: 'nowrap'}}>{empleado.idEmpleado}</td>
                 <td>{empleado.password}</td>
              
                 <td>
                     <ButtonGroup>
-                        <Button size="sm" color="primary" tag={Link} to={"/empleados/" + empleado.email}>Edit</Button>
-                        <Button size="sm" color="danger" onClick={() => this.remove(empleado.email)}>Delete</Button>
+                        <Button size="sm" color="primary" tag={Link} to={"/empleados/" + empleado.idEmpleado}>Edit</Button>
+                        <Button size="sm" color="danger" onClick={() => this.remove(empleado.idEmpleado)}>Delete</Button>
                     </ButtonGroup>
                 </td>
             </tr>
