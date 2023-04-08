@@ -11,33 +11,37 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    public final String TFGMANAGER_STRING= //	env.getProperty ("tfgmanager.server") + "tfgs/";
-	"http://localhost:8083/tfgs/";
-    
+    public final String TFGMANAGER_STRING = // env.getProperty ("tfgmanager.server") + "tfgs/";
+            "http://localhost:8083/empleados/";
+
     @Override
-    public Authentication authenticate(Authentication authentication) 
-      throws AuthenticationException {
-        String name = authentication.getPrincipal().toString(); //getName();
-        if (name.contains("@upm.es")) {
+    public Authentication authenticate(Authentication authentication)
+            throws AuthenticationException {
+        String name = authentication.getPrincipal().toString(); // getName();
+        if (name.contains("@empleado.es")) {
             List<SimpleGrantedAuthority> ga = new ArrayList<SimpleGrantedAuthority>();
-            ga.add(new SimpleGrantedAuthority("ROLE_PROFE"));
+            ga.add(new SimpleGrantedAuthority("ROLE_EMPLEADO"));
             return new UsernamePasswordAuthenticationToken(name, "", ga);
         }
-        if (name.contains("@alumnos.upm.es")) {
+        if (name.contains("@controlador.es")) {
             List<SimpleGrantedAuthority> ga = new ArrayList<SimpleGrantedAuthority>();
-            ga.add(new SimpleGrantedAuthority("ROLE_TFG"));
+            ga.add(new SimpleGrantedAuthority("ROLE_CONTROLADOR"));
             return new UsernamePasswordAuthenticationToken(name, "", ga);
         }
-        if (name.contains("admin@upm.es")) {
+        if (name.contains("@habilitado.es")) {
             List<SimpleGrantedAuthority> ga = new ArrayList<SimpleGrantedAuthority>();
-            ga.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            ga.add(new SimpleGrantedAuthority("ROLE_HABILITADO"));
             return new UsernamePasswordAuthenticationToken(name, "", ga);
         }
-        throw new UsernameNotFoundException ("could not login");
+        if (name.contains("@reclutador.es")) {
+            List<SimpleGrantedAuthority> ga = new ArrayList<SimpleGrantedAuthority>();
+            ga.add(new SimpleGrantedAuthority("ROLE_RECLUTADOR"));
+            return new UsernamePasswordAuthenticationToken(name, "", ga);
+        }
+        throw new UsernameNotFoundException("could not login");
     }
 
     @Override

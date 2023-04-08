@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light)">
+    <meta charset="UTF-8" />
+</head>
+
+<body>
+    <header th:replace="layouts/base::header(dark)"></header>
+
+    <div class="container">
+        <div class="card bg-light">
+            <div class="LL">
+                <img th:src="@{/img/user.png}" width="30" height="30" alt="">
+                <h3 th:text="#{empleados.misdatos}"></h3>
+            </div>
+            <div style="margin-left: 7%;margin-top: 1%;">
+                <p th:text="#{empleados.Empleado.email} + ': '+${empleado.email}"></p>
+                <p th:text="#{empleados.Empleado.password} + ': '+${empleado.password}"></p>
+            </div>
+        </div>
+    </div>
+    </tr>
+    </tbody>

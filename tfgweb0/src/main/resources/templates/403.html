@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layouts/base::head(light)">
+        <meta charset="UTF-8"/>
+    </head>
+    <div  class="FS">
+<h3>403: Acceso denegado</h3>
+<p>No tiene permisos para acceder a esta página</p>
+<a th:href="@{/login}"  style="max-width: 7%;" class="btn btn-outline-primary">Volver</a>
+</div>

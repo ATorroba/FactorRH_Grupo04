@@ -26,6 +26,7 @@ public class EmpleadoController {
 
     // public static final Logger log =
     // LoggerFactory.getLogger(TFGController.class);
+
     public EmpleadoController(empleadoRepository t) {
         this.empleadoRepository = t;
 
