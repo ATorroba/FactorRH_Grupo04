@@ -64,8 +64,8 @@ public class EmpleadoController {
 
     @PutMapping("/empleados/{idEmpleado}")
 
-    ResponseEntity<Empleado> update(@RequestBody Empleado newEmpleado, @PathVariable String id) {
-        return empleadoRepository.findById(id).map(empleado -> {
+    ResponseEntity<Empleado> update(@RequestBody Empleado newEmpleado, @PathVariable String idEmpleado) {
+        return empleadoRepository.findById(idEmpleado).map(empleado -> {
             empleado.setIdEmpleado(newEmpleado.getIdEmpleado());
             empleado.setPassword(newEmpleado.getPassword());
             empleado.setNombre(newEmpleado.getNombre());

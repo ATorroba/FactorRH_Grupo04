@@ -254,7 +254,7 @@ public class EmpleadoController {
         }
 
         try {
-            restTemplate.put(RHMANAGERGER_STRING + empleado.getEmail(),
+            restTemplate.put(RHMANAGERGER_STRING + empleado.getIdEmpleado(),
 
                     empleado, Empleado.class);
 
