@@ -1,3 +1,5 @@
+es\upm\dit\isst\tfgapi\controller\ControllerPermisos.class
+es\upm\dit\isst\tfgapi\model\permisosPK.class
 es\upm\dit\isst\tfgapi\repository\empleadoRepository.class
 es\upm\dit\isst\tfgapi\repository\RepositoryTurnos.class
 es\upm\dit\isst\tfgapi\SpringBootReactApplication.class
@@ -6,6 +8,8 @@ es\upm\dit\isst\tfgapi\controller\ControllerTurnos.class
 es\upm\dit\isst\tfgapi\controller\EmpleadoController.class
 es\upm\dit\isst\tfgapi\model\Calendario.class
 es\upm\dit\isst\tfgapi\model\Turnos.class
+es\upm\dit\isst\tfgapi\repository\RepositoryPermisos.class
 es\upm\dit\isst\tfgapi\controller\ControllerCalendario.class
 es\upm\dit\isst\tfgapi\model\Empleado.class
+es\upm\dit\isst\tfgapi\model\Permisos.class
 es\upm\dit\isst\tfgapi\repository\RepositoryCalendario.class

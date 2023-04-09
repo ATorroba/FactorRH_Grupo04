@@ -1,13 +1,13 @@
 package es.upm.dit.isst.tfg.tfgwebapp.model;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
-
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 public class Empleado {
-    @NotEmpty
+    @NotBlank
     private String idEmpleado;
-
     @Email
 
     private String email;
@@ -20,6 +20,7 @@ public class Empleado {
     private String direccion;
     private String CP;
     @Email
+
     private String email_particular;
     private String telefono;
     private String fecha_alta;

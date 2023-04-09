@@ -10,6 +10,8 @@ import java.util.List;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.core.io.ByteArrayResource;
 
 import org.springframework.http.HttpHeaders;
@@ -33,7 +35,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -178,7 +180,6 @@ public class EmpleadoController {
     public String crear(Map<String, Object> model) {
 
         Empleado Empleado = new Empleado();
-
         model.put("Empleado", Empleado);
 
         model.put("accion", "guardar");
@@ -195,16 +196,15 @@ public class EmpleadoController {
 
             return VISTA_FORMULARIO;
 
+        } else {
+            try {
+                restTemplate.postForObject(RHMANAGERGER_STRING, Empleado, Empleado.class);
+
+            } catch (Exception e) {
+            }
+
+            return "redirect:" + VISTA_LISTA;
         }
-
-        try {
-            restTemplate.postForObject(RHMANAGERGER_STRING, Empleado, Empleado.class);
-
-        } catch (Exception e) {
-        }
-
-        return "redirect:" + VISTA_LISTA;
-
     }
 
     @GetMapping("/editar/{id}")
