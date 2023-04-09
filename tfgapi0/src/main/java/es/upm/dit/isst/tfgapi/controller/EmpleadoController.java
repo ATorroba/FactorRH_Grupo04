@@ -47,9 +47,9 @@ public class EmpleadoController {
 
     @GetMapping("/empleados/{idEmpleado}")
 
-    ResponseEntity<Empleado> read(@PathVariable String id) {
+    ResponseEntity<Empleado> read(@PathVariable String idEmpleado) {
 
-        return empleadoRepository.findById(id).map(empleado -> ResponseEntity.ok().body(empleado))
+        return empleadoRepository.findById(idEmpleado).map(empleado -> ResponseEntity.ok().body(empleado))
                 .orElse(new ResponseEntity<Empleado>(HttpStatus.NOT_FOUND));
 
     }
@@ -68,6 +68,10 @@ public class EmpleadoController {
         return empleadoRepository.findById(id).map(empleado -> {
             empleado.setIdEmpleado(newEmpleado.getIdEmpleado());
             empleado.setPassword(newEmpleado.getPassword());
+            empleado.setNombre(newEmpleado.getNombre());
+            empleado.setApellido_1(newEmpleado.getApellido_1());
+            empleado.setApellido_2(newEmpleado.getApellido_2());
+            empleado.setEmail(newEmpleado.getEmail());
 
             empleadoRepository.save(empleado);
             return ResponseEntity.ok().body(empleado);

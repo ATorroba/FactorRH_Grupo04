@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layouts/base::head(light)">
+<head th:replace="layouts/base::head(light,${date})">
 	<meta charset="UTF-8"/>
 </head>
 <body>
-	<header th:replace="layouts/base::header(dark)"></header>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
 
 	<div class="container">
 		<div class="card bg-light">
