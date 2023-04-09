@@ -2,6 +2,9 @@ package es.upm.dit.isst.tfg.tfgwebapp.controller;
 
 import java.io.Console;
 import java.security.Principal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
 import java.util.Arrays;
@@ -124,6 +127,7 @@ public class EmpleadoController {
             }
         System.out.println(empleado1.getEmail());
         model.addAttribute("empleado", empleado1);
+        model.addAttribute("date", ZonedDateTime.now());
 
         return "datos";
 
@@ -170,6 +174,8 @@ public class EmpleadoController {
         }
 
         model.addAttribute("empleados", lista);
+        model.addAttribute("date", ZonedDateTime.now());
+
         // System.out.println(lista.get(0).getPassword());
         return VISTA_LISTA;
 
@@ -183,7 +189,7 @@ public class EmpleadoController {
         model.put("Empleado", Empleado);
 
         model.put("accion", "guardar");
-
+        model.put("date", ZonedDateTime.now());
         return VISTA_FORMULARIO;
 
     }
@@ -207,27 +213,31 @@ public class EmpleadoController {
         }
     }
 
-    @GetMapping("/editar/{id}")
+    @GetMapping("/editar/{idEmpleado}")
 
-    public String editar(@PathVariable(value = "id") String id,
+    public String editar(@PathVariable(value = "idEmpleado") String idEmpleado,
 
             Map<String, Object> model, Principal principal) {
 
-        if (principal == null || !principal.getName().equals(id))
-
-            return "redirect:/" + VISTA_LISTA;
+        /*
+         * if (principal == null || !principal.getName().equals(idEmpleado))
+         * 
+         * return "redirect:/" + VISTA_LISTA;
+         */
 
         Empleado empleado = null;
 
         try {
-            empleado = restTemplate.getForObject(RHMANAGERGER_STRING + id, Empleado.class);
+            empleado = restTemplate.getForObject(RHMANAGERGER_STRING + idEmpleado, Empleado.class);
 
         } catch (HttpClientErrorException.NotFound ex) {
+            System.out.println("idEmpleado");
         }
 
         model.put("Empleado", empleado);
 
         model.put("accion", "../actualizar");
+        model.put("date", LocalDate.now());
 
         return empleado != null ? VISTA_FORMULARIO : "redirect:/" + VISTA_LISTA;
 

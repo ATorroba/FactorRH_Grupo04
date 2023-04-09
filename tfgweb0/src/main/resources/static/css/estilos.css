@@ -3,6 +3,10 @@
 	margin-top: 20px;
 
 }
+.white {
+	color: white;
+
+}
 
 .wrap {
 	display: flex;
@@ -17,6 +21,14 @@
 	align-items: center;
 	align-content: center;
 }
+.FFF {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
 .LL {
 	margin-top: 2%;
 	margin-left: 2%;
@@ -57,7 +69,20 @@
 	align-items: center;
 	align-content: center;
 }
-
+.RRR {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	align-content: center;
+}
+.RRRR {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
 footer {
 	position: fixed;
 	bottom: 0;

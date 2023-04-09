@@ -3,7 +3,7 @@
 
 <!-- Head -->
 
-<head th:fragment="head(tema)">
+<head th:fragment="head(tema,date)">
 	<meta charset="UTF-8" />
 	<title th:text="FactorRH-web"></title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -16,18 +16,50 @@
 <body>
 
 	<!-- Cabecera bg-${tema} -->
-	<header th:fragment="header(tema)">
-		<nav style="background-color: rgb(41, 131, 235)" th:class="|navbar navbar-expand-lg navbar-${tema} |">
+	<header style="background-color: rgb(41, 131, 235)" th:fragment="header(tema,date)">
+		<div style="color:white" class="RRR">
 			<a class="navbar-brand" href="#">
 				<img th:src="@{/img/RH.png}" width="30" height="30" alt="">
 			</a>
+			<div class="FFF">
+			<h3>¡Bienvenido!</h3>
+			<p th:text="${#temporals.format(date, 'dd-MM-yyyy HH:mm')}"></p>
+		</div>
+
+			<span sec:authorize="isAuthenticated()">
+				<form th:action="@{/logout}" method="post">
+					<label><span sec:authentication="name"></span></label>
+					<!--label> Roles: <span sec:authentication="authorities"></span></label-->
+					<button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:text="#{salir}"></button>
+				</form>
+			</span>
+			<span sec:authorize="!isAuthenticated()">
+				<form th:action="@{/login}" method="post">
+					<label> <input type="text" name="username" /></label>
+					<label> <input type="password" name="password" /></label>
+					<button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:text="#{entrar}"></button>
+				</form>
+			</span>
+
+			<!--span class="idiomas">
+				<a th:href="|@{/}?idioma=es|"><img th:src="@{/img/idiomas/spain.svg}" width="20" height="20"
+						alt="Español"></a>
+				<a th:href="|@{/}?idioma=en|"><img th:src="@{/img/idiomas/usa.svg}" width="20" height="20"
+						alt="English"></a>
+			</span-->
+		</div>
+		<nav  th:class="|navbar navbar-expand-lg navbar-${tema} |">
+		
+		
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
+			<div  class="collapse navbar-collapse" id="navbarSupportedContent">
+
+				<ul  class="navbar-nav mr-auto">
+
 					<li class="nav-item active">
 						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
 					</li>
@@ -43,31 +75,23 @@
 						<a class="nav-link" th:href="@{/datos}" th:text="#{empleados.misdatos}"></a>
 					</li>
 					</li>
+					<span sec:authorize="hasRole('ROLE_CONTROLADOR')">
+			
+					</span>
+					<span sec:authorize="hasRole('ROLE_HABILITADO')">
+			
+					</span>
+					<span sec:authorize="hasRole('ROLE_EMPLEADO')">
+			
+					</span>
+					<span sec:authorize="hasRole('ROLE_RECLUTADOR')">
+			
+					</span>
 
 				</ul>
 
 				<!--h2 th:inline="text">[[${#httpServletRequest.remoteUser}]]</h2-->
-				<span sec:authorize="isAuthenticated()">
-					<form th:action="@{/logout}" method="post">
-						<label><span sec:authentication="name"></span></label>
-						<!--label> Roles: <span sec:authentication="authorities"></span></label-->
-						<button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:text="#{salir}"></button>
-					</form>
-				</span>
-				<span sec:authorize="!isAuthenticated()">
-					<form th:action="@{/login}" method="post">
-						<label> <input type="text" name="username" /></label>
-						<label> <input type="password" name="password" /></label>
-						<button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:text="#{entrar}"></button>
-					</form>
-				</span>
-
-				<span class="idiomas">
-					<a th:href="|@{/}?idioma=es|"><img th:src="@{/img/idiomas/spain.svg}" width="20" height="20"
-							alt="Español"></a>
-					<a th:href="|@{/}?idioma=en|"><img th:src="@{/img/idiomas/usa.svg}" width="20" height="20"
-							alt="English"></a>
-				</span>
+		
 				<!--form class="form-inline my-2 my-lg-0">
 		      <input class="form-control mr-sm-2" type="search" th:placeholder="#{buscador.placeholder}" aria-label="Search">
 		      <button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:text="#{buscador.boton}"></button>
