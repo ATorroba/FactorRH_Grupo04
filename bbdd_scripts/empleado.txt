@@ -1,0 +1,3 @@
+insert into empleado(id_empleado) Values('0001');
+insert into empleado(id_empleado) Values('0002');
+insert into empleado(id_empleado) Values('0003');
