@@ -3,14 +3,19 @@ package es.upm.dit.isst.tfg.tfgwebapp.model;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+
 import javax.validation.constraints.NotEmpty;
+/*import javax.persistence.TemporalType;
+import javax.persistence.Temporal*/
+import java.util.Date;;
 
 public class Empleado {
-    @NotBlank
+    @NotBlank(message = "campo obligatorio")
     private String idEmpleado;
     @Email
 
     private String email;
+    @NotBlank(message = "campo obligatorio")
 
     private String nombre;
     private String apellido_1;
@@ -23,7 +28,9 @@ public class Empleado {
 
     private String email_particular;
     private String telefono;
+    // Wed Mar 27 08:22:02 IST 2015
     private String fecha_alta;
+
     private String fecha_baja;
     private String IBAN;
     private String SWIFT;

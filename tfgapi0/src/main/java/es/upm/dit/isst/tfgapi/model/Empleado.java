@@ -8,14 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Empleado {
 
     @Id
+    @NotBlank
     @Column(name = "idEmpleado", length = 4)
     private String idEmpleado;
     @Column(name = "nombre", length = 40)
+    @NotBlank
     private String nombre;
     @Column(name = "apellido_1", length = 40)
     private String apellido_1;
@@ -35,6 +38,7 @@ public class Empleado {
     @Column(name = "telefono", length = 12)
     private String telefono;
     @Temporal(TemporalType.DATE)
+    // Wed Mar 27 08:22:02 IST 2015
     @Column(name = "fecha_alta", nullable = true, columnDefinition = "DATE DEFAULT CURRENT_DATE")
     private Date fecha_alta;
     @Temporal(TemporalType.DATE)
@@ -53,7 +57,7 @@ public class Empleado {
     private String password;
     @Column(name = "puesto", length = 5)
     private String puesto;
- 
+
     public Empleado() {
     }
 
@@ -201,5 +205,4 @@ public class Empleado {
         this.password = password;
     }
 
-    
 }

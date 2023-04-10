@@ -23,16 +23,22 @@
 					</ul>
 				</div>
 				 -->
-				 
-				<form th:action="@{${accion}}" th:object="${Empleado}" method="post">
-					<!-- <input type="hidden" th:field="*{email}" /> -->
+			
 		
 				
+				<form th:action="@{${accion}}" th:object="${Empleado}" method="post">
+					<!-- <input type="hidden" th:field="*{email}" /> -->
+		<!--p th:if="${result}" th.object="${result}" th:text="${result}" class="alert alert-danger" ></p-->
+		<p class="alert alert-danger" th:each="error: ${result}"  th:text="${error.field}+': '+${error.defaultMessage}">
+
+		</p>
+
 					<div class="form-group row">
+					
 						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.idEmpleado}"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{idEmpleado}">
-							<small class="form-text text-danger" th:if="${#fields.hasErrors('idEmpleado')}" th:errors="*{idEmpleado}"></small>
+							<input type="text" id="idEmpleado" th:field="*{idEmpleado}">
+							<div class="form-text text-danger" th:if="${#fields.hasErrors('idEmpleado')}" th:errors="*{idEmpleado}">error id</div>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -154,16 +160,13 @@
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('antiguedad')}" th:errors="*{antiguedad}"></small>
 						</div>
 					</div>
-					
-					<div th:if="${#fields.hasAnyErrors()}">
-						<ul>
-							<li th:each="err : ${#fields.allErrors()}" th:text="${err}" ></li>
-						</ul>
-					</div>
+				
 					<div class="form-group">
 						<div class="col-sm-6">
+						
+
 							<input type="submit" th:value="#{empleados.acciones.guardar}" class="btn btn-outline-primary">
-							<a th:href="@{${accion} == 'guardar' OR ${#fields.hasErrors('*')} ? 'lista' : '/lista'}"
+							<a th:href="@{${accion} == 'guardar' AND  !${#fields.hasErrors('*')} ? 'lista' : '/crear'}"
 							class="btn btn-outline-danger" th:text="#{empleados.acciones.cancelar}"></a>
 							<!-- a th:href="@{${accion} == 'guardar' OR ${#fields.hasErrors('*')} ? 'lista' : '../lista'}" class="btn btn-outline-danger" th:text="#{tfgs.acciones.cancelar}"></a-->
 						</div>

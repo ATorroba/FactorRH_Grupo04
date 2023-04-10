@@ -1,6 +1,7 @@
 package es.upm.dit.isst.tfg.tfgwebapp.controller;
 
 import java.io.Console;
+import java.lang.reflect.Array;
 import java.security.Principal;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -13,7 +14,9 @@ import java.util.List;
 
 import java.util.Map;
 
+import javax.validation.Constraint;
 import javax.validation.Valid;
+import javax.validation.executable.ValidateOnExecution;
 
 import org.springframework.core.io.ByteArrayResource;
 
@@ -30,7 +33,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.validation.BindingResult;
-
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +53,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class EmpleadoController {
@@ -196,17 +200,29 @@ public class EmpleadoController {
 
     @PostMapping("/guardar")
 
-    public String guardar(@Validated Empleado Empleado, BindingResult result) {
+    public String guardar(@Validated Empleado Empleado, BindingResult result, Map<String, Object> model) {
 
         if (result.hasErrors()) {
+            model.put("Empleado", Empleado);
+            List<ObjectError> r = result.getAllErrors();
+            // r.stream().map(a -> a);
 
-            return VISTA_FORMULARIO;
+            model.put("result", r);// .getDefaultMessage());
+
+            model.put("date", ZonedDateTime.now());
+
+            // 0 System.out.println(r);
+            // System.out.println(r.get(0));
+
+            return "formulario";
 
         } else {
             try {
+
                 restTemplate.postForObject(RHMANAGERGER_STRING, Empleado, Empleado.class);
 
             } catch (Exception e) {
+
             }
 
             return "redirect:" + VISTA_LISTA;
@@ -245,9 +261,19 @@ public class EmpleadoController {
 
     @PostMapping("/actualizar")
 
-    public String actualizar(@Validated Empleado empleado, BindingResult result) {
+    public String actualizar(@Validated Empleado empleado, BindingResult result, Map<String, Object> model) {
 
         if (result.hasErrors()) {
+            model.put("Empleado", empleado);
+            List<ObjectError> r = result.getAllErrors();
+            // r.stream().map(a -> a);
+
+            model.put("result", r);// .getDefaultMessage());
+
+            model.put("date", ZonedDateTime.now());
+
+            // 0 System.out.println(r);
+            // System.out.println(r.get(0));
 
             return VISTA_FORMULARIO;
 

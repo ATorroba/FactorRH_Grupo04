@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,7 +65,7 @@ public class EmpleadoController {
 
     @PutMapping("/empleados/{idEmpleado}")
 
-    ResponseEntity<Empleado> update(@RequestBody Empleado newEmpleado, @PathVariable String idEmpleado) {
+    ResponseEntity<Empleado> update(@Validated @RequestBody Empleado newEmpleado, @PathVariable String idEmpleado) {
         return empleadoRepository.findById(idEmpleado).map(empleado -> {
             empleado.setIdEmpleado(newEmpleado.getIdEmpleado());
             empleado.setPassword(newEmpleado.getPassword());
@@ -72,6 +73,8 @@ public class EmpleadoController {
             empleado.setApellido_1(newEmpleado.getApellido_1());
             empleado.setApellido_2(newEmpleado.getApellido_2());
             empleado.setEmail(newEmpleado.getEmail());
+            empleado.setFecha_alta(newEmpleado.getFecha_alta());
+            empleado.setFecha_baja(newEmpleado.getFecha_baja());
 
             empleadoRepository.save(empleado);
             return ResponseEntity.ok().body(empleado);
