@@ -67,7 +67,8 @@ public class EmpleadoController {
 
     @GetMapping("/")
 
-    public String inicio(Principal principal) {
+    public String inicio(Principal principal, Model model) {
+        model.addAttribute("date", ZonedDateTime.now());
 
         if (principal == null || principal.getName().equals("")) {
 
@@ -75,7 +76,7 @@ public class EmpleadoController {
         }
 
         else {
-            return "redirect:/" + "lista";
+            return "home";
         }
     }
 

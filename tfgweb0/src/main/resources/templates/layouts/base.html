@@ -16,12 +16,12 @@
 <body>
 
 	<!-- Cabecera bg-${tema} -->
-	<header style="background-color: rgb(41, 131, 235)" th:fragment="header(tema,date)">
-		<div style="color:white" class="RRR">
+	<header style="background-color: rgb(41, 131, 235);" th:fragment="header(tema,date)">
+		<div style="color:white;margin-right: 2%;margin-left: 2%;" class="RRR">
 			<a class="navbar-brand" href="#">
 				<img th:src="@{/img/RH.png}" width="30" height="30" alt="">
 			</a>
-			<div class="FFF">
+			<div  class="FFF">
 			<h3>¡Bienvenido!</h3>
 			<p th:text="${#temporals.format(date, 'dd-MM-yyyy HH:mm')}"></p>
 		</div>
@@ -61,34 +61,39 @@
 				<ul  class="navbar-nav mr-auto">
 
 					<li class="nav-item active">
-						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+						<a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/lista}" th:text="#{menu.empleados}"></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/gestion}" th:text="#{empleados.gestion}"></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/organigrama}" th:text="#{empleados.organigrama}"></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/inicio}" th:text="#{empleados.inicio}"></a>
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/datos}" th:text="#{empleados.misdatos}"></a>
-					</li>
-					</li>
+
+				
+				
+				
+				
+				
 					<span sec:authorize="hasRole('ROLE_CONTROLADOR')">
 			
 					</span>
 					<span sec:authorize="hasRole('ROLE_HABILITADO')">
 			
 					</span>
-					<span sec:authorize="hasRole('ROLE_EMPLEADO')">
-			
+					<span class="RR" sec:authorize="hasRole('ROLE_EMPLEADO')">
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/organigrama}" th:text="#{empleados.organigrama}"></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/inicio}" th:text="#{empleados.inicio}"></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/datos}" th:text="#{empleados.misdatos}"></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/gestion}" th:text="#{empleados.gestion}"></a>
+						</li>
+
 					</span>
 					<span sec:authorize="hasRole('ROLE_RECLUTADOR')">
-			
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/lista}" th:text="#{menu.empleados}"></a>
+						</li>
 					</span>
 
 				</ul>

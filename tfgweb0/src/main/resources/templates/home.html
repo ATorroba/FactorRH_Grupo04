@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-      <div class="FF">
-    <head>
-        <title>HOLA </title>
-    </head>
-    <head th:replace="layouts/base::head(dark)">
-        <meta charset="UTF-8"/>
-    </head>
-    
-    <body >
-        <h3>FactorRH</h3>
-
-        <a  class="btn btn-outline-warning my-2 my-sm-0"  th:href="@{login/}" th:text="#{entrar}"></a>
+        <head th:replace="layouts/base::head(light,${date})">
+            <meta charset="UTF-8" />
+        </head>
+        
+        <body>
+            <header th:replace="layouts/base::header(dark,${date})"></header>
+        
+    <div class="LL">
+        <h1>Escoge una acción</h1>
+    </div>
     
         
        
     </body>
-</div>
 </html>
