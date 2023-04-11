@@ -75,6 +75,16 @@ public class EmpleadoController {
             empleado.setEmail(newEmpleado.getEmail());
             empleado.setFecha_alta(newEmpleado.getFecha_alta());
             empleado.setFecha_baja(newEmpleado.getFecha_baja());
+            empleado.setTelefono(newEmpleado.getTelefono());
+            empleado.setAntiguedad(newEmpleado.getAntiguedad());
+            empleado.setSueldo_base(newEmpleado.getSueldo_base());
+            empleado.setNIF(newEmpleado.getNIF());
+            empleado.setNASS(newEmpleado.getNASS());
+            empleado.setSWIFT(newEmpleado.getSWIFT());
+            empleado.setCP(newEmpleado.getCP());
+            empleado.setDireccion(newEmpleado.getDireccion());
+            empleado.setFecha_baja(newEmpleado.getFecha_baja());
+            empleado.setEmail_particular(newEmpleado.getEmail_particular());
 
             empleadoRepository.save(empleado);
             return ResponseEntity.ok().body(empleado);

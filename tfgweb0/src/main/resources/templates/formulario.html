@@ -121,14 +121,14 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.fechaa}"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{fecha_alta}">
+							<input type="date" th:field="*{fecha_alta}">
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('fecha_alta')}" th:errors="*{fecha_alta}"></small>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.fechab}"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{fecha_baja}">
+							<input type="date" th:field="*{fecha_baja}">
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('fecha_baja')}" th:errors="*{fecha_baja}"></small>
 						</div>
 					</div>
