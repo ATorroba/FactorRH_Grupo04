@@ -7,7 +7,9 @@
 	color: white;
 
 }
-
+.bold {
+	font-weight: bold;
+}
 .wrap {
 	display: flex;
 	flex-wrap: wrap;

@@ -9,10 +9,11 @@ import es.upm.dit.isst.tfgapi.model.Ausencias;
 
 public interface AusenciasRepository extends CrudRepository<Ausencias, String> {
 
-    List<Ausencias> findByidempleado(String empleado);
+    List<Ausencias> findByempleado(String empleado);
 
     // @Autowired
-    // @Query(value = "Select * from ausencias where idempleado = idempleado and inicio = inicio", nativeQuery = true)
+    // @Query(value = "Select * from ausencias where idempleado = idempleado and
+    // inicio = inicio", nativeQuery = true)
     // List<Ausencias> buscarAusenciaPorDia(String idempleado, Date inicio);
 
 }

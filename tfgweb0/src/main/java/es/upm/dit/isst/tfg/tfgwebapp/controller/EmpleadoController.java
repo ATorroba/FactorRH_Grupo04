@@ -123,18 +123,21 @@ public class EmpleadoController {
 
                         + principal.getName(), Empleado.class);
 
-                if (empleado2 != null)
-
+                if (empleado2 != null) {
                     empleado1 = empleado2;
+                    System.out.println(empleado1.getEmail());
+                    model.addAttribute("empleado", empleado1);
+                    model.addAttribute("date", ZonedDateTime.now());
 
+                    return "datos";
+                } else {
+                    return "401";
+                }
             } catch (Exception e) {
+
             }
-        System.out.println(empleado1.getEmail());
-        model.addAttribute("empleado", empleado1);
-        model.addAttribute("date", ZonedDateTime.now());
 
-        return "datos";
-
+        return "403";
     }
 
     @GetMapping("/lista")
