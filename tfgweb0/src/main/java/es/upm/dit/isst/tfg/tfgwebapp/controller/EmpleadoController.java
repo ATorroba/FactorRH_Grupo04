@@ -89,7 +89,7 @@ public class EmpleadoController {
         }
 
         else {
-            return "redirect:/" + "lista";
+            return "redirect:/";
         }
     }
 

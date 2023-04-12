@@ -1,30 +1,31 @@
 package es.upm.dit.isst.tfgapi.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Column;
 
 @Entity
 public class Departamento {
-    
+
     @Id
-    @Column(name = "Id_Depto", length = 3)
-    private String Id_Depto;
+    @Column(name = "depto", length = 3)
+    private String depto;
     private String nombre;
     private String oficina;
     @Column(name = "padre", length = 3)
     private String padre;
-    
-    public Departamento(){
+
+    public Departamento() {
 
     }
 
-    public String getId_Depto() {
-        return Id_Depto;
+    public String getDepto() {
+        return depto;
     }
 
-    public void setId_Depto(String id_Depto) {
-        Id_Depto = id_Depto;
+    public void setDepto(String depto) {
+        this.depto = depto;
     }
 
     public String getNombre() {
@@ -50,7 +51,4 @@ public class Departamento {
     public void setPadre(String padre) {
         this.padre = padre;
     }
-    
- 
-
 }

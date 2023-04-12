@@ -24,6 +24,7 @@ public class PuestoController {
 
     private final PuestoRepository puestoRepository;
     public static final Logger log = LoggerFactory.getLogger(PuestoController.class);
+
     public PuestoController(PuestoRepository t) {
         this.puestoRepository = t;
     }
@@ -32,7 +33,7 @@ public class PuestoController {
     List<Puesto> readAll() {
         return (List<Puesto>) puestoRepository.findAll();
     }
-    
+
     @PostMapping("/puestos")
     ResponseEntity<Puesto> create(@RequestBody Puesto newPuesto) throws URISyntaxException {
         Puesto result = puestoRepository.save(newPuesto);
@@ -41,9 +42,8 @@ public class PuestoController {
 
     @GetMapping("/puestos/{id}")
     ResponseEntity<Puesto> read(@PathVariable String id) {
-        return puestoRepository.findById(id).map(puesto ->
-        ResponseEntity.ok().body(puesto)
-        ).orElse(new ResponseEntity<Puesto>(HttpStatus.NOT_FOUND));
+        return puestoRepository.findById(id).map(puesto -> ResponseEntity.ok().body(puesto))
+                .orElse(new ResponseEntity<Puesto>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/puestos/{id}")
@@ -57,6 +57,7 @@ public class PuestoController {
             puesto.setReq_disponibilidad(newPuesto.getReq_disponibilidad());
             puesto.setReq_otros(newPuesto.getReq_otros());
             puesto.setDepto(newPuesto.getDepto());
+
             puestoRepository.save(puesto);
             return ResponseEntity.ok().body(puesto);
         }).orElse(new ResponseEntity<Puesto>(HttpStatus.NOT_FOUND));
@@ -67,7 +68,7 @@ public class PuestoController {
         puestoRepository.deleteById(id);
         return ResponseEntity.ok().body(null);
     }
-       
+
     @GetMapping("/puestos/idDepto/{id}")
     List<Puesto> readPorPuesto(@PathVariable String id) {
         return (List<Puesto>) puestoRepository.findByDepto(id);

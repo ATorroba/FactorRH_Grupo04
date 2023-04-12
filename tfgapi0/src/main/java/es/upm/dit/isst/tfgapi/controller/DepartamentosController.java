@@ -31,7 +31,7 @@ public class DepartamentosController {
     @PostMapping("/departamentos")
     ResponseEntity<Departamento> create(@RequestBody Departamento newDep) throws URISyntaxException {
         Departamento result = depRepository.save(newDep);
-        return ResponseEntity.created(new URI("/departamentos/" + result.getId_Depto())).body(result);
+        return ResponseEntity.created(new URI("/departamentos/" + result.getDepto())).body(result);
     }
 
     @GetMapping("/departamentos/{id}")
@@ -48,17 +48,13 @@ public class DepartamentosController {
             departamento.setPadre(newDep.getPadre());
             return ResponseEntity.ok().body(departamento);
         }).orElse(new ResponseEntity<Departamento>(HttpStatus.NOT_FOUND));
+
     }
 
     @DeleteMapping("departamentos/{id}")
     ResponseEntity<Departamento> delete(@PathVariable String id) {
         depRepository.deleteById(id);
         return ResponseEntity.ok().body(null);
-    }
-
-    @GetMapping("/departamentos/nombre/{id}")
-    List<Departamento> readNombre(@PathVariable String id) {
-        return (List<Departamento>) depRepository.findByNombre(id);
     }
 
     @GetMapping("/departamentos/padre/{id}")
@@ -69,7 +65,5 @@ public class DepartamentosController {
     @GetMapping("/departamentos/raiz")
     List<Departamento> readDeptoRaiz() {
         return (List<Departamento>) depRepository.buscarDepartamentoRaiz();
-    }
-
-
+    } 
 }
