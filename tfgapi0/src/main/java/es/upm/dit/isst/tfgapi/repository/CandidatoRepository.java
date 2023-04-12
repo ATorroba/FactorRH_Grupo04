@@ -8,6 +8,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "candidatos", path = "candidatos")
 public interface CandidatoRepository extends CrudRepository<Candidato, String> {
 
-    List<Candidato> findByPuesto(String icandidato);
+    List<Candidato> findByPuesto(String puesto);
 
 }

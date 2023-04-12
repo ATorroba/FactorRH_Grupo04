@@ -34,11 +34,11 @@ public class AusenciasController {
         return (List<Ausencias>) ausenciasRepository.findAll();
     }
 
-    @GetMapping("/ausencias/{empleado}")
+    @GetMapping("/ausencias/{idEmpleado}")
 
-    ResponseEntity<Ausencias> read(@PathVariable String empleado) {
+    ResponseEntity<Ausencias> read(@PathVariable String idEmpleado) {
 
-        return ausenciasRepository.findById(empleado).map(ausencia -> ResponseEntity.ok().body(ausencia))
+        return ausenciasRepository.findById(idEmpleado).map(ausencia -> ResponseEntity.ok().body(ausencia))
                 .orElse(new ResponseEntity<Ausencias>(HttpStatus.NOT_FOUND));
 
     }
@@ -47,7 +47,7 @@ public class AusenciasController {
 
     ResponseEntity<Ausencias> create(@RequestBody Ausencias newTFG) throws URISyntaxException {
         Ausencias result = ausenciasRepository.save(newTFG);
-        return ResponseEntity.created(new URI("/ausencias/" + result.getEmpleado())).body(result);
+        return ResponseEntity.created(new URI("/ausencias/" + result.getIdEmpleado())).body(result);
     }
 
 }

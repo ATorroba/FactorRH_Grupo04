@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+
+	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 th:text="#{puestos.lista.titulo}"></h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th th:text="#{puestos.puesto.id_puesto}">id_puesto</th>
+								<th th:text="#{puestos.puesto.nombre_puesto}">Puesto</th>
+								<th th:text="#{puestos.puesto.sueldo_orientativo}">Sueldo orientativo</th>
+								<th th:text="#{puestos.puesto.depto}">Departamento</th>
+								<th th:text="#{puestos.puesto.estado}">Estado</th>
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="Puesto: ${puesto}">
+							<div class="wrap">
+								<td th:text="${Puesto.id_puesto}"></td>
+								<td th:text="${Puesto.nombre_puesto}"></td>
+								<td th:text="${Puesto.sueldo_orientativo}"></td>
+								<td th:text="${Puesto.depto}"></td>
+								<td th:text="${Puesto.estado}"></td>
+								<td>
+									<a th:href="@{editar/} + ${Puesto.id_puesto}" th:text="#{puestos.acciones.editar}"
+										class="btn btn-outline-primary"></a>
+								</td>
+								<td>
+									<a th:href="@{eliminar/} + ${Puesto.id_puesto}"
+										th:text="#{puestos.acciones.eliminar}" class="btn btn-outline-danger"></a>
+								</td>
+								<td>
+									<a th:href="@{aceptar/} + ${Puesto.id_puesto}"
+										th:text="#{puestos.acciones.aceptar}" class="btn btn-outline-danger"></a>
+								</td>
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{crear}" class="btn btn-outline-primary btn-block"
+									th:text="#{puestos.acciones.anadir}"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layouts/base::footer(light)"></footer>
+</body>
+
+</html>

@@ -1,8 +1,10 @@
 es\upm\dit\isst\tfgapi\controller\ControllerPermisos.class
 es\upm\dit\isst\tfgapi\model\Rol.class
+es\upm\dit\isst\tfgapi\model\Jornadas.class
 es\upm\dit\isst\tfgapi\model\permisosPK.class
 es\upm\dit\isst\tfgapi\SpringBootReactApplication.class
 es\upm\dit\isst\tfgapi\model\turnoPK.class
+es\upm\dit\isst\tfgapi\repository\JornadasRepository.class
 es\upm\dit\isst\tfgapi\repository\PuestoRepository.class
 es\upm\dit\isst\tfgapi\controller\ControllerTurnos.class
 es\upm\dit\isst\tfgapi\model\RolPK.class
@@ -14,6 +16,7 @@ es\upm\dit\isst\tfgapi\model\ausenciasPK.class
 es\upm\dit\isst\tfgapi\controller\CandidatoController.class
 es\upm\dit\isst\tfgapi\controller\DepartamentosController.class
 es\upm\dit\isst\tfgapi\repository\RolRepository.class
+es\upm\dit\isst\tfgapi\controller\JornadasController.class
 es\upm\dit\isst\tfgapi\repository\AusenciasRepository.class
 es\upm\dit\isst\tfgapi\repository\empleadoRepository.class
 es\upm\dit\isst\tfgapi\repository\DepartamentosRepository.class
@@ -27,5 +30,6 @@ es\upm\dit\isst\tfgapi\controller\ControllerCalendario.class
 es\upm\dit\isst\tfgapi\model\Departamento.class
 es\upm\dit\isst\tfgapi\model\Empleado.class
 es\upm\dit\isst\tfgapi\model\Permisos.class
+es\upm\dit\isst\tfgapi\model\jornadasPK.class
 es\upm\dit\isst\tfgapi\model\Puesto.class
 es\upm\dit\isst\tfgapi\repository\RepositoryCalendario.class

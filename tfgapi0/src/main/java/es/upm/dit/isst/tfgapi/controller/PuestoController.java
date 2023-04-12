@@ -57,6 +57,7 @@ public class PuestoController {
             puesto.setReq_disponibilidad(newPuesto.getReq_disponibilidad());
             puesto.setReq_otros(newPuesto.getReq_otros());
             puesto.setDepto(newPuesto.getDepto());
+            puesto.setEstado(newPuesto.getEstado());
 
             puestoRepository.save(puesto);
             return ResponseEntity.ok().body(puesto);
@@ -74,4 +75,13 @@ public class PuestoController {
         return (List<Puesto>) puestoRepository.findByDepto(id);
     }
 
+    @GetMapping("/puestos/estado/{id}")
+    List<Puesto> readPorEstado(@PathVariable String id) {
+        return (List<Puesto>) puestoRepository.findByEstado(id);
+    }
+
+    @GetMapping("/puestos/libres")
+    List<Puesto> readPuestosLibres() {
+        return (List<Puesto>) puestoRepository.buscarPuestoLibre();
+    }
 }

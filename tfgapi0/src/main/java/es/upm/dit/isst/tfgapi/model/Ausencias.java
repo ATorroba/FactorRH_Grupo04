@@ -11,8 +11,8 @@ import javax.persistence.Temporal;
 public class Ausencias {
 
     @Id
-    @Column(name = "empleado", length = 4)
-    private String empleado;
+    @Column(name = "idEmpleado", length = 4)
+    private String idEmpleado;
     @Id
     @Temporal(TemporalType.DATE)
     @Column(name = "inicio", nullable = true, columnDefinition = "DATE DEFAULT null")
@@ -25,22 +25,24 @@ public class Ausencias {
     @Column(name = "autorizada", length = 1)
     private String autorizada;
     @Column(name = "n_dias", precision = 8, scale = 2)
-    private Double n_dias;
+    private Integer n_dias;
+    @Temporal(TemporalType.DATE)
+
     @Column(name = "fecha_comunicacion", nullable = true, columnDefinition = "DATE DEFAULT null")
     private Date fecha_comunicacion;
     @Column(name = "notas", length = 255)
     private String notas;
 
-    public Ausencias (){
+    public Ausencias() {
 
     }
 
-    public String getEmpleado() {
-        return empleado;
+    public String getIdEmpleado() {
+        return idEmpleado;
     }
 
     public void setEmpleado(String idempleado) {
-        this.empleado = idempleado;
+        this.idEmpleado = idempleado;
     }
 
     public Date getInicio() {
@@ -75,11 +77,11 @@ public class Ausencias {
         this.autorizada = autorizada;
     }
 
-    public Double getN_dias() {
+    public Integer getN_dias() {
         return n_dias;
     }
 
-    public void setN_dias(Double n_dias) {
+    public void setN_dias(Integer n_dias) {
         this.n_dias = n_dias;
     }
 
@@ -99,6 +101,4 @@ public class Ausencias {
         this.notas = notas;
     }
 
-
-    
 }

@@ -8,7 +8,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Puesto {
-    
+
     @Id
     @Column(name = "id_puesto", length = 5)
     private String id_puesto;
@@ -23,6 +23,8 @@ public class Puesto {
     private String req_otros;
     @Column(name = "depto", length = 3)
     private String depto;
+    @Column(name = "estado", length = 10)
+    private String estado;
 
     public Puesto() {
 
@@ -104,5 +106,13 @@ public class Puesto {
     public void setDepto(String depto) {
         this.depto = depto;
     }
-   
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
 }
