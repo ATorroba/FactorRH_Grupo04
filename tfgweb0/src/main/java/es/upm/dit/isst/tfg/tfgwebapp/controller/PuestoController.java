@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import es.upm.dit.isst.tfg.tfgwebapp.model.Puesto;
 
@@ -34,7 +36,7 @@ public class PuestoController {
     @GetMapping("puestos/crear")
     public String crear(Map<String, Object> model) {
         Puesto puesto = new Puesto();
-        model.put("Puesto", puesto);
+        model.put("puesto", puesto);
         model.put("accion", "guardar");
         return VISTA_FORMULARIO_PUESTO;
     }
@@ -42,14 +44,43 @@ public class PuestoController {
     @PostMapping("puestos/guardar")
     public String guardar(@Validated Puesto puesto, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("Puesto", puesto);
+            model.addAttribute("puesto", puesto);
             return VISTA_FORMULARIO_PUESTO;
         }
         try {
             restTemplate.postForObject(PUESTOMANAGER_STRING, puesto, Puesto.class);
         } catch (Exception e) {
         }
-        return "redirect:/" + "lista";
+        return "redirect:/puestos/lista";
     }
 
+    @GetMapping("puestos/editar/{id}")
+    public String editar(@PathVariable(value = "id") String id,
+               Map<String, Object> model, Principal principal) {
+            //if (principal == null || ! principal.getName().equals(id))
+            //        return "redirect:/puestos/lista";
+            Puesto puesto = null;
+            try { puesto = restTemplate.getForObject(PUESTOMANAGER_STRING + id, Puesto.class);
+            } catch (HttpClientErrorException.NotFound ex) {}
+            model.put("puesto", puesto);
+            model.put("accion", "actualizar");
+            return puesto != null ? VISTA_FORMULARIO_PUESTO : "redirect:/puestos/lista";
+    }
+
+    @PostMapping("puestos/actualizar")
+    public String actualizar(@Validated Puesto puesto, BindingResult result) {
+            if (result.hasErrors()) {
+                    return VISTA_FORMULARIO_PUESTO;
+            }
+            try { restTemplate.put(PUESTOMANAGER_STRING + puesto.getId_puesto(),
+                puesto, Puesto.class);
+            } catch(Exception e) {}
+            return "redirect:/puestos/lista";
+    }
+
+    @GetMapping("puestos/eliminar/{id}")
+    public String eliminar(@PathVariable(value = "id") String id) {
+            restTemplate.delete(PUESTOMANAGER_STRING+ id);
+            return "redirect:/puestos/lista";
+    }
 }
