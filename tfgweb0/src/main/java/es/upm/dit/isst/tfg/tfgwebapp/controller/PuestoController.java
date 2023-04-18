@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.client.HttpClientErrorException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +51,40 @@ public class PuestoController {
             restTemplate.postForObject(PUESTOMANAGER_STRING, puesto, Puesto.class);
         } catch (Exception e) {
         }
-        return "redirect:/" + "lista";
+        return "redirect:/" + "puestos/lista";
     }
 
+    @GetMapping("puestos/editar/{id}")
+    public String editar(@PathVariable(value = "id") String id,
+            Map<String, Object> model, Principal principal) {
+        // if (principal == null || ! principal.getName().equals(id))
+        // return "redirect:/puestos/lista";
+        Puesto puesto = null;
+        try {
+            puesto = restTemplate.getForObject(PUESTOMANAGER_STRING + id, Puesto.class);
+        } catch (HttpClientErrorException.NotFound ex) {
+        }
+        model.put("Puesto", puesto);
+        model.put("accion", "actualizar");
+        return puesto != null ? VISTA_FORMULARIO_PUESTO : "redirect:/puestos/lista";
+    }
+
+    @PostMapping("puestos/editar/actualizar")
+    public String actualizar(@Validated Puesto puesto, BindingResult result) {
+        if (result.hasErrors()) {
+            return VISTA_FORMULARIO_PUESTO;
+        }
+        try {
+            restTemplate.put(PUESTOMANAGER_STRING + puesto.getId_puesto(),
+                    puesto, Puesto.class);
+        } catch (Exception e) {
+        }
+        return "redirect:/puestos/lista";
+    }
+
+    @GetMapping("puestos/eliminar/{id}")
+    public String eliminar(@PathVariable(value = "id") String id) {
+        restTemplate.delete(PUESTOMANAGER_STRING + id);
+        return "redirect:/puestos/lista";
+    }
 }

@@ -17,7 +17,7 @@
 					<thead>
 						<tr><div class="wrap">
 							<th th:text="#{empleados.Empleado.email}">email</th>
-							<th th:text="#{empleados.Empleado.password}">contraseña</th>
+							<th th:text="#{empleados.Empleado.nombre}">contraseña</th>
 						
 						
 							<th>-</th>
@@ -32,8 +32,8 @@
 					<tbody>
 						<tr th:each="Empleado: ${empleados}">
 							<div class="wrap">
-							<td th:text="${Empleado.idEmpleado}"></td>
-							<td th:text="${Empleado.password}"></td>
+							<td th:text="${Empleado.email}"></td>
+							<td th:text="${Empleado.nombre}"></td>
 				
 								<td>
 									<form method="post" th:action="@{/upload}" th:object="${Empleado}" enctype="multipart/form-data">
@@ -43,14 +43,14 @@
 										<button type="submit" th:text="#{empleados.acciones.subir}"  class="btn btn-outline-primary"></button>
 									</div></form>
 								</td>
-								<td><a th:href="@{download/} + ${Empleado.idEmpleado}" th:text="#{empleados.acciones.memoria}" class="btn btn-outline-primary"></a>
+								<td><!--a th:href="@{download/} + ${Empleado.idEmpleado}" th:text="#{empleados.acciones.memoria}" class="btn btn-outline-primary"></a-->
 								</td>
 								<td>
 									<a th:href="@{editar/} + ${Empleado.idEmpleado}" th:text="#{empleados.acciones.editar}" class="btn btn-outline-primary"></a>
 								</td><td>	
-									<a th:href="@{eliminar/} + ${Empleado.idEmpleado}" th:text="#{empleados.acciones.eliminar}" class="btn btn-outline-danger"></a>
+									<a  th:onclick="if(!(confirm('Are you sure you want to delete this employee'))) return false" th:href="@{eliminar/} + ${Empleado.idEmpleado}" th:text="#{empleados.acciones.eliminar}" class="btn btn-outline-danger"></a>
 								</td><td>
-									<a th:href="@{aceptar/} + ${Empleado.idEmpleado}" th:text="#{empleados.acciones.aceptar}" class="btn btn-outline-danger"></a>
+									<!--a th:href="@{aceptar/} + ${Empleado.idEmpleado}" th:text="#{empleados.acciones.aceptar}" class="btn btn-outline-danger"></a-->
 								</td>
 							</div>
 							</span>
