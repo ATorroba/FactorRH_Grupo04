@@ -47,10 +47,6 @@ public class JornadasController {
     ResponseEntity<Jornadas> update(@RequestBody Jornadas newJornada, @PathVariable String id) {
         return JornadasRepository.findById(id).map(Jornada -> {
             Jornada.setFecha(newJornada.getFecha());
-            Jornada.setHora_entrada(newJornada.getHora_entrada());
-            Jornada.setHora_salida(newJornada.getHora_salida());
-            Jornada.setEntrada_teorica(newJornada.getEntrada_teorica());
-            Jornada.setSalida_teorica(newJornada.getSalida_teorica());
             Jornada.setMinutos_trabajados(newJornada.getMinutos_trabajados());
             Jornada.setMinutos_teoricos(newJornada.getMinutos_teoricos());
             Jornada.setSaldo(newJornada.getSaldo());
