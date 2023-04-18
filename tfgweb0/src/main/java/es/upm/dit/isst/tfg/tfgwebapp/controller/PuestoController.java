@@ -53,16 +53,11 @@ public class PuestoController {
             restTemplate.postForObject(PUESTOMANAGER_STRING, puesto, Puesto.class);
         } catch (Exception e) {
         }
-<<<<<<< HEAD
         return "redirect:/" + "puestos/lista";
-=======
-        return "redirect:/puestos/lista";
->>>>>>> 45b68b86f8174d7be81136cedf5e55a6ed7bd7d9
     }
 
     @GetMapping("puestos/editar/{id}")
     public String editar(@PathVariable(value = "id") String id,
-<<<<<<< HEAD
             Map<String, Object> model, Principal principal) {
         // if (principal == null || ! principal.getName().equals(id))
         // return "redirect:/puestos/lista";
@@ -87,40 +82,11 @@ public class PuestoController {
         } catch (Exception e) {
         }
         return "redirect:/puestos/lista";
-=======
-               Map<String, Object> model, Principal principal) {
-            //if (principal == null || ! principal.getName().equals(id))
-            //        return "redirect:/puestos/lista";
-            Puesto puesto = null;
-            try { puesto = restTemplate.getForObject(PUESTOMANAGER_STRING + id, Puesto.class);
-            } catch (HttpClientErrorException.NotFound ex) {}
-            model.put("puesto", puesto);
-            model.put("accion", "actualizar");
-            return puesto != null ? VISTA_FORMULARIO_PUESTO : "redirect:/puestos/lista";
-    }
-
-    @PostMapping("puestos/actualizar")
-    public String actualizar(@Validated Puesto puesto, BindingResult result) {
-            if (result.hasErrors()) {
-                    return VISTA_FORMULARIO_PUESTO;
-            }
-            try { restTemplate.put(PUESTOMANAGER_STRING + puesto.getId_puesto(),
-                puesto, Puesto.class);
-            } catch(Exception e) {}
-            return "redirect:/puestos/lista";
->>>>>>> 45b68b86f8174d7be81136cedf5e55a6ed7bd7d9
     }
 
     @GetMapping("puestos/eliminar/{id}")
     public String eliminar(@PathVariable(value = "id") String id) {
-<<<<<<< HEAD
         restTemplate.delete(PUESTOMANAGER_STRING + id);
         return "redirect:/puestos/lista";
     }
 }
-=======
-            restTemplate.delete(PUESTOMANAGER_STRING+ id);
-            return "redirect:/puestos/lista";
-    }
-}
->>>>>>> 45b68b86f8174d7be81136cedf5e55a6ed7bd7d9

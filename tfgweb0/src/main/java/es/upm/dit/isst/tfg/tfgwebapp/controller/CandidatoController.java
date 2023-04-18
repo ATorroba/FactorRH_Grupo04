@@ -58,7 +58,7 @@ public class CandidatoController {
         return "redirect:/" + "candidatos/lista";
     }
 
-    @GetMapping("candidatos/eliminar/{idEmpleado}")
+    @GetMapping("candidatos/eliminar/{idcandidato}")
 
     public String eliminar(@PathVariable(value = "idcandidato") String id) {
 
