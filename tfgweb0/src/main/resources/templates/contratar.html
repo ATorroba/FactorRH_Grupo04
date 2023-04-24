@@ -37,8 +37,8 @@
 					<div class="form-group row">
 					
 						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.idEmpleado}"></label>
-						<div class="col-sm-6">
-							<input type="text" id="idEmpleado" th:field="*{idEmpleado}">
+						<div  class="col-sm-6">
+							<input type="text"  th:field="*{idEmpleado}">
 							<div class="form-text text-danger" th:if="${#fields.hasErrors('idEmpleado')}" th:errors="*{idEmpleado}">error id</div>
 						</div>
 					</div>
@@ -52,28 +52,28 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.email}"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{email}">
+							<input type="text" th:value="${candidato.email}"  name="email" id="email">
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.nombre}"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{nombre}">
+							<input type="text" th:value="${candidato.nombre}"  name="nombre" id="nombre">
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.apellido1}"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{apellido_1}">
+							<input type="text" th:value="${candidato.apellido_1}"  name="apellido_1" id="apellido_1">
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('apellido_1')}" th:errors="*{apellido_1}"></small>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.apellido2}"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{apellido_2}">
+							<input type="text" th:value="${candidato.apellido_2}"  name="apellido_2" id="apellido_2">
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('apellido_2')}" th:errors="*{apellido_2}"></small>
 						</div>
 					</div>
@@ -164,7 +164,7 @@
                     <div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="'puesto'"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{puesto}">
+							<input type="text"th:value="${ip}"  name="puesto" id="puesto">
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('puesto')}" th:errors="*{puesto}"></small>
 						</div>
 					</div>

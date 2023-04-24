@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+
 import java.lang.Integer;
 
 import org.springframework.http.HttpStatus;
@@ -42,14 +43,14 @@ public class PuestoController {
     }
 
     @GetMapping("/puestos/{id}")
-    ResponseEntity<Puesto> read(@PathVariable String id) {
-        return puestoRepository.findById(id).map(puesto -> ResponseEntity.ok().body(puesto))
+    ResponseEntity<Puesto> read(@PathVariable Integer id) {
+        return puestoRepository.findByIdpuesto(id).map(puesto -> ResponseEntity.ok().body(puesto))
                 .orElse(new ResponseEntity<Puesto>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/puestos/{id}/cerrar")
-    ResponseEntity<Puesto> inc(@PathVariable String id) {
-        ResponseEntity<Puesto> f = puestoRepository.findById(id).map(puesto -> ResponseEntity.ok().body(puesto)
+    ResponseEntity<Puesto> inc(@PathVariable Integer id) {
+        ResponseEntity<Puesto> f = puestoRepository.findByIdpuesto(id).map(puesto -> ResponseEntity.ok().body(puesto)
 
         )
                 .orElse(new ResponseEntity<Puesto>(HttpStatus.NOT_FOUND));
@@ -61,8 +62,8 @@ public class PuestoController {
     }
 
     @PutMapping("/puestos/{id}/pasar")
-    ResponseEntity<Puesto> pass(@PathVariable String id) {
-        ResponseEntity<Puesto> f = puestoRepository.findById(id).map(puesto -> ResponseEntity.ok().body(puesto)
+    ResponseEntity<Puesto> pass(@PathVariable Integer id) {
+        ResponseEntity<Puesto> f = puestoRepository.findByIdpuesto(id).map(puesto -> ResponseEntity.ok().body(puesto)
 
         )
                 .orElse(new ResponseEntity<Puesto>(HttpStatus.NOT_FOUND));
@@ -74,8 +75,8 @@ public class PuestoController {
     }
 
     @PutMapping("/puestos/{id}")
-    ResponseEntity<Puesto> update(@RequestBody Puesto newPuesto, @PathVariable String id) {
-        return puestoRepository.findById(id).map(puesto -> {
+    ResponseEntity<Puesto> update(@RequestBody Puesto newPuesto, @PathVariable Integer id) {
+        return puestoRepository.findByIdpuesto(id).map(puesto -> {
             puesto.setNombre(newPuesto.getNombre());
             puesto.setDesc_puesto(newPuesto.getDesc_puesto());
             puesto.setSueldo_orientativo(newPuesto.getSueldo_orientativo());
@@ -92,18 +93,18 @@ public class PuestoController {
     }
 
     @DeleteMapping("puestos/{id}")
-    ResponseEntity<Puesto> delete(@PathVariable String id) {
-        puestoRepository.deleteById(id);
+    ResponseEntity<Puesto> delete(@PathVariable Integer id) {
+        puestoRepository.deleteByidpuesto(id);
         return ResponseEntity.ok().body(null);
     }
 
     @GetMapping("/puestos/idDepto/{id}")
-    List<Puesto> readPorPuesto(@PathVariable String id) {
+    List<Puesto> readPorPuesto(@PathVariable Integer id) {
         return (List<Puesto>) puestoRepository.findByDepto(id);
     }
 
     @GetMapping("/puestos/estado/{id}")
-    List<Puesto> readPorEstado(@PathVariable String id) {
+    List<Puesto> readPorEstado(@PathVariable Integer id) {
         return (List<Puesto>) puestoRepository.findByEstado(id);
     }
 

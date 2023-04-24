@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class Puesto2 {
 
     // @NotEmpty(message = "El código de puesto no puede estar vacio")
-    private String idpuesto;
+    private Integer idpuesto;
     @Size(max = 60, message = "Longitud máxima 60 caracteres")
     @NotEmpty(message = "El nombre de puesto no puede estar vacio")
     private String nombre;
@@ -35,11 +35,11 @@ public class Puesto2 {
                 + depto + ", estado=" + estado + "]";
     }
 
-    public String getId_puesto() {
+    public Integer getId_puesto() {
         return idpuesto;
     }
 
-    public void setId_puesto(String id_puesto) {
+    public void setId_puesto(Integer id_puesto) {
         this.idpuesto = id_puesto;
     }
 

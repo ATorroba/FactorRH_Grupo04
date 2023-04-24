@@ -1,6 +1,7 @@
 es\upm\dit\isst\tfgapi\controller\ControllerPermisos.class
 es\upm\dit\isst\tfgapi\model\Rol.class
 es\upm\dit\isst\tfgapi\model\Jornadas.class
+es\upm\dit\isst\tfgapi\model\libro.class
 es\upm\dit\isst\tfgapi\model\permisosPK.class
 es\upm\dit\isst\tfgapi\SpringBootReactApplication.class
 es\upm\dit\isst\tfgapi\model\turnoPK.class

@@ -80,7 +80,7 @@ public class PuestoController {
     }
 
     @GetMapping("procesos/seleccioni/{idpuesto}")
-    public String seleccioni(@PathVariable(value = "idpuesto") String idpuesto, Map<String, Object> model) {
+    public String seleccioni(@PathVariable(value = "idpuesto") Integer idpuesto, Map<String, Object> model) {
 
         List<Candidato> candidatos = new ArrayList<Candidato>();
         List<Candidato> candidatos2 = new ArrayList<Candidato>();
@@ -113,7 +113,7 @@ public class PuestoController {
     }
 
     @GetMapping("procesos/seleccionf/{idpuesto}")
-    public String seleccionf(@PathVariable(value = "idpuesto") String idpuesto, Map<String, Object> model) {
+    public String seleccionf(@PathVariable(value = "idpuesto") Integer idpuesto, Map<String, Object> model) {
 
         List<Candidato> candidatos = new ArrayList<Candidato>();
         List<Candidato> candidatos2 = new ArrayList<Candidato>();
@@ -157,7 +157,7 @@ public class PuestoController {
     }
 
     @GetMapping("procesos/contratar/{ip}/{ipc}")
-    public String contratar(@PathVariable String ip, @PathVariable String ipc,
+    public String contratar(@PathVariable Integer ip, @PathVariable String ipc,
             Map<String, Object> model) {
         Empleado emp = new Empleado();
         Candidato c = new Candidato();
@@ -179,7 +179,7 @@ public class PuestoController {
     }
 
     @PostMapping("procesos/contratar/{ip}/{ipc}/guardar")
-    public String contratarg(@Validated Empleado Empleado, BindingResult result, @PathVariable String ip,
+    public String contratarg(@Validated Empleado Empleado, BindingResult result, @PathVariable Integer ip,
             @PathVariable String ipc, Map<String, Object> model) {
         Candidato c = new Candidato();
         Puesto p = new Puesto();
@@ -237,7 +237,7 @@ public class PuestoController {
     }
 
     @GetMapping("puestos/{ip}/cerrar")
-    public String cerrar(@PathVariable String ip, Map<String, Object> model) {
+    public String cerrar(@PathVariable Integer ip, Map<String, Object> model) {
 
         Puesto puesto = new Puesto();
         model.put("puesto", puesto);
@@ -318,7 +318,7 @@ public class PuestoController {
     }
 
     @GetMapping("procesos/pasaruno/{ip}/{ipc}")
-    public String procesospasaruno(@Validated Candidato candidato, @PathVariable String ipc, @PathVariable String ip,
+    public String procesospasaruno(@Validated Candidato candidato, @PathVariable String ipc, @PathVariable Integer ip,
             BindingResult result,
             Model model) {
         if (result.hasErrors()) {
@@ -352,7 +352,7 @@ public class PuestoController {
 
     @GetMapping("procesos/pasartodos/{ip}")
 
-    public String procesospasartodos(Puesto puesto, @PathVariable String ip,
+    public String procesospasartodos(Puesto puesto, @PathVariable Integer ip,
             BindingResult result,
             Model model, RedirectAttributes ra) {
         if (result.hasErrors()) {
@@ -379,7 +379,7 @@ public class PuestoController {
     }
 
     @GetMapping("puestos/editar/{id}")
-    public String editar(@PathVariable(value = "id") String id,
+    public String editar(@PathVariable(value = "id") Integer id,
             Map<String, Object> model, Principal principal) {
         // if (principal == null || ! principal.getName().equals(id))
         // return "redirect:/puestos/lista";
@@ -407,7 +407,7 @@ public class PuestoController {
     }
 
     @GetMapping("puestos/eliminar/{id}")
-    public String eliminar(@PathVariable(value = "id") String id) {
+    public String eliminar(@PathVariable(value = "id") Integer id) {
         restTemplate.delete(PUESTOMANAGER_STRING + id);
         return "redirect:/puestos/lista";
     }

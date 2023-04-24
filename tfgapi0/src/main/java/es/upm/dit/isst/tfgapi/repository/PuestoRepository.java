@@ -1,6 +1,8 @@
 package es.upm.dit.isst.tfgapi.repository;
 
 import java.util.List;
+import java.util.Optional;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +13,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import es.upm.dit.isst.tfgapi.model.Puesto;
 
 @RepositoryRestResource(collectionResourceRel = "puestos", path = "puestos")
-public interface PuestoRepository extends JpaRepository<Puesto, String> {
+public interface PuestoRepository extends CrudRepository<Puesto, String> {
     // public interface PuestoRepository extends CrudRepository<Puesto, String> {
 
     // @Autowired
@@ -19,20 +21,24 @@ public interface PuestoRepository extends JpaRepository<Puesto, String> {
     // @Query("Select IdPuesto, Nombre_puesto, Desc_puesto from puesto where idDepto
     // = ?1")
     // List<Puesto> buscarPorDepartamento(String id);
-    List<Puesto> findByDepto(String depto);
+    List<Puesto> findByDepto(Integer depto);
 
     // void deleteByIdpuesto(Integer id);
 
     List<Puesto> findByNombre(String nombre_puesto);
 
-    List<Puesto> findByIdpuesto(String idpuesto);
+    Optional<Puesto> findByIdpuesto(Integer idpuesto);
 
-    List<Puesto> findByEstado(String estado);
+    @Transactional
+
+    void deleteByidpuesto(Integer idpuesto);
+
+    List<Puesto> findByEstado(Integer estado);
 
     @Autowired
     @Query(value = "select idpuesto, nombre_puesto, desc_puesto, sueldo_orientativo, " +
             "req_exp_form, req_idiomas, req_disponibilidad, req_otros, depto, estado " +
-            "from puesto where estado <'2'", nativeQuery = true)
+            "from puestos where estado <'2'", nativeQuery = true)
     List<Puesto> buscarPuestoLibre();
 
 }

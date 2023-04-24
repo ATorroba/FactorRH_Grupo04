@@ -7,17 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.*;
 
 import javax.persistence.Id;
 
+@Table(name = "puestos")
+
 @Entity
 public class Puesto {
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
 
+    @Id
     @Column(name = "idpuesto")
-    private String idpuesto;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer idpuesto;
     @Column(name = "nombre_puesto", length = 60)
     private String nombre;
     private String desc_puesto;
@@ -41,11 +43,11 @@ public class Puesto {
         return "Puesto []";
     }
 
-    public String getId_puesto() {
+    public Integer getId_puesto() {
         return idpuesto;
     }
 
-    public void setId_puesto(String id_puesto) {
+    public void setId_puesto(Integer id_puesto) {
         this.idpuesto = id_puesto;
     }
 
