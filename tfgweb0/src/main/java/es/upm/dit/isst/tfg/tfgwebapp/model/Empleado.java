@@ -37,6 +37,7 @@ public class Empleado {
     private String sueldo_base;
     private String antiguedad;
     private String password;
+    private String puesto;
 
     public Empleado() {
 
@@ -44,6 +45,14 @@ public class Empleado {
 
     public String getIdEmpleado() {
         return idEmpleado;
+    }
+
+    public String getPuesto() {
+        return puesto;
+    }
+
+    public void setPuesto(String puesto) {
+        this.puesto = puesto;
     }
 
     public void setIdEmpleado(String idEmpleado) {

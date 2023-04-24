@@ -30,7 +30,7 @@
 						<tr th:each="Puesto: ${puesto}">
 							<div class="wrap">
 								<td th:text="${Puesto.id_puesto}"></td>
-								<td th:text="${Puesto.nombre_puesto}"></td>
+								<td th:text="${Puesto.nombre}"></td>
 								<td th:text="${Puesto.sueldo_orientativo}"></td>
 								<td th:text="${Puesto.depto}"></td>
 								<td th:text="${Puesto.estado}"></td>
@@ -42,10 +42,10 @@
 									<a th:href="@{eliminar/} + ${Puesto.id_puesto}"
 										th:text="#{puestos.acciones.eliminar}" class="btn btn-outline-danger"></a>
 								</td>
-								<td>
+								<!--td>
 									<a th:href="@{candidatos/} + ${Puesto.id_puesto}"
 										th:text="#{puestos.acciones.candidatos}" class="btn btn-outline-danger"></a>
-								</td>
+								</td-->
 							</div>
 							</span>
 						</tr>

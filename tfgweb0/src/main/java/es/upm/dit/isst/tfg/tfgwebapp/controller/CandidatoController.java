@@ -37,6 +37,50 @@ public class CandidatoController {
         return VISTA_LISTA_CANDIDATO;
     }
 
+    @GetMapping("procesos/seleccioni/candidatos/datos/{id}")
+    public String datos(Model model, @PathVariable String id) {
+        Candidato can1 = new Candidato();
+        try {
+
+            Candidato can2 = restTemplate.getForObject("http://localhost:8083//candidatos/" + id, Candidato.class);
+
+            if (can2 != null) {
+                can1 = can2;
+                model.addAttribute("candidato", can1);
+                model.addAttribute("date", ZonedDateTime.now());
+
+                return "datoscandidato";
+            } else {
+                return "401";
+            }
+        } catch (Exception e) {
+            return "403";
+        }
+
+    }
+
+    @GetMapping("procesos/seleccionf/candidatos/datos/{id}")
+    public String datos2(Model model, @PathVariable String id) {
+        Candidato can1 = new Candidato();
+        try {
+
+            Candidato can2 = restTemplate.getForObject("http://localhost:8083//candidatos/" + id, Candidato.class);
+
+            if (can2 != null) {
+                can1 = can2;
+                model.addAttribute("candidato", can1);
+                model.addAttribute("date", ZonedDateTime.now());
+
+                return "datoscandidato";
+            } else {
+                return "401";
+            }
+        } catch (Exception e) {
+            return "403";
+        }
+
+    }
+
     @GetMapping("candidatos/crear")
     public String crear(Map<String, Object> model) {
         Candidato candidato = new Candidato();

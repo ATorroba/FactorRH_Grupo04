@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.lang.Integer;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,10 +47,36 @@ public class PuestoController {
                 .orElse(new ResponseEntity<Puesto>(HttpStatus.NOT_FOUND));
     }
 
+    @PostMapping("/puestos/{id}/cerrar")
+    ResponseEntity<Puesto> inc(@PathVariable String id) {
+        ResponseEntity<Puesto> f = puestoRepository.findById(id).map(puesto -> ResponseEntity.ok().body(puesto)
+
+        )
+                .orElse(new ResponseEntity<Puesto>(HttpStatus.NOT_FOUND));
+        if (f.getBody() != null) {
+            f.getBody().setEstado("2");
+            puestoRepository.save(f.getBody());
+        }
+        return f;
+    }
+
+    @PutMapping("/puestos/{id}/pasar")
+    ResponseEntity<Puesto> pass(@PathVariable String id) {
+        ResponseEntity<Puesto> f = puestoRepository.findById(id).map(puesto -> ResponseEntity.ok().body(puesto)
+
+        )
+                .orElse(new ResponseEntity<Puesto>(HttpStatus.NOT_FOUND));
+        if (f.getBody() != null) {
+            f.getBody().setEstado("1");
+            puestoRepository.save(f.getBody());
+        }
+        return f;
+    }
+
     @PutMapping("/puestos/{id}")
     ResponseEntity<Puesto> update(@RequestBody Puesto newPuesto, @PathVariable String id) {
         return puestoRepository.findById(id).map(puesto -> {
-            puesto.setNombre_puesto(newPuesto.getNombre_puesto());
+            puesto.setNombre(newPuesto.getNombre());
             puesto.setDesc_puesto(newPuesto.getDesc_puesto());
             puesto.setSueldo_orientativo(newPuesto.getSueldo_orientativo());
             puesto.setReq_exp_form(newPuesto.getReq_exp_form());
@@ -84,4 +111,10 @@ public class PuestoController {
     List<Puesto> readPuestosLibres() {
         return (List<Puesto>) puestoRepository.buscarPuestoLibre();
     }
+
+    @GetMapping("/puestos/nombre/{nombre_puesto}")
+    List<Puesto> readPorNombre(@PathVariable String nombre_puesto) {
+        return (List<Puesto>) puestoRepository.findByNombre(nombre_puesto);
+    }
+
 }

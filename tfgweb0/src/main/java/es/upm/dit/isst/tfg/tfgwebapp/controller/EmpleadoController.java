@@ -204,16 +204,16 @@ public class EmpleadoController {
 
     @PostMapping("/guardar")
 
-    public String guardar(@Validated Empleado Empleado, BindingResult result, Map<String, Object> model) {
+    public String guardar(@Validated Empleado Empleado, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
-            model.put("Empleado", Empleado);
+            model.addAttribute("Empleado", Empleado);
             List<ObjectError> r = result.getAllErrors();
             // r.stream().map(a -> a);
 
-            model.put("result", r);// .getDefaultMessage());
+            model.addAttribute("result", r);// .getDefaultMessage());
 
-            model.put("date", ZonedDateTime.now());
+            model.addAttribute("date", ZonedDateTime.now());
 
             // 0 System.out.println(r);
             // System.out.println(r.get(0));

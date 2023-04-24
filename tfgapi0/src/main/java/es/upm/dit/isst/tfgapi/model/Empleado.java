@@ -61,6 +61,14 @@ public class Empleado {
     public Empleado() {
     }
 
+    public String getPuesto() {
+        return puesto;
+    }
+
+    public void setPuesto(String puesto) {
+        this.puesto = puesto;
+    }
+
     public String getIdEmpleado() {
         return idEmpleado;
     }

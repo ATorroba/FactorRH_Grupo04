@@ -9,6 +9,7 @@
 	<header th:replace="layouts/base::header(dark,${date})"></header>
 	<div class="container">
 		<div class="card bg-light">
+		
 			<div class="card-header">
 				<h3
 					th:text="${accion} == 'guardar' ? #{puestos.formulario.titulo.nuevo} : #{puestos.formulario.titulo.editar}">
@@ -37,9 +38,9 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{puestos.puesto.nombre_puesto}"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{nombre_puesto}">
-							<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre_puesto')}"
-								th:errors="*{nombre_puesto}"></small>
+							<input type="text" th:field="*{nombre}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}"
+								th:errors="*{nombre}"></small>
 						</div>
 					</div>
 					<div class="form-group row">

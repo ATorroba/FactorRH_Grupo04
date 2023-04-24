@@ -4,16 +4,22 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.Id;
 
 @Entity
 public class Puesto {
-
     @Id
-    @Column(name = "id_puesto", length = 5)
-    private String id_puesto;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+
+    @Column(name = "idpuesto")
+    private String idpuesto;
     @Column(name = "nombre_puesto", length = 60)
-    private String nombre_puesto;
+    private String nombre;
     private String desc_puesto;
     @Column(name = "sueldo_orientativo", precision = 8, scale = 2)
     private BigDecimal sueldo_orientativo;
@@ -36,19 +42,19 @@ public class Puesto {
     }
 
     public String getId_puesto() {
-        return id_puesto;
+        return idpuesto;
     }
 
     public void setId_puesto(String id_puesto) {
-        this.id_puesto = id_puesto;
+        this.idpuesto = id_puesto;
     }
 
-    public String getNombre_puesto() {
-        return nombre_puesto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombre_puesto(String nombre_puesto) {
-        this.nombre_puesto = nombre_puesto;
+    public void setNombre(String nombre_puesto) {
+        this.nombre = nombre_puesto;
     }
 
     public String getDesc_puesto() {

@@ -9,12 +9,12 @@ import java.math.BigDecimal;
 
 public class Puesto {
 
-    @Size(max = 5, message = "Longitud máxima 5 caracteres")
-    @NotEmpty(message = "El código de puesto no puede estar vacio")
-    private String id_puesto;
+    // @Size(max = 5, message = "Longitud máxima 5 caracteres")
+    // @NotEmpty(message = "El código de puesto no puede estar vacio")
+    private String idpuesto;
     @Size(max = 60, message = "Longitud máxima 60 caracteres")
     @NotEmpty(message = "El nombre de puesto no puede estar vacio")
-    private String nombre_puesto;
+    private String nombre;
     @Size(max = 255)
     @NotEmpty(message = "La descripción no puede estar vacía")
     private String desc_puesto;
@@ -41,26 +41,26 @@ public class Puesto {
 
     @Override
     public String toString() {
-        return "Puesto [id_puesto=" + id_puesto + ", nombre_puesto=" + nombre_puesto + ", desc_puesto=" + desc_puesto
+        return "Puesto [id_puesto=" + idpuesto + ", nombre_puesto=" + nombre + ", desc_puesto=" + desc_puesto
                 + ", sueldo_orientativo=" + sueldo_orientativo + ", req_exp_form=" + req_exp_form + ", req_idiomas="
                 + req_idiomas + ", req_disponibilidad=" + req_disponibilidad + ", req_otros=" + req_otros + ", depto="
                 + depto + ", estado=" + estado + "]";
     }
 
     public String getId_puesto() {
-        return id_puesto;
+        return idpuesto;
     }
 
     public void setId_puesto(String id_puesto) {
-        this.id_puesto = id_puesto;
+        this.idpuesto = id_puesto;
     }
 
-    public String getNombre_puesto() {
-        return nombre_puesto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombre_puesto(String nombre_puesto) {
-        this.nombre_puesto = nombre_puesto;
+    public void setNombre(String nombre_puesto) {
+        this.nombre = nombre_puesto;
     }
 
     public String getDesc_puesto() {

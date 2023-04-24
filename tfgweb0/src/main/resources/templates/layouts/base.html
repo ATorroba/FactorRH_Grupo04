@@ -92,6 +92,12 @@
 					</span>
 					<span class="RR" sec:authorize="hasRole('ROLE_RECLUTADOR')">
 						<li class="nav-item">
+							<a class="nav-link" th:href="@{/IPS}" >IPS</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/procesos}" >Procesos de selección</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link" th:href="@{/lista}" th:text="#{menu.empleados}"></a>
 						</li>
 						<li class="nav-item">

@@ -21,12 +21,18 @@ public interface PuestoRepository extends JpaRepository<Puesto, String> {
     // List<Puesto> buscarPorDepartamento(String id);
     List<Puesto> findByDepto(String depto);
 
+    // void deleteByIdpuesto(Integer id);
+
+    List<Puesto> findByNombre(String nombre_puesto);
+
+    List<Puesto> findByIdpuesto(String idpuesto);
+
     List<Puesto> findByEstado(String estado);
 
     @Autowired
-    @Query(value = "select id_puesto, nombre_puesto, desc_puesto, sueldo_orientativo, " +
+    @Query(value = "select idpuesto, nombre_puesto, desc_puesto, sueldo_orientativo, " +
             "req_exp_form, req_idiomas, req_disponibilidad, req_otros, depto, estado " +
-            "from puesto where estado <'99'", nativeQuery = true)
+            "from puesto where estado <'2'", nativeQuery = true)
     List<Puesto> buscarPuestoLibre();
 
 }

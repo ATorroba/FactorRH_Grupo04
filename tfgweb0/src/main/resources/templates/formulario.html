@@ -160,6 +160,13 @@
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('antiguedad')}" th:errors="*{antiguedad}"></small>
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="'puesto'"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{puesto}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('puesto')}" th:errors="*{puesto}"></small>
+						</div>
+					</div>
 				
 					<div class="form-group">
 						<div class="col-sm-6">

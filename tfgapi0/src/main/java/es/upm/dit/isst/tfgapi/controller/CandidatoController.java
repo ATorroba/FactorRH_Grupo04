@@ -23,7 +23,9 @@ import es.upm.dit.isst.tfgapi.repository.CandidatoRepository;
 public class CandidatoController {
 
     private final CandidatoRepository candidatoRepository;
-    //public static final Logger log = LoggerFactory.getLogger(TFGController.class);
+
+    // public static final Logger log =
+    // LoggerFactory.getLogger(TFGController.class);
     public CandidatoController(CandidatoRepository t) {
         this.candidatoRepository = t;
 
@@ -42,9 +44,8 @@ public class CandidatoController {
 
     @GetMapping("/candidatos/{id}")
     ResponseEntity<Candidato> read(@PathVariable String id) {
-        return candidatoRepository.findById(id).map(candidato ->
-        ResponseEntity.ok().body(candidato))
-        .orElse(new ResponseEntity<Candidato>(HttpStatus.NOT_FOUND));
+        return candidatoRepository.findById(id).map(candidato -> ResponseEntity.ok().body(candidato))
+                .orElse(new ResponseEntity<Candidato>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/candidatos/{id}")
@@ -67,6 +68,16 @@ public class CandidatoController {
         }).orElse(new ResponseEntity<Candidato>(HttpStatus.NOT_FOUND));
     }
 
+    @PostMapping("/candidatos/select/{id}")
+    ResponseEntity<Candidato> select(@PathVariable String id) {
+        return candidatoRepository.findById(id).map(candidato -> {
+
+            candidato.setpreseleccionado("1");
+            candidatoRepository.save(candidato);
+            return ResponseEntity.ok().body(candidato);
+        }).orElse(new ResponseEntity<Candidato>(HttpStatus.NOT_FOUND));
+    }
+
     @DeleteMapping("candidatos/{id}")
     ResponseEntity<Candidato> delete(@PathVariable String id) {
         candidatoRepository.deleteById(id);
@@ -76,19 +87,19 @@ public class CandidatoController {
     @GetMapping("/candidatos/puesto/{id}")
     List<Candidato> candidatoPorPuesto(@PathVariable String id) {
         return (List<Candidato>) candidatoRepository.findByPuesto(id);
-      }
+    }
 
     // @GetMapping("/tfgs/profesor/{id}")
     // List<Candidato> readdireccion(@PathVariable String id) {
-    //     return (List<Candidato>) candidatoRepository.findBy(id);
+    // return (List<Candidato>) candidatoRepository.findBy(id);
     // }
 
     // @PostMapping("/tfgs/{id}/incrementa")
     // ResponseEntity<Candidato> incrementa(@PathVariable String id) {
-    //     return candidatoRepository.findById(id).map(candidato -> {
-    //         candidato.setStatus(candidato.getStatus() + 1);
-    //         candidatoRepository.save(candidato);
-    //         return ResponseEntity.ok().body(candidato);
-    //     }).orElse(new ResponseEntity<Candidato>(HttpStatus.NOT_FOUND));
+    // return candidatoRepository.findById(id).map(candidato -> {
+    // candidato.setStatus(candidato.getStatus() + 1);
+    // candidatoRepository.save(candidato);
+    // return ResponseEntity.ok().body(candidato);
+    // }).orElse(new ResponseEntity<Candidato>(HttpStatus.NOT_FOUND));
     // }
 }
