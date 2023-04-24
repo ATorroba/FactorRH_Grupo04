@@ -15,7 +15,9 @@
 
         <div class="card bg-light">
             <div class="card-header">
-                <h3 th:text="#{candidatos.lista.titulo}"></h3>
+                <h3 th:text="'Candidatos'"></h3>
+                <p th:text="'Puesto:  '+${puesto.nombre}+'  '+${ip}"></p>
+
             </div>
             <div class="card-body">
                 <table class="table table-striped">
@@ -26,6 +28,8 @@
 
                                 <th th:text="'Datos'"></th>
                                 <th th:text="'Pasar a selección final'"></th>
+                                <th th:text="'Seleccionado?'"></th>
+
 
                             </div>
                         </tr>
@@ -48,7 +52,7 @@
                                  </td-->
                                 <td><a class="btn btn-outline-secondary" th:href="@{/procesos/pasaruno/}+${ip}+'/'+${Candidato.idcandidato}"
                                         th:text="'seleccionar'"></a></td>
-                                <td th:text="${Candidato.preseleccionado}"></td>
+                                <td th:text="${Candidato.preseleccionado}=='1'?'Sí':'No'"></td>
                                 <!--td>
 
                                 <input class="navbar-toggler-icon" type="checkbox" data-toggle="toggle"

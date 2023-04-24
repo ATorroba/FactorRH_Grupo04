@@ -94,7 +94,8 @@ public class PuestoController {
                 System.out.println(puesto1.getNombre());
                 for (Candidato s : candidatos) {
                     System.out.println(s.getpuesto());
-                    if (s.getpuesto().equals(puesto1.getNombre()) && s.getpreseleccionado().equals("0")) {
+                    if (s.getpuesto().equals(puesto1.getNombre())
+                            && (s.getpreseleccionado().equals("0") || s.getpreseleccionado().equals("1"))) {
                         System.out.println("yes");
                         candidatos2.add(s);
                     }
@@ -104,6 +105,7 @@ public class PuestoController {
             }
             model.put("candidato", candidatos2);
             model.put("ip", idpuesto);
+            model.put("puesto", puesto1);
             return "seleccioni";
         } catch (Error e) {
             return "403";
