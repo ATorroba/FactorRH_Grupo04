@@ -1,0 +1,16 @@
+--Para insertar con todos los datos
+insert into remesa(ejercicio,mes, tipo_nomina,estado, fecha_pago,fecha_remesa) values(2023,1,1,1,'2023-01-01','2023-01-01')
+
+--solo datos iniciales
+insert into remesa(ejercicio,mes, tipo_nomina,estado) values(2023,1,1,1)
+insert into remesa(ejercicio,mes, tipo_nomina,estado) values(2023,2,1,1)
+insert into remesa(ejercicio,mes, tipo_nomina,estado) values(2023,3,1,1)
+insert into remesa(ejercicio,mes, tipo_nomina,estado) values(2023,4,1,1)
+
+-- insertar empleados
+insert into empleado(id_empleado) Values('0001');
+insert into empleado(id_empleado) Values('0002');
+insert into empleado(id_empleado) Values('0003');
+
+--insertar recibos 
+insert into recibo(id_empleado, id_remesa) values ('0001',1)
