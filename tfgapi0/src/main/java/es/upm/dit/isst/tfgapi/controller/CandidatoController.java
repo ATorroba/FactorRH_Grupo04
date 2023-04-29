@@ -78,6 +78,16 @@ public class CandidatoController {
         }).orElse(new ResponseEntity<Candidato>(HttpStatus.NOT_FOUND));
     }
 
+    @PostMapping("/candidatos/deselect/{id}")
+    ResponseEntity<Candidato> deselect(@PathVariable String id) {
+        return candidatoRepository.findById(id).map(candidato -> {
+
+            candidato.setpreseleccionado("0");
+            candidatoRepository.save(candidato);
+            return ResponseEntity.ok().body(candidato);
+        }).orElse(new ResponseEntity<Candidato>(HttpStatus.NOT_FOUND));
+    }
+
     @DeleteMapping("candidatos/{id}")
     ResponseEntity<Candidato> delete(@PathVariable String id) {
         candidatoRepository.deleteById(id);
