@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "Recibo")
 public class Recibo{
@@ -22,6 +25,7 @@ public class Recibo{
     private Integer idRecibo;
     @ManyToOne(optional = false)
     @JoinColumn(name="idRemesa")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Remesa idRemesa;
     @ManyToOne(optional = false)
     @JoinColumn(name = "idEmpleado")

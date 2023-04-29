@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "ConceptoRecibo")
 public class ConceptoRecibo {
@@ -19,6 +22,7 @@ public class ConceptoRecibo {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "idRecibo")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Recibo idRecibo;
 
     @ManyToOne(optional = false)
