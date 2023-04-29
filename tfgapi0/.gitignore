@@ -2,6 +2,7 @@
 bin/
 dist/
 lib/
+target/
 
 # editors
 *.swp
