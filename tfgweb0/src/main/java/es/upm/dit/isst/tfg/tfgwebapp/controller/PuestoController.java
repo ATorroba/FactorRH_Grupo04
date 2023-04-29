@@ -1,35 +1,47 @@
 package es.upm.dit.isst.tfg.tfgwebapp.controller;
 
 import java.security.Principal;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+//import jakarta.activation.DataContentHandler;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.time.ZonedDateTime;
-import org.springframework.validation.ObjectError;
+import java.util.Properties;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.client.HttpClientErrorException;
+//import javax.mail.Authenticator;
+//import javax.mail.PasswordAuthentication;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+//import javax.mail.Session;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+//import javax.activation.DataContentHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import es.upm.dit.isst.tfg.tfgwebapp.model.Puesto;
-import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
-
 import es.upm.dit.isst.tfg.tfgwebapp.model.Candidato;
-
+import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
+import es.upm.dit.isst.tfg.tfgwebapp.model.Puesto;
 import es.upm.dit.isst.tfg.tfgwebapp.model.Puesto2;
 
+@Configuration
+@EnableAsync
 @Controller
 public class PuestoController {
     public final String PUESTOMANAGER_STRING = "http://localhost:8083/puestos/";
@@ -180,7 +192,7 @@ public class PuestoController {
 
     @PostMapping("procesos/contratar/{ip}/{ipc}/guardar")
     public String contratarg(@Validated Empleado Empleado, BindingResult result, @PathVariable Integer ip,
-            @PathVariable String ipc, Map<String, Object> model) {
+            @PathVariable String ipc, Map<String, Object> model, Principal principal) {
         Candidato c = new Candidato();
         Puesto p = new Puesto();
         if (result.hasErrors()) {
@@ -218,9 +230,68 @@ public class PuestoController {
             return "contratar";
         } else {
             try {
+                p = restTemplate.getForObject("http://localhost:8083/puestos/" + ip, Puesto.class);
+
+                c = restTemplate.getForObject("http://localhost:8083/candidatos/" + ipc, Candidato.class);
+
                 restTemplate.postForObject(RHMANAGERGER_STRING, Empleado, Empleado.class);
                 restTemplate.delete("http://localhost:8083/candidatos/" + ipc);
                 restTemplate.postForObject(PUESTOMANAGER_STRING + ip + "/cerrar", p, Puesto.class);
+                String remitente = "usuario gmail";
+                // La clave de aplicación obtenida según se explica en este artículo:
+                String claveemail = "clave google mail";
+                String destinatario = principal.getName(); // A quien le quieres escribir.
+                String destinatario2 = Empleado.getEmail(); // A quien le quieres escribir.
+
+                String asunto = "Fin de petición de candidatos para puesto: " + p.getNombre();
+                String asunto2 = "Resultado de selección para el puesto: " + p.getNombre();
+
+                String cuerpo = "Ya no se requieren candidatos para el puesto: " + c.getpuesto() + " con id: " + ip;
+                String cuerpo2 = "Ha sido contratado para el puesto: " + c.getpuesto() + " con id: " + ip
+                        + "\n Sus credenciales son \n\n Usuario: " + Empleado.getEmail() + "\nContraseña: "
+                        + Empleado.getPassword();
+
+                Properties props = System.getProperties();
+                props.put("mail.smtp.host", "smtp.gmail.com"); // El servidor SMTP de Google
+                props.put("mail.smtp.user", remitente);
+                props.put("mail.smtp.clave", claveemail); // La clave de la cuenta
+                props.put("mail.smtp.auth", "true"); // Usar autenticación mediante usuario y clave
+                props.put("mail.smtp.starttls.enable", "true"); // Para conectar de manera segura al servidor SMTP
+                props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+                props.put("mail.smtp.port", "587"); // El puerto SMTP seguro de Google
+                props.put("mail.smtp.ssl.trust", "*");
+                Session session = Session.getDefaultInstance(props);
+                MimeMessage message = new MimeMessage(session);
+                MimeMessage message2 = new MimeMessage(session);
+
+                try {
+                    message.setFrom(new InternetAddress(remitente));
+                    message2.setFrom(new InternetAddress(remitente));
+
+                    message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario)); // Se podrían
+                                                                                                       // añadir
+                                                                                                       // varios de la
+                                                                                                       // misma
+                                                                                                       // manera
+                    message2.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario2)); // Se podrían
+
+                    message.setSubject(asunto);
+                    message2.setSubject(asunto2);
+
+                    message.setText(cuerpo);
+                    message2.setText(cuerpo2);
+
+                    Transport transport = session.getTransport("smtp");
+
+                    transport.connect("smtp.gmail.com", remitente, claveemail);
+
+                    transport.sendMessage(message, message.getAllRecipients());
+                    transport.sendMessage(message2, message2.getAllRecipients());
+
+                    transport.close();
+                } catch (MessagingException me) {
+                    me.printStackTrace(); // Si se produce un error
+                }
 
             } catch (Exception e) {
                 model.put("date", ZonedDateTime.now());
@@ -270,11 +341,12 @@ public class PuestoController {
             restTemplate.postForObject(PUESTOMANAGER_STRING, puesto, Puesto.class);
         } catch (Exception e) {
         }
+
         return "redirect:/" + "puestos/lista";
     }
 
     @PostMapping("puestos/guardar2")
-    public String guardar2(@Validated Puesto2 puesto, BindingResult result, Model model) {
+    public String guardar2(@Validated Puesto2 puesto, Principal principal, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("puesto", puesto);
             return "IPS";
@@ -292,7 +364,50 @@ public class PuestoController {
             puestosend.setDesc_puesto(lista.get(0).getDesc_puesto());
             // puestosend.setId_puesto("99");
 
-            restTemplate.postForObject(PUESTOMANAGER_STRING, puestosend, Puesto.class);
+            Puesto p = restTemplate.postForObject(PUESTOMANAGER_STRING, puestosend, Puesto.class);
+            String remitente = "usuariogmail";
+            String claveemail = "clave gmaiñ";
+            String destinatario = principal.getName(); // Email reclutador.
+
+            String asunto = "Petición de candidatos para puesto: " + p.getNombre();
+
+            String cuerpo = "Se requieren candidatos para el puesto: " + p.getNombre() + " con id: "
+                    + p.getId_puesto();
+
+            Properties props = System.getProperties();
+            props.put("mail.smtp.host", "smtp.gmail.com"); // El servidor SMTP de Google
+            props.put("mail.smtp.user", remitente);
+            props.put("mail.smtp.clave", claveemail); // La clave de la cuenta
+            props.put("mail.smtp.auth", "true"); // Usar autenticación mediante usuario y clave
+            props.put("mail.smtp.starttls.enable", "true"); // Para conectar de manera segura al servidor SMTP
+            props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+            props.put("mail.smtp.port", "587"); // El puerto SMTP seguro de Google
+            props.put("mail.smtp.ssl.trust", "*");
+            Session session = Session.getDefaultInstance(props);
+            MimeMessage message = new MimeMessage(session);
+
+            try {
+                message.setFrom(new InternetAddress(remitente));
+
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario)); // Se podrían
+                                                                                                   // añadir
+                                                                                                   // varios de la
+                                                                                                   // misma
+                                                                                                   // manera
+                message.setSubject(asunto);
+
+                message.setText(cuerpo);
+
+                Transport transport = session.getTransport("smtp");
+                transport.connect("smtp.gmail.com", remitente, claveemail);
+
+                transport.sendMessage(message, message.getAllRecipients());
+                transport.close();
+
+            } catch (MessagingException me) {
+                me.printStackTrace(); // Si se produce un error
+            }
+
         } catch (Exception e) {
             model.addAttribute("puesto", puesto);
             System.out.println(e.getMessage());
@@ -305,13 +420,55 @@ public class PuestoController {
     }
 
     @PostMapping("procesos/guardar")
-    public String procesosguardar(@Validated Puesto puesto, BindingResult result, Model model) {
+    public String procesosguardar(Principal principal, @Validated Puesto puesto, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("puesto", puesto);
             return "IPS";
         }
         try {
             restTemplate.postForObject(PUESTOMANAGER_STRING, puesto, Puesto.class);
+
+            String remitente = "auser google";
+            String claveemail = "clave google";
+            String destinatario = principal.getName(); // Email reclutador.
+
+            String asunto = "Petición de candidatos para puesto: " + puesto.getNombre();
+
+            String cuerpo = "Se requieren candidatos para el puesto: " + puesto.getNombre();
+
+            Properties props = System.getProperties();
+            props.put("mail.smtp.host", "smtp.gmail.com"); // El servidor SMTP de Google
+            props.put("mail.smtp.user", remitente);
+            props.put("mail.smtp.clave", claveemail); // La clave de la cuenta
+            props.put("mail.smtp.auth", "true"); // Usar autenticación mediante usuario y clave
+            props.put("mail.smtp.starttls.enable", "true"); // Para conectar de manera segura al servidor SMTP
+            props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+            props.put("mail.smtp.port", "587"); // El puerto SMTP seguro de Google
+            props.put("mail.smtp.ssl.trust", "*");
+            Session session = Session.getDefaultInstance(props);
+            MimeMessage message = new MimeMessage(session);
+
+            try {
+                message.setFrom(new InternetAddress(remitente));
+
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario)); // Se podrían
+                                                                                                   // añadir
+                                                                                                   // varios de la
+                                                                                                   // misma
+                                                                                                   // manera
+                message.setSubject(asunto);
+
+                message.setText(cuerpo);
+
+                Transport transport = session.getTransport("smtp");
+
+                transport.connect("smtp.gmail.com", remitente, claveemail);
+                transport.sendMessage(message, message.getAllRecipients());
+
+                transport.close();
+            } catch (MessagingException me) {
+                me.printStackTrace(); // Si se produce un error
+            }
         } catch (Exception e) {
         }
         return "redirect:/" + "procesos";
@@ -336,6 +493,39 @@ public class PuestoController {
 
             // restTemplate.postForObject(PUESTOMANAGER_STRING, candidato, Candidato.class);
             restTemplate.postForObject("http://localhost:8083/candidatos/select/" + ipc, candidato, Candidato.class);
+
+            System.out.println("buenas:  ");
+
+            return "redirect:/procesos/seleccioni/" + ip;
+
+        } catch (Exception e) {
+            System.out.println("malas:  ");
+            System.out.println(e);
+
+            return "403";
+
+        }
+    }
+
+    @GetMapping("procesos/quitaruno/{ip}/{ipc}")
+    public String procesosquitaruno(@Validated Candidato candidato, @PathVariable String ipc, @PathVariable Integer ip,
+            BindingResult result,
+            Model model) {
+        if (result.hasErrors()) {
+            // model.addAttribute("candidato", candidato);
+            model.addAttribute("result", result.getAllErrors().toString());
+            System.out.println(result.getAllErrors().toString());
+
+            return "403";
+        }
+        try {
+            candidato = new Candidato();
+            candidato = restTemplate.getForObject("http://localhost:8083/candidatos/" + ipc,
+                    Candidato.class);
+            System.out.println();
+
+            // restTemplate.postForObject(PUESTOMANAGER_STRING, candidato, Candidato.class);
+            restTemplate.postForObject("http://localhost:8083/candidatos/deselect/" + ipc, candidato, Candidato.class);
 
             System.out.println("buenas:  ");
 

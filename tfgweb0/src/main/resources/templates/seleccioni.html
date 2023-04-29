@@ -28,6 +28,8 @@
 
                                 <th th:text="'Datos'"></th>
                                 <th th:text="'Pasar a selección final'"></th>
+                                <th th:text="'Quitar de selección final'"></th>
+
                                 <th th:text="'Seleccionado?'"></th>
 
 
@@ -51,7 +53,9 @@
                                         class="btn btn-outline-primary">
                                  </td-->
                                 <td><a class="btn btn-outline-secondary" th:href="@{/procesos/pasaruno/}+${ip}+'/'+${Candidato.idcandidato}"
-                                        th:text="'seleccionar'"></a></td>
+                                        th:text="'Seleccionar'"></a></td>
+                                        <td><a class="btn btn-outline-secondary" th:href="@{/procesos/quitaruno/}+${ip}+'/'+${Candidato.idcandidato}"
+                                            th:text="'Quitar'"></a></td>
                                 <td th:text="${Candidato.preseleccionado}=='1'?'Sí':'No'"></td>
                                 <!--td>
 
