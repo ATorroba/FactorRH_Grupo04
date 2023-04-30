@@ -11,12 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "Recibo")
+@Table(name = "Recibo", uniqueConstraints = {
+    @UniqueConstraint(columnNames = { "idEmpleado", "idRemesa"}) })
 public class Recibo{
     
     @Id

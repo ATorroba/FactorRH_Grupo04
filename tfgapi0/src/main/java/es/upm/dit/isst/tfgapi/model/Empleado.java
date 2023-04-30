@@ -1,6 +1,6 @@
 package es.upm.dit.isst.tfgapi.model;
 
-import javax.persistence.Lob;
+//import javax.persistence.Lob;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,7 +15,7 @@ public class Empleado {
 
     @Id
     @NotBlank
-    @Column(name = "idEmpleado", length = 4)
+    @Column(name = "id_Empleado", length = 4)
     private String idEmpleado;
     @Column(name = "nombre", length = 40)
     @NotBlank

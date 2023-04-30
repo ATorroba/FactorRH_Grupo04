@@ -8,6 +8,19 @@ insert into remesa(ejercicio,mes, tipo_nomina,estado) values(2023,3,1,1);
 insert into remesa(ejercicio,mes, tipo_nomina,estado) values(2023,4,1,1);
 
 -- insertar empleados
+insert into empleado(id_empleado,nombre,apellido_1, apellido_2, email, IBAN, SWIFT,sueldo_base, antiguedad,puesto ) 
+Values('0101','Juan','Sin','Miedo','juan@empleado.es','1234 1234 1234 1234','23456',1200,200,'100');
+
+insert into empleado(id_empleado,nombre,apellido_1, apellido_2, email, IBAN, SWIFT,sueldo_base, antiguedad,puesto ) 
+Values('0102','Pepe','Leches','Leches','pepe@empleado.es','2334 1234 1234 1234','123456',1000,100,'200');
+
+insert into empleado(id_empleado,nombre,apellido_1, apellido_2, email, IBAN, SWIFT,sueldo_base, antiguedad,puesto ) 
+Values('0103','Elsa','Frozen','López','elsa@empleado.es','9999 9999 9999 99999','99999',5200,0,'300');
+
+insert into empleado(id_empleado,nombre,apellido_1, apellido_2, email, IBAN, SWIFT,sueldo_base, antiguedad,puesto ) 
+Values('0104','Kevin','de Todos los Santos','García','kevin@empleado.es','8888 8888 8888 8888','888123',500,400,'300');
+
+
 insert into empleado(id_empleado) Values('0001');
 insert into empleado(id_empleado) Values('0002');
 insert into empleado(id_empleado) Values('0003');

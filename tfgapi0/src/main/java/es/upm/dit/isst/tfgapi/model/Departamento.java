@@ -2,7 +2,6 @@ package es.upm.dit.isst.tfgapi.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Column;
 
 @Entity

@@ -4,7 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
+//import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -39,10 +39,16 @@ public class EmpleadoController {
         return (List<Empleado>) empleadoRepository.findAll();
     }
 
+    @GetMapping("/empleados_nomina")
+
+    List<Empleado> readAllNomina() {
+        return (List<Empleado>) empleadoRepository.seleccionarEmpleadosNomina();
+    }
+
     @PostMapping("/empleados")
 
-    ResponseEntity<Empleado> create(@RequestBody Empleado newTFG) throws URISyntaxException {
-        Empleado result = empleadoRepository.save(newTFG);
+    ResponseEntity<Empleado> create(@RequestBody Empleado newEmp) throws URISyntaxException {
+        Empleado result = empleadoRepository.save(newEmp);
         return ResponseEntity.created(new URI("/empleados/" + result.getIdEmpleado())).body(result);
     }
 
