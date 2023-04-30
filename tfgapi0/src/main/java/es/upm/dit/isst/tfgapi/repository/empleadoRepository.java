@@ -1,5 +1,6 @@
 package es.upm.dit.isst.tfgapi.repository;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,6 @@ public interface empleadoRepository extends CrudRepository<Empleado, String> {
     @Query(value = "Select id_empleado, cp, iban, nass, nif, swift, antiguedad, apellido_1, apellido_2," +
                    "direccion, email, email_particular, fecha_alta, fecha_baja, nombre, "+
                    "password, puesto, sueldo_base, telefono "+
-                   "from empleado where fecha_baja is null" , nativeQuery = true)
-    List<Empleado> seleccionarEmpleadosNomina();
+                   "from empleado where fecha_alta <= :fin and (fecha_baja >= :inicio or fecha_baja is null)" , nativeQuery = true)
+    List<Empleado> seleccionarEmpleadosNomina(Date inicio, Date fin);
 }

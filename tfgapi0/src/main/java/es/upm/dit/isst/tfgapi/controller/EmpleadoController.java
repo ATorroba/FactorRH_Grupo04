@@ -39,11 +39,10 @@ public class EmpleadoController {
         return (List<Empleado>) empleadoRepository.findAll();
     }
 
-    @GetMapping("/empleados_nomina")
-
-    List<Empleado> readAllNomina() {
-        return (List<Empleado>) empleadoRepository.seleccionarEmpleadosNomina();
-    }
+    //@GetMapping("/empleados_nomina")
+    //List<Empleado> readAllNomina() {
+    //    return (List<Empleado>) empleadoRepository.seleccionarEmpleadosNomina();
+    //}
 
     @PostMapping("/empleados")
 
