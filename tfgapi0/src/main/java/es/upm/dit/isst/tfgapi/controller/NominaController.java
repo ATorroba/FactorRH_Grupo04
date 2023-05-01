@@ -28,7 +28,7 @@ public class NominaController {
             nominaService.crearRecibos(idRemesa);
             return new ResponseEntity<Void>(HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
     }
 }
