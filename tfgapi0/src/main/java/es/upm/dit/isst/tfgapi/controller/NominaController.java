@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import es.upm.dit.isst.tfgapi.service.NominaService;
 
 @RestController
-
 public class NominaController {
-
     @Autowired
     private NominaService nominaService;
 
@@ -21,6 +19,7 @@ public class NominaController {
      * @return la salida es OK si se ha efectuado correctamente el cálculo de la
      *         nómina
      */
+    
     @PostMapping("/crear_recibos")
     public ResponseEntity<Void> crearRecibos(@RequestParam(name = "idRemesa") Integer idRemesa) {
         if (idRemesa == null)

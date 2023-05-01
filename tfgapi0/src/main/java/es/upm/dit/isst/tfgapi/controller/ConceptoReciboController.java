@@ -43,6 +43,7 @@ public class ConceptoReciboController {
         return conRepository.findById(id).map(conceptoRecibo -> {
             conceptoRecibo.setIdRecibo(newCon.getIdRecibo());
             conceptoRecibo.setIdConcepto(newCon.getIdConcepto());
+            conceptoRecibo.setPrecio(newCon.getPrecio());
             conceptoRecibo.setUnidades(newCon.getUnidades());
             conceptoRecibo.setDevengo(newCon.getDevengo());
             conceptoRecibo.setDeduccion(newCon.getDeduccion());

@@ -31,6 +31,8 @@ public class ConceptoRecibo {
 
     @Column(name = "unidades", precision = 8, scale = 2)
     private Double unidades;
+    @Column(name = "precio", precision = 8, scale = 2)
+    private Double precio;
     @Column(name = "devengo", precision = 8, scale = 2)
     private Double devengo;
     @Column(name = "deduccion", precision = 8, scale = 2)
@@ -85,6 +87,14 @@ public class ConceptoRecibo {
 
     public void setDeduccion(Double deduccion) {
         this.deduccion = deduccion;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 
 }
