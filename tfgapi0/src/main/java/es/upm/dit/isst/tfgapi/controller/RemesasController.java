@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Date;
 import java.util.List;
 import es.upm.dit.isst.tfgapi.model.Remesa;
 
@@ -56,6 +57,43 @@ public class RemesasController {
     ResponseEntity<Remesa> delete(@PathVariable Integer id) {
         remRepository.deleteById(id);
         return ResponseEntity.ok().body(null);
+    }
+
+    @PostMapping("/remesas/{id}/calculada")
+    ResponseEntity<Remesa> calculada(@PathVariable Integer id) {
+        return remRepository.findById(id).map(remesa -> {
+            remesa.setEstado("2");
+            remRepository.save(remesa);
+            return ResponseEntity.ok().body(remesa);
+        }).orElse(new ResponseEntity<Remesa>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/remesas/{id}/emitida")
+    ResponseEntity<Remesa> emitida(@PathVariable Integer id) {
+        return remRepository.findById(id).map(remesa -> {
+            remesa.setEstado("3");
+            if (remesa.getFecha_remesa() == null) {
+                java.util.Date fechaActual = new java.util.Date();
+                java.sql.Date fecha = new java.sql.Date(fechaActual.getTime());
+                remesa.setFecha_remesa(fecha);
+            }
+            remRepository.save(remesa);
+            return ResponseEntity.ok().body(remesa);
+        }).orElse(new ResponseEntity<Remesa>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/remesas/{id}/pagada")
+    ResponseEntity<Remesa> pagada(@PathVariable Integer id) {
+        return remRepository.findById(id).map(remesa -> {
+            remesa.setEstado("4");
+            if (remesa.getFecha_pago() == null) {
+                java.util.Date fechaActual = new java.util.Date();
+                java.sql.Date fecha = new java.sql.Date(fechaActual.getTime());
+                remesa.setFecha_pago(fecha);
+            }
+            remRepository.save(remesa);
+            return ResponseEntity.ok().body(remesa);
+        }).orElse(new ResponseEntity<Remesa>(HttpStatus.NOT_FOUND));
     }
 
 

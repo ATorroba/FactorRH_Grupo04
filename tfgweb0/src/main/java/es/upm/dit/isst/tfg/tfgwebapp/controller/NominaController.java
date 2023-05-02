@@ -104,6 +104,18 @@ public class NominaController {
         return "redirect:/remesas";
     }
 
+    @GetMapping("remesas/emitir/{id}")
+    public String emitir(@PathVariable(value = "id") Integer id) {
+        restTemplate.postForObject(REMESAMANAGER_STRING + id +"/emitida", null, Remesa.class);
+        return "redirect:/remesas";
+    }
+
+    @GetMapping("remesas/pagar/{id}")
+    public String pagar(@PathVariable(value = "id") Integer id) {
+        restTemplate.postForObject(REMESAMANAGER_STRING + id +"/pagada", null, Remesa.class);
+        return "redirect:/remesas";
+    }
+
     @GetMapping("remesas/eliminar/{id}")
     public String eliminar(@PathVariable(value = "id") Integer id) {
         restTemplate.delete(REMESAMANAGER_STRING + id);

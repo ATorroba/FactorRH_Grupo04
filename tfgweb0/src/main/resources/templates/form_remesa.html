@@ -3,13 +3,13 @@
 
 <head th:replace="layouts/base::head(light,${date})">
 	<meta charset="UTF-8">
-</head>idRremesa
+</head>
 
 <body>
 	<header th:replace="layouts/base::header(dark,${date})"></header>
 	<div class="container">
 		<div class="card bg-light">
-		
+
 			<div class="card-header">
 				<h3
 					th:text="${accion} == 'guardar' ? #{remesa.formulario.titulo.nuevo} : #{remesa.formulario.titulo.editar}">
@@ -30,7 +30,10 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{remesa.remesa.idRemesa}"></label>
 						<div class="col-sm-6">
-							<input type="text" th:field="*{idRemesa}" readonly>
+							<!--input type="text" th:field="*{idRemesa}" readonly-->
+							<strong>
+								<span th:text="*{idRemesa}">
+								</span></strong>
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('idRemesa')}"
 								th:errors="*{idRemesa}"></small>
 						</div>
@@ -38,8 +41,10 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{remesa.remesa.ejercicio}"></label>
 						<div class="col-sm-6">
-							<input type="number" name="ejercicio" th:field="*{ejercicio}" min="2020" max="2100" step="1" th:value="${ejercicio != null ? ejercicio : 2023}" required>
-							<small class="form-text text-danger" th:if="${#fields.hasErrors('ejercicio')}" th:errors="*{ejercicio}"></small>
+							<input type="number" name="ejercicio" th:field="*{ejercicio}" min="2020" max="2100" step="1"
+								th:value="${ejercicio != null ? ejercicio : 2023}" required>
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('ejercicio')}"
+								th:errors="*{ejercicio}"></small>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -71,42 +76,42 @@
 								<option value="1" th:text="#{remesa.remesa.nomina_ordinaria}"></option>
 								<option value="2" th:text="#{remesa.remesa.extra}"></option>
 							</select>
-							<small class="form-text text-danger" th:if="${#fields.hasErrors('tipo_nomina')}" th:errors="*{tipo_nomina}"></small>
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('tipo_nomina')}"
+								th:errors="*{tipo_nomina}"></small>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{remesa.remesa.estado}"></label>
 						<div class="col-sm-6">
-							<select th:field="*{estado}" readonly>
-								<option value="1" th:selected="${estado == null || estado == 1}">Pendiente</option>
-								<option value="2" th:selected="${estado == 2}">Calculada</option>
-								<option value="3" th:selected="${estado == 3}">Emitida</option>
-								<option value="4" th:selected="${estado == 4}">Pagada</option>
-							</select>
-							<small class="form-text text-danger" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></small>
+							<strong>
+							<span
+								th:text="${remesa.estado == '1' || remesa.estado == null ? 'Pendiente' : (remesa.estado == '2' ? 'Calculada' : (remesa.estado == '3' ? 'Emitida' : (remesa.estado == '4' ? 'Pagada' : 'Otros'))) }">
+							</span></strong>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{remesa.remesa.fecha_remesa}"></label>
 						<div class="col-sm-6">
 							<input type="date" th:field="*{fecha_remesa}">
-							<small class="form-text text-danger" th:if="${#fields.hasErrors('fecha_remesa')}" th:errors="*{fecha_remesa}"></small>
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('fecha_remesa')}"
+								th:errors="*{fecha_remesa}"></small>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{remesa.remesa.fecha_pago}"></label>
 						<div class="col-sm-6">
 							<input type="date" th:field="*{fecha_pago}">
-							<small class="form-text text-danger" th:if="${#fields.hasErrors('fecha_pago')}" th:errors="*{fecha_pago}"></small>
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('fecha_pago')}"
+								th:errors="*{fecha_pago}"></small>
 						</div>
 					</div>
-					
+
 					<!--div th:if="${#fields.hasAnyErrors()}">
 						<ul>
 							<li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li>
 						</ul>
 					</div-->
-					
+
 					<div class="form-group">
 						<div class="col-sm-6">
 							<input type="submit" th:value="#{remesa.acciones.guardar}" class="btn btn-outline-primary">

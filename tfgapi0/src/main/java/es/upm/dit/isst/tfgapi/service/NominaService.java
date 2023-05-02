@@ -228,6 +228,15 @@ public class NominaService {
                 throw new DataIntegrityViolationException("Error en alta deducciones");
             };
         }
+
+        // Finalmente se marca la remesa como calculada
+        try {
+            remesa.setEstado("2");
+            remesasRepository.save(remesa);
+        } catch (Exception e) {
+            throw new DataIntegrityViolationException("Error en marcado remesa como calculada");
+        };
+
     }
 
     public static double redondear(double valor) {
