@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+
+	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 th:text="#{remesa.lista.titulo}"></h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th th:text="#{remesa.remesa.idRemesa}">idRemesa</th>
+								<th th:text="#{remesa.remesa.periodo}">Periodo</th>
+								<th th:text="#{remesa.remesa.tipo_nomina}">Tipo</th>
+								<th th:text="#{remesa.remesa.estado}">Estado</th>
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="remesa: ${remesa}">
+							<div class="wrap">
+								<td th:text="${remesa.idRemesa}"></td>
+								<td th:text="${remesa.ejercicio + '-' + remesa.mes+''}"></td>
+								<td
+									th:text="${remesa.tipo_nomina == '1' ? 'Ordinaria' : (remesa.tipo_nomina == '2' ? 'Extra' : 'Otros')}">
+								</td>
+								<td
+									th:text="${remesa.estado == '1' ? 'Pendiente' : (remesa.estado == '2' ? 'Calculada' : (remesa.estado == '3' ? 'Emitida' : (remesa.estado == '4' ? 'Pagada' : 'Otros'))) }">
+								</td>
+
+								<!--td th:text="${remesa.tipo_nomina}"></td-->
+								<!--td th:text="${remesa.estado}"></td-->
+
+								<!--td>
+									<a th:href="@{calcular/} + ${remesa.idRemesa}" th:text="#{remesa.acciones.calcular}"
+										class="btn btn-outline-primary"></a>
+								</td-->
+								<td>
+									<a th:if="${remesa.estado == '1'}" th:href="@{calcular/} + ${remesa.idRemesa}"
+										th:text="#{remesa.acciones.calcular}" class="btn btn-outline-primary"></a>
+								</td>
+
+								<td>
+									<a th:href="@{editar/} + ${remesa.idRemesa}" th:text="#{remesa.acciones.editar}"
+										class="btn btn-outline-primary"></a>
+								</td>
+
+								<td th:if="${remesa.estado == '1' or remesa.estado == '2'}">
+									<a th:href="@{eliminar/} + ${remesa.idRemesa}" th:text="#{remesa.acciones.eliminar}" class="btn btn-outline-danger"
+										onclick="return confirm('¿Está seguro que desea eliminar esta remesa?')"></a>
+								</td>
+								  
+								<!--td>
+									<a th:href="@{eliminar/} + ${remesa.idRemesa}" th:text="#{remesa.acciones.eliminar}"
+										class="btn btn-outline-danger"></a>
+								</td-->
+								<td>
+									<a th:href="@{pagar/} + ${remesa.idRemesa}" th:text="#{remesa.acciones.pagar}"
+										class="btn btn-outline-danger"></a>
+								</td>
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{crear}" class="btn btn-outline-primary btn-block"
+									th:text="#{remesa.acciones.anadir}"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layouts/base::footer(light)"></footer>
+</body>
+
+</html>

@@ -26,19 +26,19 @@ public class RemesasController {
         return (List<Remesa>) remRepository.findAll();
     }
 
-    @PostMapping("/remesa")
+    @PostMapping("/remesas")
     ResponseEntity<Remesa> create(@RequestBody Remesa newRem) throws URISyntaxException {
         Remesa result = remRepository.save(newRem);
         return ResponseEntity.created(new URI("/remesas/" + result.getIdRemesa())).body(result);
     }
 
-    @GetMapping("/remesa/{id}")
+    @GetMapping("/remesas/{id}")
     ResponseEntity<Remesa> read(@PathVariable Integer id) {
         return remRepository.findById(id).map(remesa -> ResponseEntity.ok().body(remesa))
                 .orElse(new ResponseEntity<Remesa>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping("/remesa/{id}")
+    @PutMapping("/remesas/{id}")
     ResponseEntity<Remesa> update(@RequestBody Remesa newRemesa, @PathVariable Integer id) {
         return remRepository.findById(id).map(remesa -> {
             remesa.setEjercicio(newRemesa.getEjercicio());
@@ -52,7 +52,7 @@ public class RemesasController {
         }).orElse(new ResponseEntity<Remesa>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("remesa/{id}")
+    @DeleteMapping("remesas/{id}")
     ResponseEntity<Remesa> delete(@PathVariable Integer id) {
         remRepository.deleteById(id);
         return ResponseEntity.ok().body(null);

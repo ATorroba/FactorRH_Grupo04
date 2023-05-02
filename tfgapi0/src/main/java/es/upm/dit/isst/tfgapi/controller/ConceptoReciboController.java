@@ -26,19 +26,19 @@ public class ConceptoReciboController {
         return (List<ConceptoRecibo>) conRepository.findAll();
     }
 
-    @PostMapping("/conceptorec")
+    @PostMapping("/conceptosrec")
     ResponseEntity<ConceptoRecibo> create(@RequestBody ConceptoRecibo newCon) throws URISyntaxException {
         ConceptoRecibo result = conRepository.save(newCon);
         return ResponseEntity.created(new URI("/conceptosrec/" + result.getIdConcepto())).body(result);
     }
 
-    @GetMapping("/conceptorec/{id}")
+    @GetMapping("/conceptosrec/{id}")
     ResponseEntity<ConceptoRecibo> read(@PathVariable Long id) {
         return conRepository.findById(id).map(conceptoRecibo -> ResponseEntity.ok().body(conceptoRecibo))
                 .orElse(new ResponseEntity<ConceptoRecibo>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping("/conceptorec/{id}")
+    @PutMapping("/conceptosrec/{id}")
     ResponseEntity<ConceptoRecibo> update(@RequestBody ConceptoRecibo newCon, @PathVariable Long id) {
         return conRepository.findById(id).map(conceptoRecibo -> {
             conceptoRecibo.setIdRecibo(newCon.getIdRecibo());
@@ -53,7 +53,7 @@ public class ConceptoReciboController {
         }).orElse(new ResponseEntity<ConceptoRecibo>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("conceptorec/{id}")
+    @DeleteMapping("conceptosrec/{id}")
     ResponseEntity<ConceptoRecibo> delete(@PathVariable long id) {
         conRepository.deleteById(id);
         return ResponseEntity.ok().body(null);

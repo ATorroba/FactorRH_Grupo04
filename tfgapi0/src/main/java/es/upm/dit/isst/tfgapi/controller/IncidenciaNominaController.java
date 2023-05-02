@@ -27,19 +27,19 @@ public class IncidenciaNominaController {
         return (List<IncidenciaNomina>) incRepository.findAll();
     }
 
-    @PostMapping("/incidencia_n")
+    @PostMapping("/incidencias_n")
     ResponseEntity<IncidenciaNomina> create(@RequestBody IncidenciaNomina newInc) throws URISyntaxException {
         IncidenciaNomina result = incRepository.save(newInc);
         return ResponseEntity.created(new URI("/incidencias_n/" + result.getIdConcepto())).body(result);
     }
 
-    @GetMapping("/incidencia_n/{id}")
+    @GetMapping("/incidencias_n/{id}")
     ResponseEntity<IncidenciaNomina> read(@PathVariable Integer id) {
         return incRepository.findById(id).map(conceptoRecibo -> ResponseEntity.ok().body(conceptoRecibo))
                 .orElse(new ResponseEntity<IncidenciaNomina>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping("/incidencia_n/{id}")
+    @PutMapping("/incidencias_n/{id}")
     ResponseEntity<IncidenciaNomina> update(@RequestBody IncidenciaNomina newInc, @PathVariable Integer id) {
         return incRepository.findById(id).map(incidenciaNomina -> {
             incidenciaNomina.setIdEmpleado(newInc.getIdEmpleado());
@@ -56,7 +56,7 @@ public class IncidenciaNominaController {
         }).orElse(new ResponseEntity<IncidenciaNomina>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("incidencia_n/{id}")
+    @DeleteMapping("incidencias_n/{id}")
     ResponseEntity<IncidenciaNomina> delete(@PathVariable Integer id) {
         incRepository.deleteById(id);
         return ResponseEntity.ok().body(null);
