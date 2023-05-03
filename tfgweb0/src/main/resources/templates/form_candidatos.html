@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8">
+</head>
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 th:text="${accion} == 'guardar' ? #{candidatos.formulario.titulo.nuevo} : #{candidatos.formulario.titulo.editar}"></h3>
+			</div>
+			<div class="card-body">
+				<!-- Mostrar los errores en una lista -->
+				<!-- 
+				<div th:object="${candidato}" th:remove="tag">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+						<li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+					</ul>
+				</div>
+				 -->
+				 
+				<form th:action="@{${accion}}" th:object="${Candidato}" method="post">
+					<!-- <input type="hidden" th:field="*{email}" /> -->
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.idcandidato}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{idcandidato}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('idcandidato')}" th:errors="*{idcandidato}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.nombre}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{nombre}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.apellido_1}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{apellido_1}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('apellido_1')}" th:errors="*{apellido_1}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.apellido_2}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{apellido_2}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('apellido_2')}" th:errors="*{apellido_2}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.email}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{email}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.form_experiencia}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{form_Experiencia}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('form_Experiencia')}" th:errors="*{form_Experiencia}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.idiomas}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{idiomas}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('idiomas')}" th:errors="*{idiomas}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.disponibilidad}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{disponibilidad}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('disponibilidad')}" th:errors="*{disponibilidad}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.curriculum}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{curriculum}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('curriculum')}" th:errors="*{curriculum}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.puesto}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{puesto}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('puesto')}" th:errors="*{puesto}"></small>
+						</div>
+					</div>
+                    <div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.notas_reclutador}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{notas_reclutador}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('notas_reclutador')}" th:errors="*{notas_reclutador}"></small>
+						</div>
+					</div>
+                    <div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{candidatos.candidato.preseleccionado}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{preseleccionado}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('preseleccionado')}" th:errors="*{preseleccionado}"></small>
+						</div>
+					</div>
+									
+					<div th:if="${#fields.hasAnyErrors()}">
+						<ul>
+							<li th:each="err : ${#fields.allErrors()}" th:text="${err}" ></li>
+						</ul>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-6">
+							<input type="submit" th:value="#{candidatos.acciones.guardar}" class="btn btn-outline-primary">
+							<a th:href="@{${accion} == 'guardar' AND !${#fields.hasErrors('*')} ? 'candidatos/lista' : '/candidatos/crear'}"
+							class="btn btn-outline-danger" th:text="#{candidatos.acciones.cancelar}"></a>
+							<!-- a th:href="@{${accion} == 'guardar' OR ${#fields.hasErrors('*')} ? 'lista' : '../lista'}" class="btn btn-outline-danger" th:text="#{tfgs.acciones.cancelar}"></a-->
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<!--footer th:replace="layouts/base::footer(dark)"></footer-->
+</body>
+</html>

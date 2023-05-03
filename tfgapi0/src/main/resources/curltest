@@ -1,0 +1,21 @@
+#   !/bin/sh
+echo
+echo "0.empty list"
+curl localhost:8080/api
+echo
+echo "1.listing"
+curl localhost:8080/tfgs
+echo
+echo "2.adding element"
+curl -H "Content-Type: application/json" -d '{ "email": "email1@alumnos.upm.es", "pass": "asdf", "nombre": "nombre", "titulo": "asfsgfsfsdd", "tutor": "juancarlos.duenas@upm.es", "status": 1, "memoria": null, "nota": 0.0 }' -X POST http://localhost:8080/tfgs
+echo
+echo "3.listing"
+curl localhost:8080/tfgs
+echo
+echo "4.remove"
+#curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/tfgs/email1@alumnos.upm.es
+echo
+echo "5.listing"
+curl localhost:8080/tfgs
+echo
+echo "0.end"

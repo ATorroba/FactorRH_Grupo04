@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Head -->
+
+<head th:fragment="head(tema,date)">
+	<meta charset="UTF-8" />
+	<title th:text="FactorRH-web"></title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+		integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/estilos.css}">
+	<link rel="stylesheet" th:href="@{/css/tema_} + ${tema} + .css">
+	<link rel="icon" type="image/png" th:href="@{/img/RH.png}" />
+</head>
+
+<body>
+
+	<!-- Cabecera bg-${tema} -->
+	<header style="background-color: rgb(41, 131, 235);" th:fragment="header(tema,date)">
+		<div style="color:white;margin-right: 2%;margin-left: 2%;" class="RRR">
+			<a class="navbar-brand" href="/">
+				<img th:src="@{/img/RH.png}" width="30" height="30" alt="">
+			</a>
+			<div class="FFF">
+				<h3>¡Bienvenido!</h3>
+				<p th:text="${#temporals.format(date, 'dd-MM-yyyy HH:mm')}"></p>
+			</div>
+
+			<span sec:authorize="isAuthenticated()">
+				<form th:action="@{/logout}" method="post">
+					<label><span sec:authentication="name"></span></label>
+					<!--label> Roles: <span sec:authentication="authorities"></span></label-->
+					<button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:text="#{salir}"></button>
+				</form>
+			</span>
+			<span sec:authorize="!isAuthenticated()">
+				<form th:action="@{/login}" method="post">
+					<label> <input type="text" name="username" /></label>
+					<label> <input type="password" name="password" /></label>
+					<button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:text="#{entrar}"></button>
+				</form>
+			</span>
+
+			<!--span class="idiomas">
+				<a th:href="|@{/}?idioma=es|"><img th:src="@{/img/idiomas/spain.svg}" width="20" height="20"
+						alt="Español"></a>
+				<a th:href="|@{/}?idioma=en|"><img th:src="@{/img/idiomas/usa.svg}" width="20" height="20"
+						alt="English"></a>
+			</span-->
+		</div>
+		<nav th:class="|navbar navbar-expand-lg navbar-${tema} |">
+
+
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+				<ul class="navbar-nav mr-auto">
+
+					<li class="nav-item active">
+						<a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+					</li>
+
+					<span class="RR" sec:authorize="hasRole('ROLE_CONTROLADOR')">
+
+					</span>
+					<span class="RR" sec:authorize="hasRole('ROLE_HABILITADO')">
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/incidencias_n}" th:text="#{habilitado.incidencias}"></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/remesas}" th:text="#{habilitado.gestion}"></a>
+						</li>
+					</span>
+					<span class="RR" sec:authorize="hasRole('ROLE_EMPLEADO')">
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/organigrama}" th:text="#{empleados.organigrama}"></a>
+						</li>
+						<!--li class="nav-item">
+							<a class="nav-link" th:href="@{/inicio}" th:text="#{empleados.inicio}"></a>
+						</li-->
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/datos}" th:text="#{empleados.misdatos}"></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/gestion}" th:text="#{empleados.gestion}"></a>
+						</li>
+
+					</span>
+					<span class="RR" sec:authorize="hasRole('ROLE_RECLUTADOR')">
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/IPS}">Iniciar proceso de selección</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/procesos}">Procesos de selección</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/lista}" th:text="#{menu.empleados}"></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/puestos/lista}" th:text="#{puestos.lista.titulo}"></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/candidatos/lista}" th:text="#{candidatos.lista.titulo}"></a>
+						</li>
+					</span>
+
+
+				</ul>
+
+				<!--h2 th:inline="text">[[${#httpServletRequest.remoteUser}]]</h2-->
+
+				<!--form class="form-inline my-2 my-lg-0">
+		      <input class="form-control mr-sm-2" type="search" th:placeholder="#{buscador.placeholder}" aria-label="Search">
+		      <button class="btn btn-outline-warning my-2 my-sm-0" type="submit" th:text="#{buscador.boton}"></button>
+		    </form -->
+			</div>
+		</nav>
+	</header>
+
+
+	<!-- Contenido -->
+	<div class="container">
+	</div>
+
+	<!-- Pie de pagina 
+	<footer th:fragment="footer(tema)" th:class="|bg-${tema}|"></footer>
+	<div th:if="${param.error}">
+		Invalid username and password.
+	</div>
+	<div th:if="${param.logout}">
+		You have been logged out.
+	</div>
+	<form th:action="@{/login}" method="post">
+		<div><label> User Name: <input type="text" name="username"/> </label></div>
+		<div><label> Password: <input type="password" name="password"/> </label></div>
+		<div><input type="submit" value="Sign In"/></div>
+	</form>
+	</footer> -->
+
+	<footer th:fragment="footer(tema)" th:class="|bg-${tema}|">
+
+		<!--span class="info-copyrigth"><a href="https://programadoointentandolo.com">programadoointentandolo.com</a>
+			&copy; 2019</span>
+		<div>Flag icons made by <a href="https://www.flaticon.com/<?=_('authors').'/'?>freepik"
+				title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"
+				title="Flaticon">www.flaticon.com</a> is licensed by <a
+				href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC
+				3.0 BY</a></div-->
+	</footer>
+</body>
+
+</html>
