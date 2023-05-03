@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+    <meta charset="UTF-8" />
+</head>
+
+<body>
+    
+    <header th:replace="layouts/base::header(dark,${date})"></header>
+    <button class="btn btn-outline-primary" onclick="history.back()">Go Back</button>
+
+    <div class="container">
+        <div class="card bg-light">
+            <div class="LL">
+                <img th:src="@{/img/user.png}" width="30" height="30" alt="">
+                <h3 >Datos candidato</h3>
+            </div>
+
+            <div style="margin-left: 7%;margin-top: 1%;">
+                <p th:text="#{candidatos.candidato.nombre} + ': '+${candidato.nombre}+${candidato.apellido_1}+${candidato.apellido_2}"></p>
+     
+                <p th:text="#{candidatos.candidato.email} + ': '+${candidato.email}"></p>
+                <p th:text="#{candidatos.candidato.form_experiencia} + ': '+${candidato.form_Experiencia}"></p>
+                
+                <p th:text="#{candidatos.candidato.idiomas} + ': '+${candidato.idiomas}"></p>
+                
+                <p th:text="#{candidatos.candidato.disponibilidad} + ': '+${candidato.disponibilidad}"></p>
+                
+                <p th:text="#{candidatos.candidato.notas_reclutador} + ': '+${candidato.notas_reclutador}"></p>
+                <p th:text="#{candidatos.candidato.curriculum} + ': '+${candidato.curriculum}"></p>
+                <p th:text="#{candidatos.candidato.preseleccionado} + ': '+${candidato.preseleccionado}"></p>
+                <p th:text="#{candidatos.candidato.puesto} + ': '+${candidato.puesto}"></p>
+            
+            </div>
+        </div>
+    </div>
+    </tr>
+    </tbody>
