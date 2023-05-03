@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+    <meta charset="UTF-8" />
+</head>
+
+<body>
+    <header th:replace="layouts/base::header(dark,${date})"></header>
+
+    <div class="container">
+        <div class="card bg-light">
+            <div class="LL">
+                <img th:src="@{/img/user.png}" width="30" height="30" alt="">
+                <h3 th:text="#{empleados.misdatos}"></h3>
+            </div>
+            <div style="margin-left: 7%;margin-top: 1%;">
+                <p th:text="#{empleados.Empleado.idEmpleado} + ': '+${empleado.idEmpleado}"></p>
+                
+                <p th:text="#{empleados.Empleado.email} + ': '+${empleado.email}"></p>
+                <p th:text="#{empleados.Empleado.password} + ': '+${empleado.password}"></p>
+                <p th:text="#{empleados.Empleado.nombre} + ': '+${empleado.nombre}"></p>
+                
+                <p th:text="#{empleados.Empleado.apellido1} + ': '+${empleado.apellido_1}"></p>
+                
+                <p th:text="#{empleados.Empleado.apellido2} + ': '+${empleado.apellido_2}"></p>
+                
+                <p th:text="#{empleados.Empleado.NASS} + ': '+${empleado.NASS}"></p>
+                <p th:text="#{empleados.Empleado.NIF} + ': '+${empleado.NIF}"></p>
+                <p th:text="#{empleados.Empleado.direccion} + ': '+${empleado.direccion}"></p>
+                <p th:text="#{empleados.Empleado.CP} + ': '+${empleado.CP}"></p>
+                <p th:text="#{empleados.Empleado.fechaa} + ': '+${empleado.fecha_alta}"></p>
+                <p th:text="#{empleados.Empleado.fechab} + ': '+${empleado.fecha_baja}"></p>
+                <p th:text="#{empleados.Empleado.sueldo} + ': '+${empleado.sueldo_base}"></p>
+                <p th:text="#{empleados.Empleado.antiguedad} + ': '+${empleado.antiguedad}"></p>
+                <p th:text="#{empleados.Empleado.telefono} + ': '+${empleado.telefono}"></p>
+                <p th:text="#{empleados.Empleado.IBAN} + ': '+${empleado.IBAN}"></p>
+                <p th:text="#{empleados.Empleado.SWIFT} + ': '+${empleado.SWIFT}"></p>
+                <p th:text="#{empleados.Empleado.email2} + ': '+${empleado.email_particular}"></p>
+
+            </div>
+        </div>
+    </div>
+    </tr>
+    </tbody>

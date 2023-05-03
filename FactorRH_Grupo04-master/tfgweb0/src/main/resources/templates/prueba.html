@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Organigrama</title>
+    <style>
+        ul, #organigrama {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: inline-block;
+            vertical-align: top;
+            margin: 20px;
+            padding: 0;
+            position: relative;
+        }
+
+        .departamento {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .line {
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Organigrama</h1>
+    <div id="organigrama">
+        <ul th:if="${raiz != null}">
+            <li th:object="${raiz}">
+                <div class="departamento">
+                    <strong>Nombre: </strong> <span th:text="*{departamento.nombre}"></span> <br>
+                    <strong>Oficina: </strong> <span th:text="*{departamento.oficina}"></span>
+                </div>
+                <span class="line" th:if="*{hijos.size() > 0}"></span>
+                <ul>
+                    <li th:each="hijo : *{hijos}">
+                        <div class="departamento">
+                            <strong>Nombre: </strong> <span th:text="${hijo.departamento.nombre}"></span> <br>
+                            <strong>Oficina: </strong> <span th:text="${hijo.departamento.oficina}"></span>
+                        </div>
+                        <span class="line" th:if="${hijo.hijos.size() > 0}"></span>
+                        <ul>
+                            <li th:each="subhijo : ${hijo.hijos}">
+                                <div class="departamento">
+                                    <strong>Nombre: </strong> <span th:text="${subhijo.departamento.nombre}"></span> <br>
+                                    <strong>Oficina: </strong> <span th:text="${subhijo.departamento.oficina}"></span>
+                                </div>
+                                <!-- Añade más niveles si es necesario -->
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

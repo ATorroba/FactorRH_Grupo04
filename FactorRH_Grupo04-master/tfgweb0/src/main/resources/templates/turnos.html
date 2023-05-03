@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+    <div class="container">
+        <div class="card bg-light">
+            <div class="LL">
+                <img th:src="@{/img/reloj.png}" width="30" height="30" alt="">
+                <h3 th:text="#{empleados.Turno.titulo}"></h3>
+            </div>
+            <div style="margin-left: 7%;margin-top: 1%;">
+                <h2>Lunes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hora Entrada</th>
+                            <th>Hora Salida</th>
+                            <th>Duración jornada (minutos)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="t : ${turno}" th:if="${t.idDia} == 1">
+                            <td th:text="${t.hora_entrada}">Hora Entrada</td>
+                            <td th:text="${t.hora_salida}">Hora Salida</td>
+                            <td th:text="${t.minutos_jornada}">Hora Salida</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-left: 7%;margin-top: 1%;">
+                <h2>Martes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hora Entrada</th>
+                            <th>Hora Salida</th>
+                            <th>Duración jornada (minutos)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="t : ${turno}" th:if="${t.idDia} == 2">
+                            <td th:text="${t.hora_entrada}">Hora Entrada</td>
+                            <td th:text="${t.hora_salida}">Hora Salida</td>
+                            <td th:text="${t.minutos_jornada}">Hora Salida</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-left: 7%;margin-top: 1%;">
+                <h2>Miércoles</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hora Entrada</th>
+                            <th>Hora Salida</th>
+                            <th>Duración jornada (minutos)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="t : ${turno}" th:if="${t.idDia} == 3">
+                            <td th:text="${t.hora_entrada}">Hora Entrada</td>
+                            <td th:text="${t.hora_salida}">Hora Salida</td>
+                            <td th:text="${t.minutos_jornada}">Hora Salida</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-left: 7%;margin-top: 1%;">
+                <h2>Jueves</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hora Entrada</th>
+                            <th>Hora Salida</th>
+                            <th>Duración jornada (minutos)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="t : ${turno}" th:if="${t.idDia} == 4">
+                            <td th:text="${t.hora_entrada}">Hora Entrada</td>
+                            <td th:text="${t.hora_salida}">Hora Salida</td>
+                            <td th:text="${t.minutos_jornada}">Hora Salida</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-left: 7%;margin-top: 1%;">
+                <h2>Viernes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hora Entrada</th>
+                            <th>Hora Salida</th>
+                            <th>Duración jornada (minutos)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="t : ${turno}" th:if="${t.idDia} == 5">
+                            <td th:text="${t.hora_entrada}">Hora Entrada</td>
+                            <td th:text="${t.hora_salida}">Hora Salida</td>
+                            <td th:text="${t.minutos_jornada}">Hora Salida</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-left: 7%;margin-top: 1%;">
+                <h2>Sábado</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hora Entrada</th>
+                            <th>Hora Salida</th>
+                            <th>Duración jornada (minutos)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="t : ${turno}" th:if="${t.idDia} == 6">
+                            <td th:text="${t.hora_entrada}">Hora Entrada</td>
+                            <td th:text="${t.hora_salida}">Hora Salida</td>
+                            <td th:text="${t.minutos_jornada}">Hora Salida</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-left: 7%;margin-top: 1%;">
+                <h2>Domingo</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hora Entrada</th>
+                            <th>Hora Salida</th>
+                            <th>Duración jornada (minutos)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="t : ${turno}" th:if="${t.idDia} == 7">
+                            <td th:text="${t.hora_entrada}">Hora Entrada</td>
+                            <td th:text="${t.hora_salida}">Hora Salida</td>
+                            <td th:text="${t.minutos_jornada}">Hora Salida</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+	
+</body>
+</html>
