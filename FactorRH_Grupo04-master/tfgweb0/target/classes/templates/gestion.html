@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8">
+</head>
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+        <div class="container">
+            <h3 style="padding-left: 5%;"> Gestión ausencias</h3>
+
+            <div class="card bg-light">
+
+                <div class="card-header">
+                    <div style="display: flex;justify-content: flex-start;gap:2%">
+                    <img th:src="@{/img/vac.png}" width="30" height="30" alt="">
+
+                    <h4 >Solicitar dias de ausencia</h4>
+                </div>
+                </div>
+                <div style="padding-left: 5%;" class="card-body">
+                    
+                    <!-- Mostrar los errores en una lista -->
+                    <!-- 
+                    <div th:object="${TFG}" th:remove="tag">
+                        <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                            <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+                        </ul>
+                    </div>
+                     -->
+                
+
+                     
+                   
+                    
+                    <form th:action="@{/guardarausencia}" th:object="${Ausencia}" method="post">
+                        <p th:text="${result}"></p>
+                        <!-- <input type="hidden" th:field="*{email}" /> -->
+            <!--p th:if="${result}" th.object="${result}" th:text="${result}" class="alert alert-danger" ></p-->
+            <p class="alert alert-danger" th:each="error: ${result}"  th:text="${error.field}+': '+${error.defaultMessage}">
+    
+            </p>
+            <label class="bold" >Tipo de ausencia</label>
+
+            <ul  style="list-style-type: none">
+                <li >
+                    <input type="radio" th:field="*{tipo_ausencia}" th:value="VAC" />
+                    <label  th:text="#{ausencias.tipo.vac}"></label>
+                </li><li>
+                    <input type="radio" th:field="*{tipo_ausencia}" th:value="BAJ" />
+                    <label  th:text="#{ausencias.tipo.baj}"></label>
+                </li><li>
+                    <input type="radio" th:field="*{tipo_ausencia}" th:value="JUS" />
+                    <label  th:text="#{ausencias.tipo.jus}"></label>
+                </li><li>
+                    <input type="radio" th:field="*{tipo_ausencia}" th:value="AUS" />
+                    <label  th:text="#{ausencias.tipo.aus}"></label>
+
+                </li>
+            </ul>
+        <div style="display:flex;justify-content:flex-start;gap:2%">
+            <div class="form-group column">
+                <div >
+                <label class="bold" th:text="#{ausencias.inicio}"></label></div>
+                <div >
+                    <input type="date" th:field="*{inicio}">
+                </div>
+            </div>
+                        <div class="form-group column">
+                            <label class="bold" th:text="#{ausencias.final}"></label>
+                            <div >
+                                <input type="date" th:field="*{fin}">
+                            </div>
+                        </div>
+                    </div>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                            
+    
+                                <!--input type="submit" th:value="#{empleados.acciones.guardar}" class="btn btn-outline-primary">
+                                <a th:href="@{${accion} == 'guardar' AND  !${#fields.hasErrors('*')} ? 'lista' : '/crear'}"
+                                class="btn btn-outline-danger" th:text="#{empleados.acciones.cancelar}"></a-->
+                                <input type="submit" th:value="Solicitar" class="btn btn-outline-primary">
+                                <a th:href="@{/guardarausencia}"></a>
+                                <!-- a th:href="@{${accion} == 'guardar' OR ${#fields.hasErrors('*')} ? 'lista' : '../lista'}" class="btn btn-outline-danger" th:text="#{tfgs.acciones.cancelar}"></a-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</div>
+
+</html>

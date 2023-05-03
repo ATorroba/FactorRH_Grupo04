@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+    <meta charset="UTF-8" />
+</head>
+
+<body>
+    <header th:replace="layouts/base::header(dark,${date})"></header>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Organigrama</title>
+    <style>
+        .li{
+   
+            display: flex;
+        padding-right: 1%;
+        padding-left: 1%;
+
+                    flex-direction: column;
+                    margin-left:1%;
+                    margin-right:1%;
+                    text-align: center;
+               
+        }
+        .tree-diagram ul {
+            display: flex;
+            justify-content: center;
+         
+            position: relative;
+
+            /* Reset */
+            list-style-type: none;
+            margin: 0;
+            padding: 1rem 0.5rem 0rem 0.5rem;
+        }
+
+
+    </style>
+</head>
+
+    <div th:object="${raiz}" class="tree-diagram">
+        <ul >
+            <li style=" 
+            display: flex;   
+        padding:1%;
+        align-items: stretch;
+        
+                border-radius: 10pt;
+                background-color:rgb(11, 43, 80);
+                color : white" ><div >
+                <p style="font-weight:bold" th:text="${raiz.departamento.nombre}"></p>
+                <p th:text="${raiz.departamento.oficina}"></p>
+            </div>
+            </li>
+        </ul>
+        <ul>
+            <li  th:each="q : *{hijos}">
+                <!-- Content -->
+<div class="li" style="  
+
+background-color:rgb(21, 79, 145);
+border-radius: 10pt;
+
+color : white" >
+                <p style="font-weight:bold" th:text="${q.departamento.nombre}"></p>
+                <p th:text="${q.departamento.oficina}"></p>
+            </div>
+                <!-- Sub items -->
+                <ul>
+                    <li class="li" style="
+                    background-color:rgb(41, 131, 235);
+                    border-radius: 10pt;
+                  
+              
+                    color : white" th:each="a : ${q.hijos}">
+<div>
+                        <p style="font-weight:bold;text-align: center;"  th:text="${a.departamento.nombre}"></p>
+                        <p th:text="${a.departamento.oficina}"></p>
+                    </div>
+                        <!-- Content -->
+
+
+                        <!-- Sub items -->
+                        <ul>
+                            <li style="    
+                            justify-content: center;
+                            background-color:rgb(116, 215, 228);
+
+                            color : black" th:each="z : ${a.hijos}">
+                                <p style="font-weight:bold" th:text="${z.departamento.nombre}"></p>
+                                <p th:text="${z.departamento.oficina}"></p>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+
+            <!-- Repeat other items -->
+        </ul>
+    </div>
+
+
+</body>
+<!--body>
+<div class="organigrama">
+    <div th:text="${raiz.departamento.nombre}"></div>
+
+
+    <div th:if="${raiz != null}">
+        <div th:replace="this::departamentoFrag(${raiz})"></div>
+    </div>
+    <div th:if="${raiz == null}">
+        <p>No hay departamentos en el organigrama.</p>
+    </div>
+</div>
+
+<div th:fragment="departamentoFrag(departm)" th:if="${departm != null}">
+    <div class="departamento" th:object="${departm.departamento}">
+        <h3 th:text="*{nombre}"></h3>
+        <p th:text="'Oficina: ' + *{oficina}"></p>
+    </div>
+    <div class="linea" th:if="${!departm.hijos.isEmpty()}"></div>
+    <div class="hijos" th:if="${!departm.hijos.isEmpty()}">
+        <div class="nivel">
+            <div th:each="hijo : ${departm.hijos}" th:replace="this::departamentoFrag(${hijo})"></div>
+        </div>
+    </div>
+</div>
+</body-->
+
+</html>

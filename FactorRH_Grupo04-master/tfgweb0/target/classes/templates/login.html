@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<div class="loginchunk">
+    <img th:src="@{/img/RHB.png}" maxwidth="175" height="175" alt="">
+
+    <h1 style="color:white">FactorRH</h1>
+</div>
+<div class="FF">
+
+    <head>
+        <title>Login </title>
+    </head>
+
+    <head th:replace="layouts/base::head(light,${date})">
+        <meta charset="UTF-8" />
+    </head>
+
+    <body>
+        <label> Roles: <span sec:authentication="authorities"></span></label>
+
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+
+
+
+        <form class="FF" th:action="@{/login}" method="post">
+            <div><label><input type="text" name="username" placeholder="Correo o ID de usuario" /> </label></div>
+            <div><label><input type="password" name="contraseña" placeholder="Contraseña" /> </label></div>
+            <div><input type="submit" value="Iniciar sesión" /></div>
+        </form>
+
+    </body>
+</div>
+
+</html>
