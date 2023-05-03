@@ -1,0 +1,23 @@
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 1, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 2, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 3, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 4, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 5, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 6, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 7, null, null, 0);
+
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 1, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 2, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 3, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 4, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 5, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 6, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 7, '09:00:00', '17:00:00', 480);
+
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 1, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 2, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 3, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 4, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 5, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 6, '09:00:00', '17:00:00', 480);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 7, '09:00:00', '17:00:00', 480);
