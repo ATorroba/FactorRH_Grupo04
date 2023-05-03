@@ -29,15 +29,15 @@
 					<tbody>
 						<tr th:each="recibo: ${recibos}">
 							<div class="wrap">
-								<td th:text="${recibo.remesa.idRemesa}"></td>
-								<td th:text="${recibo.remesa.ejercicio + '-' + recibo.remesa.mes+''}"></td>
+								<td th:text="${recibo.idRemesa.idRemesa}"></td>
+								<td th:text="${recibo.idRemesa.ejercicio + '-' + recibo.idRemesa.mes+''}"></td>
 								<td
-									th:text="${recibo.remesa.tipo_nomina == '1' ? 'Ordinaria' : (recibo.remesa.tipo_nomina == '2' ? 'Extra' : 'Otros')}">
+									th:text="${recibo.idRemesa.tipo_nomina == '1' ? 'Ordinaria' : (recibo.idRemesa.tipo_nomina == '2' ? 'Extra' : 'Otros')}">
 								</td>
 								<td
-									th:text="${recibo.remesa.estado == '1' ? 'Pendiente' : (recibo.remesa.estado == '2' ? 'Calculada' : (recibo.remesa.estado == '3' ? 'Emitida' : (recibo.remesa.estado == '4' ? 'Pagada' : 'Otros'))) }">
+									th:text="${recibo.idRemesa.estado == '1' ? 'Pendiente' : (recibo.idRemesa.estado == '2' ? 'Calculada' : (recibo.idRemesa.estado == '3' ? 'Emitida' : (recibo.idRemesa.estado == '4' ? 'Pagada' : 'Otros'))) }">
 								</td>
-								<td th:text="${recibo.empleado.nombre + ' ' + recibo.empleado.apellido_1 + ' ' + recibo.empleado.apellido_2}"></td>
+								<td th:text="${recibo.idEmpleado.nombre + ' ' + recibo.idEmpleado.apellido_1 + ' ' + recibo.idEmpleado.apellido_2}"></td>
 								<td>
 									<a th:href="@{conceptos/recibo/} + ${recibo.idRecibo}" th:text="#{recibo.acciones.detalle}"
 										class="btn btn-outline-primary"></a>

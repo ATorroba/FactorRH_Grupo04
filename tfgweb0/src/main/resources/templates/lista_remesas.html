@@ -48,7 +48,7 @@
 								</td>
 
 								<td>
-									<a th:href="@{editar/} + ${remesa.idRemesa}" th:text="#{remesa.acciones.editar}"
+									<a th:if="${remesa.estado == '1'}" th:href="@{editar/} + ${remesa.idRemesa}" th:text="#{remesa.acciones.editar}"
 										class="btn btn-outline-primary"></a>
 								</td>
 

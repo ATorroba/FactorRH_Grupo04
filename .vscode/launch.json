@@ -9,6 +9,16 @@
             "projectName": "rhgapi1",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-TfgwebappApplication<tfgwebapp>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "es.upm.dit.isst.tfg.tfgwebapp.TfgwebappApplication",
+            "projectName": "tfgwebapp",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

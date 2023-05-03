@@ -200,7 +200,7 @@ public class NominaService {
             // EN ESTE PUNTO HAY QUE INTRODUCIR EL TRATAMIENTO DE LAS INCIDENCIAS DE NÓMINA E IR AÑADIENDO 
             // EL IMPORTE QUE CORRESPONDA A BRUTO O A DEDUCCION
 
-            // IRPF. Concepto 98
+            // BRUTO. Concepto 98
             ConceptoRecibo conc98 = new ConceptoRecibo();
             conc98.setIdRecibo(recibo);
             conc98.setIdConcepto(concM98);
@@ -214,7 +214,7 @@ public class NominaService {
                 throw new DataIntegrityViolationException("Error en alta BRUTO");
             };
 
-            // IRPF. Concepto 99
+            // DESCUENTOS. Concepto 99
             ConceptoRecibo conc99 = new ConceptoRecibo();
             conc99.setIdRecibo(recibo);
             conc99.setIdConcepto(concM99);

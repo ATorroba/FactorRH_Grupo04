@@ -70,7 +70,7 @@ public class RemesasController {
     @PostMapping("/remesas/{id}/emitida")
     ResponseEntity<Remesa> emitida(@PathVariable Integer id) {
         return remRepository.findById(id).map(remesa -> {
-            remesa.setEstado("3");
+            if (remesa.getEstado() == "2") {remesa.setEstado("3");};
             if (remesa.getFecha_remesa() == null) {
                 java.util.Date fechaActual = new java.util.Date();
                 java.sql.Date fecha = new java.sql.Date(fechaActual.getTime());
@@ -84,7 +84,7 @@ public class RemesasController {
     @PostMapping("/remesas/{id}/pagada")
     ResponseEntity<Remesa> pagada(@PathVariable Integer id) {
         return remRepository.findById(id).map(remesa -> {
-            remesa.setEstado("4");
+            if (remesa.getEstado() == "3") {remesa.setEstado("4");};
             if (remesa.getFecha_pago() == null) {
                 java.util.Date fechaActual = new java.util.Date();
                 java.sql.Date fecha = new java.sql.Date(fechaActual.getTime());
