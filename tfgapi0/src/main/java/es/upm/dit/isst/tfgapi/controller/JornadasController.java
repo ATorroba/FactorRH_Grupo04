@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,16 +34,16 @@ public class JornadasController {
         return ResponseEntity.created(new URI("/jornada/" + result.getClave().getIdEmpleado() + "/" + result.getClave().getFecha())).body(result);
     }
 
-    @GetMapping("/jornadas/{idEmplado}/{fecha}")
-    ResponseEntity<Jornadas> getJornadaById(@PathVariable String idEmpleado, @PathVariable LocalDate fecha) {
+    @GetMapping("/jornadas/{idEmpleado}/{fecha}")
+    ResponseEntity<Jornadas> getJornadaById(@PathVariable String idEmpleado, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
         jornadasPK jornadaPk = new jornadasPK(idEmpleado, fecha);
         return jornadasRepository.findById(jornadaPk).map(jornada ->
         ResponseEntity.ok().body(jornada)
         ).orElse(new ResponseEntity<Jornadas>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping("/jornadas/{idEmplado}/{fecha}")
-    ResponseEntity<Jornadas> update(@RequestBody Jornadas newJornada, @PathVariable String idEmpleado, @PathVariable LocalDate fecha) {
+    @PutMapping("/jornadas/{idEmpleado}/{fecha}")
+    ResponseEntity<Jornadas> update(@RequestBody Jornadas newJornada, @PathVariable String idEmpleado, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
         jornadasPK jornadaPk = new jornadasPK(idEmpleado, fecha);
         return jornadasRepository.findById(jornadaPk).map(jornada -> {
             jornada.setHora_entrada(newJornada.getHora_entrada());
@@ -61,20 +62,20 @@ public class JornadasController {
         }).orElse(new ResponseEntity<Jornadas>(HttpStatus.NOT_FOUND));
     }
     
-    @DeleteMapping("jornadas/{idEmplado}/{fecha}")
-    ResponseEntity<Jornadas> delete(@PathVariable String idEmpleado, @PathVariable LocalDate fecha) {
+    @DeleteMapping("/jornadas/{idEmpleado}/{fecha}")
+    ResponseEntity<Jornadas> delete(@PathVariable String idEmpleado, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
         jornadasPK jornadaPk = new jornadasPK(idEmpleado, fecha);
         jornadasRepository.deleteById(jornadaPk);
         return ResponseEntity.ok().body(null);
     }
 
-    @GetMapping("/jornadas/{idEmplado}")
+    @GetMapping("/jornadas/empleado/{idEmpleado}")
     List<Jornadas> jornadasEmpleado(@PathVariable String idEmpleado) {
-        return (List<Jornadas>) jornadasRepository.findByIdEmpleado(idEmpleado);
+        return (List<Jornadas>) jornadasRepository.findByClave_IdEmpleado(idEmpleado);
     }
 
-    @GetMapping("/jornadas/{fecha}")
-    List<Jornadas> jornadasFecha(@PathVariable LocalDate fecha) {
-        return (List<Jornadas>) jornadasRepository.findByFecha(fecha);
+    @GetMapping("/jornadas/fecha/{fecha}")
+    List<Jornadas> jornadasFecha(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+        return (List<Jornadas>) jornadasRepository.findByClave_Fecha(fecha);
     }
 }

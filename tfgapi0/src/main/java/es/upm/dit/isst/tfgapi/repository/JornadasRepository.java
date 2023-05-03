@@ -13,8 +13,6 @@ import es.upm.dit.isst.tfgapi.model.jornadasPK;
 @RepositoryRestResource(collectionResourceRel = "jornadas", path = "jornadas")
 public interface JornadasRepository extends CrudRepository<Jornadas, jornadasPK> {
 
-    @Query("SELECT jor FROM Jornadas jor WHERE jor.clave.idEmpleado = :idEmpleado")
-    List<Jornadas> findByIdEmpleado(@Param("idEmpleado") String idEmpleado);
-    @Query("SELECT jorna FROM Jornadas jorna WHERE jorna.clave.fecha = :fecha")
-    List<Jornadas> findByFecha(@Param("fecha") LocalDate fecha);
+    List<Jornadas> findByClave_IdEmpleado(String idEmpleado);
+    List<Jornadas> findByClave_Fecha(LocalDate fecha);
 }
