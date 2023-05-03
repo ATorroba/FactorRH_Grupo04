@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+
+	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 th:text="#{recibos.lista.remesa}"></h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th th:text="#{recibos.lista.idRemesa}">idRemesa</th>
+								<th th:text="#{recibos.lista.periodo}">Periodo</th>
+								<th th:text="#{recibos.lista.tipo_nomina}">Tipo</th>
+								<th th:text="#{recibos.lista.estado}">Estado</th>
+								<th th:text="#{recibos.lista.empleado}">Empleado</th>
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="recibo: ${recibos}">
+							<div class="wrap">
+								<td th:text="${recibo.remesa.idRemesa}"></td>
+								<td th:text="${recibo.remesa.ejercicio + '-' + recibo.remesa.mes+''}"></td>
+								<td
+									th:text="${recibo.remesa.tipo_nomina == '1' ? 'Ordinaria' : (recibo.remesa.tipo_nomina == '2' ? 'Extra' : 'Otros')}">
+								</td>
+								<td
+									th:text="${recibo.remesa.estado == '1' ? 'Pendiente' : (recibo.remesa.estado == '2' ? 'Calculada' : (recibo.remesa.estado == '3' ? 'Emitida' : (recibo.remesa.estado == '4' ? 'Pagada' : 'Otros'))) }">
+								</td>
+								<td th:text="${recibo.empleado.nombre + ' ' + recibo.empleado.apellido_1 + ' ' + recibo.empleado.apellido_2}"></td>
+								<td>
+									<a th:href="@{conceptos/recibo/} + ${recibo.idRecibo}" th:text="#{recibo.acciones.detalle}"
+										class="btn btn-outline-primary"></a>
+								</td>
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{volver}" class="btn btn-outline-primary btn-block"
+									th:text="#{remesa.acciones.anadir}"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layouts/base::footer(light)"></footer>
+</body>
+
+</html>

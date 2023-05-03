@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Date;
 import java.util.List;
 import es.upm.dit.isst.tfgapi.model.Remesa;
 
