@@ -2,64 +2,69 @@ package es.upm.dit.isst.tfgapi.model;
 
 import javax.persistence.*;
 import java.sql.Time;
-//import javax.persistence.Lob;
-
-
 
 @Entity
-@Table(name = "Turnos")
-@IdClass(value = turnoPK.class)
 public class Turnos {
-
     @Id
-    @Column(name = "idEmpleado", length = 4)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idTurno;
     private String idEmpleado;
-    @Id
     private Integer idDia;
     private Time hora_entrada;
     private Time hora_salida;
     private int minutos_jornada;
     
-    // @Lob
-    // private byte[] foto;
 
     public Turnos() {
         
     }
 
-    @Override
-    public String toString() {
-        return "Turnos []";
+    public Integer getIdTurno() {
+        return idTurno;
     }
 
-    public int getidDia() {
-        return this.idDia;
+    public void setIdTurno(Integer idTurno) {
+        this.idTurno = idTurno;
     }
 
-    public String getidEmpleado() {
-        return this.idEmpleado;
+    public String getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public Time getHoraEntrada() {
+    public void setIdEmpleado(String idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    public Integer getIdDia() {
+        return idDia;
+    }
+
+    public void setIdDia(Integer idDia) {
+        this.idDia = idDia;
+    }
+
+    public Time getHora_entrada() {
         return hora_entrada;
     }
 
-    public void setHoraEntrada(Time hora_entrada) {
+    public void setHora_entrada(Time hora_entrada) {
         this.hora_entrada = hora_entrada;
     }
 
-    public Time getHoraSalida() {
+    public Time getHora_salida() {
         return hora_salida;
     }
-    public void setHoraSalida(Time hora_salida) {
+
+    public void setHora_salida(Time hora_salida) {
         this.hora_salida = hora_salida;
     }
 
-    public int getMinutosJornada() {
+    public int getMinutos_jornada() {
         return minutos_jornada;
     }
 
-    public void setMinutosJornada(int minutos_jornada) {
+    public void setMinutos_jornada(int minutos_jornada) {
         this.minutos_jornada = minutos_jornada;
     }
+    
 }
