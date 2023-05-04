@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+
+	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+                <div style="display: flex;justify-content: flex-start;gap:2%">
+                    <img th:src="@{/img/vacaciones.png}" width="30" height="30" alt="">
+                    <h4 th:text="Vacaciones"></h4>
+                </div>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th th:text="#{ausencias.ausencia.inicio}">Inicio</th>
+								<th th:text="#{ausencias.ausencia.fin}">Fin</th>
+								<th th:text="#{ausencias.ausencia.tipo_ausencia}">Tipo de ausencia</th>
+								<th th:text="#{ausencias.ausencia.autorizada}">Autorizada</th>
+								<th th:text="#{ausencias.ausencia.n_dias}">Dias</th>
+                                <th th:text="#{ausencias.ausencia.fecha_comunicacion}">Fecha de Comunicacion</th>
+                                <th th:text="#{ausencias.ausencia.notas}">Notas</th>
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="a : ${vacaciones}">
+							<div class="wrap">
+								<td th:text="${a.inicio}">Inicio</td>
+								<td th:text="${a.fin}">Fin</td>
+								<td th:text="${a.tipo_ausencia}">Tipo de ausencia</td>
+								<td th:text="${a.autorizada}">Autorizada</td>
+								<td th:text="${a.n_dias}">Dias</td>
+                                <td th:text="${a.fecha_comunicacion}">Fecha de Comunicacion</td>
+                                <td th:text="${a.notas}">Notas</td>
+								<!--td>
+									<a th:href="@{ausencias/} + ${Ausencia.id_puesto}"
+										th:text="#{puestos.acciones.candidatos}" class="btn btn-outline-danger"></a>
+								</td-->
+							</div>
+							</span>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layouts/base::footer(light)"></footer>
+</body>
+
+</html>

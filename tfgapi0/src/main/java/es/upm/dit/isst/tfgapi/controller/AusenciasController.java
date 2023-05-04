@@ -36,11 +36,8 @@ public class AusenciasController {
 
     @GetMapping("/ausencias/{idEmpleado}")
 
-    ResponseEntity<Ausencias> read(@PathVariable String idEmpleado) {
-
-        return ausenciasRepository.findById(idEmpleado).map(ausencia -> ResponseEntity.ok().body(ausencia))
-                .orElse(new ResponseEntity<Ausencias>(HttpStatus.NOT_FOUND));
-
+    List<Ausencias> readByIdEmpleado(@PathVariable String idEmpleado) {
+        return (List<Ausencias>) ausenciasRepository.findByidEmpleado(idEmpleado);
     }
 
     @PostMapping("/ausencias")

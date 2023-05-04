@@ -1,5 +1,8 @@
 package es.upm.dit.isst.tfg.tfgwebapp.controller;
 
+import java.util.stream.Collectors;
+
+
 import java.io.Console;
 import java.lang.reflect.Array;
 import java.security.Principal;
@@ -77,6 +80,34 @@ public class AusenciasController {
         return "gestion";
 
     }
+    @GetMapping("/vacaciones")
+    public String getAusenciasPorIdEmpleado(Principal principal, Model model) {
+        try {
+            System.out.println(principal.getName());
+            RestTemplate restTemplate1 = new RestTemplate();
+
+            Empleado empleado2 = restTemplate1.getForObject("http://localhost:8083/datos/"
+
+                    + principal.getName(), Empleado.class);
+            String idEmpLog = empleado2.getIdEmpleado();
+
+            if (empleado2 != null) {
+                String url = "http://localhost:8083/ausencias/" + idEmpLog;
+                RestTemplate restTemplate = new RestTemplate();
+                Ausencias[] ausenciasArray = restTemplate.getForObject(url, Ausencias[].class);
+                List<Ausencias> ausencias = Arrays.asList(ausenciasArray);
+                model.addAttribute("vacaciones", ausencias);
+                return "vacaciones";
+            }
+        } catch (Exception e) {
+            return "401";
+
+        }
+        return "401";
+    }
+    
+    
+
 
     @PostMapping("/guardarausencia")
 

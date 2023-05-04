@@ -79,9 +79,11 @@
                                 <!--input type="submit" th:value="#{empleados.acciones.guardar}" class="btn btn-outline-primary">
                                 <a th:href="@{${accion} == 'guardar' AND  !${#fields.hasErrors('*')} ? 'lista' : '/crear'}"
                                 class="btn btn-outline-danger" th:text="#{empleados.acciones.cancelar}"></a-->
-                                <input type="submit" th:value="Solicitar" class="btn btn-outline-primary">
-                                <a th:href="@{/guardarausencia}"></a>
-                                <!-- a th:href="@{${accion} == 'guardar' OR ${#fields.hasErrors('*')} ? 'lista' : '../lista'}" class="btn btn-outline-danger" th:text="#{tfgs.acciones.cancelar}"></a-->
+                                <a th:href="@{/guardarausencia}" class="btn btn-outline-primary btn-block"
+                                th:text="Solicitar"></a>
+                            <!-- a th:href="@{${accion} == 'guardar' OR ${#fields.hasErrors('*')} ? 'lista' : '../lista'}" class="btn btn-outline-danger" th:text="#{tfgs.acciones.cancelar}"></a-->
+                            <a th:href="@{/vacaciones}" class="btn btn-outline-primary btn-block"
+                                th:text="Vacaciones"></a>
                             </div>
                         </div>
                     </form>
