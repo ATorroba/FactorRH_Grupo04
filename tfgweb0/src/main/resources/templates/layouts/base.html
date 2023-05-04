@@ -65,6 +65,9 @@
 					</li>
 
 					<span class="RR" sec:authorize="hasRole('ROLE_CONTROLADOR')">
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/permisos/lista}" th:text="#{permisos.ver.titulo}"></a>
+						</li>
 
 					</span>
 					<span class="RR" sec:authorize="hasRole('ROLE_HABILITADO')">

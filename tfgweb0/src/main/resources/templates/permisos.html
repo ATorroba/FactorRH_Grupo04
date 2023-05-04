@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+
+	<div class="container">
+		<div class="card bg-light">
+            <div class="card-header"></div>
+                <div style="display: flex;justify-content: flex-start;gap:2%">
+                    <h4 th:text="#{permisos.lista.titulo}"></h4>
+                </div>
+            </div>
+			<div class="card-body">
+				
+				<table class="table table-striped">
+					<thead>
+						<tr>
+                            <div class="wrap">
+                                <th th:text="#{permisos.Permisos.ejercicio}">Ejercicio</th>
+                                <th th:text="#{permisos.Permisos.idEmpleado}">Id empleado</th>
+                                <th th:text="#{permisos.Permisos.vacaciones}">Dias de vacaciones disponibles</th>
+                                <th th:text="#{permisos.Permisos.diasGracia}">Dias gracia</th>
+						    </div>	
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="p : ${Totpermisos}">
+							<div class="wrap">
+                                <td th:text="${p.ejercicio}">Ejercicio</td>
+							    <td th:text="${p.idEmpleado}">Id empleado</td>
+                                <td th:text="${p.vacaciones}">Dias de vacaciones disponibles</td>
+                                <td th:text="${p.diasGracia}">Dias gracia</td>
+                           
+                            </div>
+                        </span>
+						</tr>
+					</tbody>
+					
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<footer th:replace="layouts/base::footer(light)"></footer>
+</body>
+</html>

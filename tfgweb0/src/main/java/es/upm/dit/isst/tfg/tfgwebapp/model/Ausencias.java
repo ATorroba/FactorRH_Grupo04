@@ -19,7 +19,7 @@ public class Ausencias {
     private String fin;// date
     private String tipo_ausencia;
     private String autorizada;
-    private Double n_dias;
+    private Integer n_dias;
     private String fecha_comunicacion;// date
     private String notas;
 
@@ -67,11 +67,11 @@ public class Ausencias {
         this.autorizada = autorizada;
     }
 
-    public Double getN_dias() {
+    public Integer getN_dias() {
         return n_dias;
     }
 
-    public void setN_dias(Double n_dias) {
+    public void setN_dias(Integer n_dias) {
         this.n_dias = n_dias;
     }
 

@@ -12,6 +12,8 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 import es.upm.dit.isst.tfg.tfgwebapp.model.Ausencias;
+import es.upm.dit.isst.tfg.tfgwebapp.model.Permisos;
+
 import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
 import java.util.Arrays;
 
@@ -81,30 +83,56 @@ public class AusenciasController {
 
     }
     @GetMapping("/vacaciones")
-    public String getAusenciasPorIdEmpleado(Principal principal, Model model) {
-        try {
-            System.out.println(principal.getName());
-            RestTemplate restTemplate1 = new RestTemplate();
+public String getAusenciasPorIdEmpleado(Principal principal, Model model) {
+    try {
+        RestTemplate restTemplate1 = new RestTemplate();
 
-            Empleado empleado2 = restTemplate1.getForObject("http://localhost:8083/datos/"
+        Empleado empleado2 = restTemplate1.getForObject("http://localhost:8083/datos/" + principal.getName(), Empleado.class);
+        String idEmpLog = empleado2.getIdEmpleado();
 
-                    + principal.getName(), Empleado.class);
-            String idEmpLog = empleado2.getIdEmpleado();
+        if (empleado2 != null) {
+            String url = "http://localhost:8083/ausencias/" + idEmpLog;
+            RestTemplate restTemplate = new RestTemplate();
+            Ausencias[] ausenciasArray = restTemplate.getForObject(url, Ausencias[].class);
+            List<Ausencias> ausencias = Arrays.asList(ausenciasArray);
 
-            if (empleado2 != null) {
-                String url = "http://localhost:8083/ausencias/" + idEmpLog;
-                RestTemplate restTemplate = new RestTemplate();
-                Ausencias[] ausenciasArray = restTemplate.getForObject(url, Ausencias[].class);
-                List<Ausencias> ausencias = Arrays.asList(ausenciasArray);
-                model.addAttribute("vacaciones", ausencias);
-                return "vacaciones";
+            url = "http://localhost:8083/permisos/" + idEmpLog;
+            restTemplate = new RestTemplate();
+            Permisos[] permisosArray = restTemplate.getForObject(url, Permisos[].class);
+            List<Permisos> permisos = Arrays.asList(permisosArray);
+            int vacacionesTotales = permisos.get(0).getVacaciones();
+
+
+            // Filtrar las ausencias por tipo_ausencia = "vac"
+            List<Ausencias> vacaciones = ausencias.stream()
+                .filter(a -> "vac".equals(a.getTipo_ausencia()))
+                .collect(Collectors.toList());
+                    
+            int vacacionesGastadas = 0;
+            for (Ausencias vacacion : vacaciones) {
+                if(vacacion.getN_dias() != null){
+                    vacacionesGastadas += vacacion.getN_dias();
+                }else {
+                    continue;
+                }
+               
             }
-        } catch (Exception e) {
-            return "401";
+            int vacacionesDisponibles = vacacionesTotales - vacacionesGastadas;
 
+            model.addAttribute("vacacionesTotales", vacacionesTotales);
+            model.addAttribute("vacacionesDisponibles", vacacionesDisponibles);
+            model.addAttribute("vacaciones", vacaciones);
+            return "vacaciones";
         }
+    } catch (Exception e) {
         return "401";
+
     }
+    return "401";
+}
+
+
+    
     
     
 
