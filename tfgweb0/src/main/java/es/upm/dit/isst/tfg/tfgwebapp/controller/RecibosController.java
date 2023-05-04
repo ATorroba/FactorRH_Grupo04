@@ -49,7 +49,7 @@ public class RecibosController {
         return RECIBOS_REMESA;
     }
 
-    @GetMapping("/remesas/empleado/{id}")
+    @GetMapping("/empleado/recibos/{id}")
     public String recibos_empleado(String id, Model model, Principal principal) {
 
         List<Recibo> lista_recibos = new ArrayList<Recibo>();

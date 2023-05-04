@@ -16,7 +16,7 @@ import es.upm.dit.isst.tfgapi.model.Remesa;
 public class RemesasController {
     private final RemesasRepository remRepository;
     public static final Logger log = LoggerFactory.getLogger(RemesasRepository.class);
-    
+
     public RemesasController(RemesasRepository rem) {
         this.remRepository = rem;
     }
@@ -28,6 +28,7 @@ public class RemesasController {
 
     @PostMapping("/remesas")
     ResponseEntity<Remesa> create(@RequestBody Remesa newRem) throws URISyntaxException {
+        newRem.setEstado("1");
         Remesa result = remRepository.save(newRem);
         return ResponseEntity.created(new URI("/remesas/" + result.getIdRemesa())).body(result);
     }
@@ -70,12 +71,13 @@ public class RemesasController {
     @PostMapping("/remesas/{id}/emitida")
     ResponseEntity<Remesa> emitida(@PathVariable Integer id) {
         return remRepository.findById(id).map(remesa -> {
-            if (remesa.getEstado() == "2") {remesa.setEstado("3");};
             if (remesa.getFecha_remesa() == null) {
                 java.util.Date fechaActual = new java.util.Date();
                 java.sql.Date fecha = new java.sql.Date(fechaActual.getTime());
                 remesa.setFecha_remesa(fecha);
             }
+            if ("2".equals(remesa.getEstado()))
+                remesa.setEstado("3");
             remRepository.save(remesa);
             return ResponseEntity.ok().body(remesa);
         }).orElse(new ResponseEntity<Remesa>(HttpStatus.NOT_FOUND));
@@ -84,7 +86,8 @@ public class RemesasController {
     @PostMapping("/remesas/{id}/pagada")
     ResponseEntity<Remesa> pagada(@PathVariable Integer id) {
         return remRepository.findById(id).map(remesa -> {
-            if (remesa.getEstado() == "3") {remesa.setEstado("4");};
+            if ("3".equals(remesa.getEstado()))
+                remesa.setEstado("4");
             if (remesa.getFecha_pago() == null) {
                 java.util.Date fechaActual = new java.util.Date();
                 java.sql.Date fecha = new java.sql.Date(fechaActual.getTime());
@@ -94,6 +97,5 @@ public class RemesasController {
             return ResponseEntity.ok().body(remesa);
         }).orElse(new ResponseEntity<Remesa>(HttpStatus.NOT_FOUND));
     }
-
 
 }

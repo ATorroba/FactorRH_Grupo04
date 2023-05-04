@@ -30,10 +30,15 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{remesa.remesa.idRemesa}"></label>
 						<div class="col-sm-6">
-							<!--input type="text" th:field="*{idRemesa}" readonly-->
+							<!--strong>
+								<input type="text" th:field="*{idRemesa}" readonly>
+							</strong-->
 							<strong>
-								<span th:text="*{idRemesa}">
-								</span></strong>
+							<span th:text="*{idRemesa}">
+							</span></strong>
+							<input type="hidden" th:field="*{idRemesa}" />
+							<input type="hidden" th:field="*{estado}" />
+							
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('idRemesa')}"
 								th:errors="*{idRemesa}"></small>
 						</div>
@@ -73,8 +78,10 @@
 						<label class="col-sm-2 col-form-label" th:text="#{remesa.remesa.tipo_nomina}"></label>
 						<div class="col-sm-6">
 							<select th:field="*{tipo_nomina}">
-								<option value="1" th:text="#{remesa.remesa.nomina_ordinaria}"></option>
-								<option value="2" th:text="#{remesa.remesa.extra}"></option>
+								<option value="1" th:text="#{remesa.remesa.nomina_ordinaria}"
+									th:selected="${remesa.tipo_nomina == 1}"></option>
+								<option value="2" th:text="#{remesa.remesa.extra}"
+									th:selected="${remesa.tipo_nomina == 2}"></option>
 							</select>
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('tipo_nomina')}"
 								th:errors="*{tipo_nomina}"></small>
@@ -84,9 +91,9 @@
 						<label class="col-sm-2 col-form-label" th:text="#{remesa.remesa.estado}"></label>
 						<div class="col-sm-6">
 							<strong>
-							<span
-								th:text="${remesa.estado == '1' || remesa.estado == null ? 'Pendiente' : (remesa.estado == '2' ? 'Calculada' : (remesa.estado == '3' ? 'Emitida' : (remesa.estado == '4' ? 'Pagada' : 'Otros'))) }">
-							</span></strong>
+								<span
+									th:text="${remesa.estado == '1' || remesa.estado == null ? 'Pendiente' : (remesa.estado == '2' ? 'Calculada' : (remesa.estado == '3' ? 'Emitida' : (remesa.estado == '4' ? 'Pagada' : 'Otros'))) }">
+								</span></strong>
 						</div>
 					</div>
 					<div class="form-group row">
