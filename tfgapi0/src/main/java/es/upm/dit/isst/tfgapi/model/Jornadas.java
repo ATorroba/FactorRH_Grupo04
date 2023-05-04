@@ -1,15 +1,21 @@
 package es.upm.dit.isst.tfgapi.model;
 
 import javax.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalTime;
 
-import javax.persistence.EmbeddedId;
 
 @Entity
+@Table(name = "Jornadas")
+@IdClass(value = jornadasPK.class)
 public class Jornadas {
 
-    @EmbeddedId
-    private jornadasPK clave;
+    @Id
+    @Column(name = "idEmpleado", length = 4)
+    private String idEmpleado;
+    @Id
+    private LocalDate fecha;
     private LocalTime hora_entrada;
     private LocalTime hora_salida;
     private LocalTime entrada_teorica;
@@ -27,11 +33,17 @@ public class Jornadas {
 
     }
 
-    public jornadasPK getClave() {
-        return clave;
+    public String getIdEmpleado() {
+        return idEmpleado;
     }
-    public void setClave(jornadasPK clave) {
-        this.clave = clave;
+    public void setIdEmpleado(String idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+    public LocalDate getFecha() {
+        return fecha;
+    }
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
     public LocalTime getHora_entrada() {
         return hora_entrada;

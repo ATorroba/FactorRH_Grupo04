@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import es.upm.dit.isst.tfgapi.model.Jornadas;
@@ -24,14 +25,15 @@ public class JornadasController {
     }
 
     @GetMapping("/jornadas")
-    List<Jornadas> readAll() {
-        return (List<Jornadas>) jornadasRepository.findAll();
+    List<Jornadas> readAllJornadas() {
+       Iterable<Jornadas> listaJornadas =  jornadasRepository.findAll();
+       return (List<Jornadas>) listaJornadas;
     }
     
     @PostMapping("/jornadas")
     ResponseEntity<Jornadas> create(@RequestBody Jornadas newJornada) throws URISyntaxException {
         Jornadas result = jornadasRepository.save(newJornada);
-        return ResponseEntity.created(new URI("/jornada/" + result.getClave().getIdEmpleado() + "/" + result.getClave().getFecha())).body(result);
+        return ResponseEntity.created(new URI("/jornada/" + result.getIdEmpleado() + "/" + result.getFecha())).body(result);
     }
 
     @GetMapping("/jornadas/{idEmpleado}/{fecha}")
@@ -46,6 +48,8 @@ public class JornadasController {
     ResponseEntity<Jornadas> update(@RequestBody Jornadas newJornada, @PathVariable String idEmpleado, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
         jornadasPK jornadaPk = new jornadasPK(idEmpleado, fecha);
         return jornadasRepository.findById(jornadaPk).map(jornada -> {
+            jornada.setIdEmpleado(newJornada.getIdEmpleado());
+            jornada.setFecha(newJornada.getFecha());
             jornada.setHora_entrada(newJornada.getHora_entrada());
             jornada.setHora_salida(newJornada.getHora_salida());
             jornada.setEntrada_teorica(newJornada.getEntrada_teorica());
@@ -71,11 +75,11 @@ public class JornadasController {
 
     @GetMapping("/jornadas/empleado/{idEmpleado}")
     List<Jornadas> jornadasEmpleado(@PathVariable String idEmpleado) {
-        return (List<Jornadas>) jornadasRepository.findByClave_IdEmpleado(idEmpleado);
+        return (List<Jornadas>) jornadasRepository.findByIdEmpleado(idEmpleado);
     }
 
     @GetMapping("/jornadas/fecha/{fecha}")
     List<Jornadas> jornadasFecha(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
-        return (List<Jornadas>) jornadasRepository.findByClave_Fecha(fecha);
+        return (List<Jornadas>) jornadasRepository.findByFecha(fecha);
     }
 }

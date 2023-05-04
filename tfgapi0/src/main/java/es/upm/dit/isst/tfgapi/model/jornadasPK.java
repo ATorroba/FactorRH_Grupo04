@@ -4,9 +4,7 @@ import java.util.Objects;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.persistence.Embeddable;
 
-@Embeddable
 public class jornadasPK implements Serializable { 
     
     @Column(name = "idEmpleado", length = 4)
@@ -14,11 +12,11 @@ public class jornadasPK implements Serializable {
 
     private LocalDate fecha;
 
-    public jornadasPK() {
+    public jornadasPK(){
 
     }
 
-    public jornadasPK(String idEmpleado, LocalDate fecha) {
+    public jornadasPK(String idEmpleado, LocalDate fecha){
         this.idEmpleado = idEmpleado;
         this.fecha = fecha;
     }
@@ -35,20 +33,4 @@ public class jornadasPK implements Serializable {
     public int hashCode() {
         return Objects.hash(idEmpleado, fecha);
     }
-
-    public String getIdEmpleado() {
-        return idEmpleado;
-    }
-
-    public void setIdEmpleado(String idEmpleado) {
-        this.idEmpleado = idEmpleado;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    } 
 }
