@@ -4,16 +4,90 @@
 
 <head th:replace="layouts/base::head(light,${date})">
     <meta charset="UTF-8" />
+    <style>
+        .error {
+            color: red;
+            display: none;
+        }
+        .container {
+            border: 1px solid #0073e6;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .title-bar {
+            background-color: #0073e6;
+            color: white;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6em;
+            box-sizing: border-box;
+            font-size: 1.2rem;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 1em;
+            box-sizing: border-box;
+        }
+        button {
+            font-size: 1.5rem;
+            padding: 1em;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            text-align: center;
+            width: 48%;
+            height: 3.5em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button:hover {
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .entrada {
+            background-color: #228B22;
+            color: white;
+        }
+        .salida {
+            background-color: #8B0000;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
     <header th:replace="layouts/base::header(dark,${date})"></header>
 
     <div class="LL">
-        <h1>Escoge una acción</h1>
+        <h1>Escoge una acción, y que no se te olvide fichar</h1>
     </div>
 
-
+    <div class="container">
+        <h1 class="title-bar">Fichaje :</h1>
+        <div class="button-container">
+            <form th:action="@{/fichar/entrada}" method="post">
+                <button type="submit" class="entrada">Fichar entrada</button>
+            </form>
+            <form th:action="@{/fichar/salida}" method="post">
+                <button type="submit" class="salida">Fichar salida</button>
+            </form>
+        </div>
+    </div>
+    <div id="error" class="error" th:text="${error}"></div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        if ("[[${error}]]" != "") {
+            showError();
+        }
+        /*]]>*/
+    </script>
 
 </body>
 
