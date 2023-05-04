@@ -32,18 +32,14 @@ public class ControllerPermisos {
     }
 
     @GetMapping("/permisos")
-
     List<Permisos> readAll() {
         return (List<Permisos>) permisosRepository.findAll();
-
     }
 
-    @GetMapping("/tfgs/{idEmpleado}")
-    ResponseEntity<Permisos> read(@PathVariable String idEmpleado) {
-        return permisosRepository.findById(idEmpleado).map(permiso ->
-            ResponseEntity.ok().body(permiso)
-            ).orElse(new ResponseEntity<Permisos>(HttpStatus.NOT_FOUND));
+    @GetMapping("/permisos/{idEmpleado}")
 
+    List<Permisos> readByIdEmpleado(@PathVariable String idEmpleado) {
+        return (List<Permisos>) permisosRepository.findByidEmpleado(idEmpleado);
     }
 
     

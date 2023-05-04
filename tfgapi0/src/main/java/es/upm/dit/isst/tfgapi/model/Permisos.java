@@ -12,7 +12,7 @@ public class Permisos {
     @Column(name = "idEmpleado", length = 4)
     private String idEmpleado;
     private Integer vacaciones;
-    private Integer dias_gracia;
+    private Integer diasGracia;
 
     public Permisos(){
 
@@ -40,10 +40,10 @@ public Integer getEjercicio(){
     }
 
     public Integer getDiasGracia() {
-        return dias_gracia;
+        return diasGracia;
     }
 
-    public void setDiasGracia(Integer dias_gracia) {
-        this.dias_gracia = dias_gracia;
+    public void setDiasGracia(Integer diasGracia) {
+        this.diasGracia = diasGracia;
     }
 }
