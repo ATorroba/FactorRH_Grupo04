@@ -102,3 +102,57 @@ footer .info-copyrigth {
 header .idiomas {
 	padding: 0 10px;
 }
+.error {
+	color: red;
+	display: none;
+}
+.container {
+	border: 1px solid #0073e6;
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.title-bar {
+	background-color: #0073e6;
+	color: white;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.6em;
+	box-sizing: border-box;
+	font-size: 1.2rem;
+}
+.button-container {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	padding: 1em;
+	box-sizing: border-box;
+}
+button {
+	font-size: 1.5rem;
+	padding: 1em;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+	text-align: center;
+	width: 48%;
+	height: 3.5em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+button:hover {
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.entrada {
+	background-color: green;
+	color: white;
+}
+.salida {
+	background-color: #8B0000;
+	color: white;
+}
