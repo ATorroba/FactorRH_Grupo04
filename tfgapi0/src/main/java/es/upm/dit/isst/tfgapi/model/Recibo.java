@@ -1,5 +1,4 @@
 package es.upm.dit.isst.tfgapi.model;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,9 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.OnDelete;
@@ -25,6 +23,7 @@ public class Recibo{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idRecibo")
     private Integer idRecibo;
+    @OrderBy("idEmpleado")
     @ManyToOne(optional = false)
     @JoinColumn(name="idRemesa")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -32,12 +31,13 @@ public class Recibo{
     @ManyToOne(optional = false)
     @JoinColumn(name = "idEmpleado")
     private Empleado idEmpleado;
-    @Temporal(TemporalType.DATE)
-    private Date fecha_pago;
     @Column(name = "IBAN", length = 24)
     private String IBAN;
     @Column(name = "SWIFT", length = 11)
     private String SWIFT;
+    private Double bruto;
+    private Double deduccion;
+    private Double neto;
 
     public Recibo(){
     }
@@ -66,15 +66,7 @@ public class Recibo{
         this.idEmpleado = idEmpleado;
     }
 
-    public Date getFecha_pago() {
-        return fecha_pago;
-    }
-
-    public void setFecha_pago(Date fecha_pago) {
-        this.fecha_pago = fecha_pago;
-    }
-
-    public String getIBAN() {
+     public String getIBAN() {
         return IBAN;
     }
 
@@ -90,4 +82,29 @@ public class Recibo{
         SWIFT = sWIFT;
     }
 
+    public Double getBruto() {
+        return bruto;
+    }
+
+    public void setBruto(Double bruto) {
+        this.bruto = bruto;
+    }
+
+    public Double getDeduccion() {
+        return deduccion;
+    }
+
+    public void setDeduccion(Double deduccion) {
+        this.deduccion = deduccion;
+    }
+
+    public Double getNeto() {
+        return neto;
+    }
+
+    public void setNeto(Double neto) {
+        this.neto = neto;
+    }
+
+    
 }

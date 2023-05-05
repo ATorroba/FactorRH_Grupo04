@@ -74,9 +74,11 @@ public class RecibosController {
         return recRepository.findById(id).map(recibo -> {
             recibo.setIdRemesa(newRec.getIdRemesa());
             recibo.setIdEmpleado(newRec.getIdEmpleado());
-            recibo.setFecha_pago(newRec.getFecha_pago());
             recibo.setIBAN(newRec.getIBAN());
             recibo.setSWIFT(newRec.getSWIFT());
+            recibo.setBruto(newRec.getBruto());
+            recibo.setDeduccion(newRec.getDeduccion());
+            recibo.setNeto(newRec.getNeto());
             recRepository.save(recibo);
             return ResponseEntity.ok().body(recibo);
         }).orElse(new ResponseEntity<Recibo>(HttpStatus.NOT_FOUND));

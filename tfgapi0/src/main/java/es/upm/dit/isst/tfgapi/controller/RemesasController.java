@@ -48,6 +48,9 @@ public class RemesasController {
             remesa.setEstado(newRemesa.getEstado());
             remesa.setFecha_pago(newRemesa.getFecha_pago());
             remesa.setFecha_remesa(newRemesa.getFecha_remesa());
+            remesa.setBruto(newRemesa.getBruto());
+            remesa.setDeduccion(newRemesa.getDeduccion());
+            remesa.setNeto(newRemesa.getNeto());
             remRepository.save(remesa);
             return ResponseEntity.ok().body(remesa);
         }).orElse(new ResponseEntity<Remesa>(HttpStatus.NOT_FOUND));

@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.OrderBy;
+
 
 @Entity
 @Table(name = "Remesa", uniqueConstraints = {
@@ -20,6 +22,7 @@ public class Remesa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idRemesa")
     private Integer idRemesa;
+    @OrderBy("ejercicio DESC, mes DESC, tipo_nomina asc")
     private Integer ejercicio;
     private Integer mes;
     @Column(name = "tipo_nomina", length = 1)
@@ -30,6 +33,10 @@ public class Remesa {
     private Date fecha_remesa;
     @Temporal(TemporalType.DATE)
     private Date fecha_pago;
+    private Double bruto;
+    private Double deduccion;
+    private Double neto;
+    
 
     public Remesa() {
     }
@@ -88,6 +95,30 @@ public class Remesa {
 
     public void setFecha_pago(Date fecha_pago) {
         this.fecha_pago = fecha_pago;
+    }
+
+    public Double getBruto() {
+        return bruto;
+    }
+
+    public void setBruto(Double bruto) {
+        this.bruto = bruto;
+    }
+
+    public Double getDeduccion() {
+        return deduccion;
+    }
+
+    public void setDeduccion(Double deduccion) {
+        this.deduccion = deduccion;
+    }
+
+    public Double getNeto() {
+        return neto;
+    }
+
+    public void setNeto(Double neto) {
+        this.neto = neto;
     }
 
 }

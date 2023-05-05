@@ -19,6 +19,10 @@ public class Remesa {
     public String fecha_remesa; // Date
     public String fecha_pago; // Date
 
+    private Double bruto;
+    private Double deduccion;
+    private Double neto;
+
     public Remesa() {
     }
 
@@ -78,12 +82,29 @@ public class Remesa {
         this.fecha_pago = fecha_pago;
     }
 
-    @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return super.toString();
+    public Double getBruto() {
+        return bruto;
     }
 
+    public void setBruto(Double bruto) {
+        this.bruto = bruto;
+    }
 
+    public Double getDeduccion() {
+        return deduccion;
+    }
+
+    public void setDeduccion(Double deduccion) {
+        this.deduccion = deduccion;
+    }
+
+    public Double getNeto() {
+        return neto;
+    }
+
+    public void setNeto(Double neto) {
+        this.neto = neto;
+    }
+    
     
 }

@@ -6,9 +6,11 @@ public class Recibo {
     public Integer idRecibo;
     public Remesa idRemesa;
     public Empleado idEmpleado;
-    public String fecha_pago; // Date
     public String SWIFT;
     public String IBAN;
+    private Double bruto;
+    private Double deduccion;
+    private Double neto;
         
     public Recibo() {
     }
@@ -25,10 +27,6 @@ public class Recibo {
         return idEmpleado;
     }
 
-    public String getFecha_pago() {
-        return fecha_pago;
-    }
-
     public String getSWIFT() {
         return SWIFT;
     }
@@ -36,5 +34,19 @@ public class Recibo {
     public String getIBAN() {
         return IBAN;
     }
-        
+
+    public Double getBruto() {
+        return bruto;
+    }
+
+    public Double getDeduccion() {
+        return deduccion;
+    }
+
+    public Double getNeto() {
+        return neto;
+    }
+    
+    
+    
 }

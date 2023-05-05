@@ -24,6 +24,7 @@
 								<th th:text="#{recibos.lista.estado}">Estado</th>
 								<th th:text="#{recibos.lista.fpago}">Fecha pago</th>
 								<th th:text="#{recibos.lista.empleado}">Empleado</th>
+								<th th:text="#{recibos.lista.neto}">Neto</th>
 							</div>
 						</tr>
 					</thead>
@@ -42,6 +43,7 @@
 								<td
 									th:text="${recibo.idEmpleado.nombre + ' ' + recibo.idEmpleado.apellido_1 + ' ' + recibo.idEmpleado.apellido_2}">
 								</td>
+								<td th:text="${#numbers.formatCurrency(recibo.neto)}"></td>
 								<td>
 									<a th:href="@{conceptos/recibo/} + ${recibo.idRecibo}"
 										th:text="#{recibo.acciones.detalle}" class="btn btn-outline-primary"></a>

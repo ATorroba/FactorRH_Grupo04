@@ -22,6 +22,9 @@
 								<th th:text="#{remesa.remesa.periodo}">Periodo</th>
 								<th th:text="#{remesa.remesa.tipo_nomina}">Tipo</th>
 								<th th:text="#{remesa.remesa.estado}">Estado</th>
+								<th th:text="#{remesa.remesa.bruto}">Bruto</th>
+								<th th:text="#{remesa.remesa.neto}">Neto</th>
+
 							</div>
 						</tr>
 					</thead>
@@ -36,7 +39,10 @@
 								<td
 									th:text="${remesa.estado == '1' ? 'Pendiente' : (remesa.estado == '2' ? 'Calculada' : (remesa.estado == '3' ? 'Emitida' : (remesa.estado == '4' ? 'Pagada' : 'Otros'))) }">
 								</td>
-
+								<td th:text="${#numbers.formatCurrency(remesa.bruto)}"></td>
+								<td th:text="${#numbers.formatCurrency(remesa.neto)}"></td>
+								
+								
 								<td>
 									<a th:if="${remesa.estado == '1'}" th:href="@{calcular/} + ${remesa.idRemesa}"
 										th:text="#{remesa.acciones.calcular}" class="btn btn-outline-primary"></a>
@@ -48,25 +54,26 @@
 								</td>
 
 								<td>
-									<a th:if="${remesa.estado == '1'}" th:href="@{editar/} + ${remesa.idRemesa}" th:text="#{remesa.acciones.editar}"
-										class="btn btn-outline-primary"></a>
+									<a th:if="${remesa.estado == '1'}" th:href="@{editar/} + ${remesa.idRemesa}"
+										th:text="#{remesa.acciones.editar}" class="btn btn-outline-primary"></a>
 								</td>
 
 								<td th:if="${remesa.estado == '1' or remesa.estado == '2'}">
-									<a th:href="@{eliminar/} + ${remesa.idRemesa}" th:text="#{remesa.acciones.eliminar}" class="btn btn-outline-danger"
+									<a th:href="@{eliminar/} + ${remesa.idRemesa}" th:text="#{remesa.acciones.eliminar}"
+										class="btn btn-outline-danger"
 										onclick="return confirm('¿Está seguro que desea eliminar esta remesa?')"></a>
 								</td>
-								
+
 								<td>
 									<a th:if="${remesa.estado >= '2'}" th:href="@{emitir/} + ${remesa.idRemesa}"
 										th:text="#{remesa.acciones.emitir}" class="btn btn-outline-danger"></a>
 								</td>
-								
+
 								<td>
 									<a th:if="${remesa.estado == '3'}" th:href="@{pagar/} + ${remesa.idRemesa}"
 										th:text="#{remesa.acciones.pagar}" class="btn btn-outline-primary"></a>
 								</td>
-								
+
 							</div>
 							</span>
 						</tr>
