@@ -46,7 +46,7 @@
 								<td th:text="${#numbers.formatCurrency(recibo.deduccion)}"></td>
 								<td th:text="${#numbers.formatCurrency(recibo.neto)}"></td>
 								<td>
-									<a th:href="@{./recibo/} + ${recibo.idRecibo}"
+									<a th:href="@{/empleado/recibos/recibo/} + ${recibo.idRecibo}"
 										th:text="#{recibo.acciones.detalle}" class="btn btn-outline-primary"></a>
 								</td>
 							</div>
@@ -56,7 +56,7 @@
 					<tfoot>
 						<tr>
 							<td colspan="1">
-								<a th:href="@{/recibos}" class="btn btn-outline-primary btn-block"
+								<a th:href="@{/}" class="btn btn-outline-primary btn-block"
 									th:text="#{recibos.lista.volver}"></a>
 							</td>
 						</tr>
