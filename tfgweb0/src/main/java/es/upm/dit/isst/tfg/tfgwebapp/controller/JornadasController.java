@@ -66,9 +66,11 @@ public class JornadasController {
             jornada.setIdEmpleado(idEmpleado);
             jornada.setFecha(fecha);
             jornada.setHora_entrada(horaActual);
+            jornada.setEstado("fe");
             restTemplate.postForObject(JORNADASMANAGER_STRING, jornada, Jornadas.class);
         } else if (jornada.getHora_entrada() == null){
             jornada.setHora_entrada(horaActual);
+            jornada.setEstado("fe");
             restTemplate.put(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha, jornada, Jornadas.class);
         }else {
             model.addAttribute("error", "Ya ha fichado la entrada, no puede volver a fichar su entrada hasta mañana");
@@ -110,6 +112,15 @@ public class JornadasController {
            
         } else if (jornada.getHora_salida() == null && horaActual.isAfter(jornada.getHora_entrada())) {
             jornada.setHora_salida(horaActual);
+            jornada.setEstado("1");
+            int horaEntr = jornada.getHora_entrada().getHour();
+            int minEntr = jornada.getHora_entrada().getMinute();
+            int minutosEnt = horaEntr * 60 + minEntr;
+            int horaSal = jornada.getHora_salida().getHour();
+            int minSal = jornada.getHora_salida().getMinute();
+            int minutosSal = horaSal * 60 + minSal;
+            int minTrabajados = minutosSal - minutosEnt;
+            jornada.setMinutos_trabajados(minTrabajados);
             restTemplate.put(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha, jornada, Jornadas.class);
         } else {
             model.addAttribute("error", "Por favor fiche la entrada antes de fichar la salida.");

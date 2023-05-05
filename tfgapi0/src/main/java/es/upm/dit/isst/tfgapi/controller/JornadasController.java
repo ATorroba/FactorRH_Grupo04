@@ -82,4 +82,14 @@ public class JornadasController {
     List<Jornadas> jornadasFecha(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
         return (List<Jornadas>) jornadasRepository.findByFecha(fecha);
     }
+
+    @GetMapping("/jornadas/estado/{estado}")
+    List<Jornadas> jornadasEstado(@PathVariable String estado) {
+        return (List<Jornadas>) jornadasRepository.findByEstado(estado);
+    }
+
+    @GetMapping("/jornadas/estado/{estado}/{incidencia}")
+    List<Jornadas> jornadasIncidencia(@PathVariable String estado, @PathVariable String incidencia) {
+        return (List<Jornadas>) jornadasRepository.findByIncidenciaAndEstado(incidencia, estado);
+    }
 }

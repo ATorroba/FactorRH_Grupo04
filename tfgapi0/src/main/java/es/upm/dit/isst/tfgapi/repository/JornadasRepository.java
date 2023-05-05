@@ -12,4 +12,6 @@ import es.upm.dit.isst.tfgapi.model.jornadasPK;
 public interface JornadasRepository extends CrudRepository<Jornadas, jornadasPK> {
     List<Jornadas> findByIdEmpleado(String idEmpleado);
     List<Jornadas> findByFecha(LocalDate fecha);
+    List<Jornadas> findByEstado(String estado);
+    List<Jornadas> findByIncidenciaAndEstado(String incidencia, String estado);
 }
