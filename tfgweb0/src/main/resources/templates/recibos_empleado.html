@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="layouts/base::head(light,${date})">
-	<meta charset="UTF-8" />
+	<meta charset="UTF-8">
 </head>
 
 <body>
 	<header th:replace="layouts/base::header(dark,${date})"></header>
-
 	<div class="container">
 		<div class="card bg-light">
 			<div class="card-header">
-				<h3 th:text="#{recibos.lista.empleado} + ' ' + ${recibos[0].idEmpleado.nombre + ' ' + recibos[0].idEmpleado.apellido_1 + ' ' + recibos[0].idEmpleado.apellido_2}"></h3>
+				<h3
+					th:text="#{recibos.lista.empleado} + ' ' + ${recibos[0].idEmpleado.nombre + ' ' + recibos[0].idEmpleado.apellido_1 + ' ' + recibos[0].idEmpleado.apellido_2}">
+				</h3>
 			</div>
 			<div class="card-body">
 				<table class="table table-striped">

@@ -9,23 +9,24 @@
 <body>
     <header th:replace="layouts/base::header(dark,${date})"></header>
 
-    <div class="LL">
+    <div class="FF">
         <h1>Escoge una acción, y que no se te olvide fichar</h1>
-    </div>
 
-    <div class="container2">
-        <h1 class="title-bar">Fichaje :</h1>
-        <div class="button-container">
-            <form th:action="@{/fichar/entrada}" method="post">
-                <button type="submit" class="entrada">Fichar entrada</button>
-            </form>
-            <form th:action="@{/fichar/salida}" method="post">
-                <button type="submit" class="salida">Fichar salida</button>
-            </form>
+
+        <div class="container">
+            <h1 class="title-bar">Fichaje :</h1>
+            <div class="button-container">
+                <form th:action="@{/fichar/entrada}" method="post">
+                    <button type="submit" class="entrada">Fichar entrada</button>
+                </form>
+                <form th:action="@{/fichar/salida}" method="post">
+                    <button type="submit" class="salida">Fichar salida</button>
+                </form>
+            </div>
         </div>
     </div>
     <div id="error" class="error" th:text="${error}"></div>
-    
+
     <script th:inline="javascript">
         /*<![CDATA[*/
         if ("[[${error}]]" != "") {
