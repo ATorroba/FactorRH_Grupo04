@@ -80,7 +80,7 @@ public class NominaService {
         inicio = Date.valueOf(LocalDate.of(remesa.getEjercicio(), remesa.getMes(), 1));
         fin = Date.valueOf(LocalDate.of(remesa.getEjercicio(), remesa.getMes(), 1)
                 .withDayOfMonth(LocalDate.of(remesa.getEjercicio(), remesa.getMes(), 1).lengthOfMonth()));
-        Long dias_mes = 1 + (fin.getTime() - inicio.getTime()) / (24 * 60 * 60 * 1000);
+        Long dias_mes = 1 + ((fin.getTime() - inicio.getTime()) / (24 * 60 * 60 * 1000));
 
         // System.out.printf("Se obtiene la lista de emplados de %s a %s %n", inicio,
         // fin);
@@ -113,7 +113,7 @@ public class NominaService {
                 hasta = (empleado.getFecha_baja().after(fin)) ? fin : (Date) empleado.getFecha_baja();
             }
 
-            Long dias_trabajo = (hasta.getTime() - desde.getTime()) / (24 * 60 * 60 * 1000);
+            Long dias_trabajo = 1 + ((hasta.getTime() - desde.getTime()) / (24 * 60 * 60 * 1000));
             double unidades = ((double) dias_trabajo) / ((double) dias_mes);
 
             if (empleado.getSueldo_base() == null) {

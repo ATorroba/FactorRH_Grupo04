@@ -166,3 +166,12 @@ button:hover {
 	background-color: #8B0000;
 	color: white;
 }
+
+
+td.alineado-derecha {
+    text-align: right;
+}
+
+.negrita {
+	font-weight: bold;
+}

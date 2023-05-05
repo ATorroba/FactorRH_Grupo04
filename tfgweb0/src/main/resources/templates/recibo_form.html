@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+
+	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h5
+					th:text="#{recibo.nomina.titulo}+ ' ' + ${conceptoR[0].idRecibo.idRecibo} + ' Periodo ' + ${conceptoR[0].idRecibo.idRemesa.ejercicio} + '-' + ${conceptoR[0].idRecibo.idRemesa.mes}">
+				</h5>
+				<h5
+					th:text="#{recibo.nomina.tipo} + ' ' + ${conceptoR[0].idRecibo.idRemesa.tipo_nomina == '1' ? 'Ordinaria' : 'Extra'}">
+				</h5>
+				<h3
+					th:text="${conceptoR[0].idRecibo.idEmpleado.nombre + ' ' + conceptoR[0].idRecibo.idEmpleado.apellido_1 + ' ' +conceptoR[0].idRecibo.idEmpleado.apellido_2}">
+				</h3>
+				<!--h5 th:text="#{recibo.nomina.neto} + ' ' + ${#numbers.formatCurrency(conceptoR[0].idRecibo.neto)}"></h5-->
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th th:text="#{recibo.nomina.cod}">Código</th>
+								<th th:text="#{recibo.nomina.desc}">Cóncepto</th>
+								<th th:text="#{recibo.nomina.unidades}">Unidades/%</th>
+								<th th:text="#{recibo.nomina.precio}">Base</th>
+								<th th:text="#{recibo.nomina.devengo}">Devengo</th>
+								<th th:text="#{recibo.nomina.deduccion}">Deducción</th>
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="conceptoR: ${conceptoR}"
+							th:classappend="${conceptoR.idConcepto.idConcepto == 98 || conceptoR.idConcepto.idConcepto == 99 ? 'negrita' : ''}">
+							<div class="wrap">
+								<td th:text="${conceptoR.idConcepto.idConcepto}"></td>
+								<td th:text="${conceptoR.idConcepto.desc_concepto}"></td>
+								<td th:text="${conceptoR.unidades}"></td>
+								<td th:text="${conceptoR.precio}"></td>
+								<td th:text="${#numbers.formatCurrency(conceptoR.devengo)}"></td>
+								<td th:text="${#numbers.formatCurrency(conceptoR.deduccion)}"></td>
+							</div>
+							</span>
+						</tr>
+					</tbody>
+
+					<tfoot>
+						<div>
+							<h5 th:text="#{recibo.nomina.neto} + ' ' + ${#numbers.formatCurrency(conceptoR[0].idRecibo.neto)}"></h5>
+						</div>
+
+						<tr>
+							<td colspan="1">
+								<a th:href="${'../'+conceptoR[0].idRecibo.idRemesa.idRemesa}"
+									class="btn btn-outline-primary btn-block" th:text="#{recibos.lista.volver}"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			
+		</div>
+	</div>
+	<footer th:replace="layouts/base::footer(light)"></footer>
+</body>
+
+</html>
