@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -19,6 +21,10 @@ import java.util.Arrays;
 import java.util.List;
 import es.upm.dit.isst.tfg.tfgwebapp.model.Jornadas;
 import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
+
+import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.BindingResult;
+import java.util.Map;
 
 
 @Controller
@@ -112,5 +118,63 @@ public class JornadasController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/incidencias")
+    public String recuperarIncidencia(Principal principal, Map<String, Object> model) {
+
+        String idEmpleado;
+
+        try {
+            Empleado empleadoActual = restTemplate.getForObject(DATOSMANAGER_STRING + principal.getName(), Empleado.class);
+            idEmpleado = empleadoActual.getIdEmpleado();
+        } catch (Exception e) {
+            return "401";
+        }
+
+        // Jornadas[] jornadaArray;
+        // List<Jornadas> jornadas;
+        Jornadas jornadaHoy = new Jornadas();
+        LocalDate fecha = LocalDate.now();
+
+        try {
+            jornadaHoy = restTemplate.getForObject(JORNADASMANAGER_STRING + idEmpleado + "/"+ fecha, Jornadas.class);
+
+        } catch (HttpClientErrorException.NotFound ex) {
+        }
+        model.put("jor", jornadaHoy);
+        model.put("accion", "/incidencia/publicarIncidencia");
+        return "incidencias";
+        
+    }
+
+    @PostMapping("/incidencia/publicarIncidencia")
+public String publicarIncidencia(@Validated Jornadas jornada, BindingResult result, Map<String, Object> model) {
+    if (result.hasErrors()) {
+        
+        model.put("org.springframework.validation.BindingResult.jor", result);
+        
+        return "incidencias";
+    }
     
+    try {
+        jornada.setEstado(String.valueOf(1));
+        restTemplate.put(JORNADASMANAGER_STRING + jornada.getIdEmpleado() + "/"+ jornada.getFecha() , jornada, Jornadas.class);
+    } catch (Exception e) {
+
+    }
+    
+    return "redirect:/incidencias";
+}
+    @GetMapping("/form")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("incidenciaForm", new Jornadas());
+        return "formulario";
+    }
+    
+    @PostMapping("/form")
+    public String procesarFormulario(@ModelAttribute Jornadas incidenciaForm) {
+        String incidencia = incidenciaForm.getIncidencia();
+        // hacer algo con el valor de incidencia
+        return "resultado";
+    }
 }
