@@ -53,19 +53,21 @@
 
 					<tfoot>
 						<div>
-							<h5 th:text="#{recibo.nomina.neto} + ' ' + ${#numbers.formatCurrency(conceptoR[0].idRecibo.neto)}"></h5>
+							<h5
+								th:text="#{recibo.nomina.neto} + ' ' + ${#numbers.formatCurrency(conceptoR[0].idRecibo.neto)}">
+							</h5>
 						</div>
 
 						<tr>
 							<td colspan="1">
-								<a th:href="${'../'+conceptoR[0].idRecibo.idRemesa.idRemesa}"
+								<a th:href="${origen == 'remesa' ? '../'+conceptoR[0].idRecibo.idRemesa.idRemesa : '../'+conceptoR[0].idRecibo.idEmpleado.idEmpleado}"
 									class="btn btn-outline-primary btn-block" th:text="#{recibos.lista.volver}"></a>
 							</td>
 						</tr>
 					</tfoot>
 				</table>
 			</div>
-			
+
 		</div>
 	</div>
 	<footer th:replace="layouts/base::footer(light)"></footer>
