@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8">
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3
+					th:text="#{recibos.lista.empleado}">
+				</h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<!--th th:text="#{recibos.lista.idRemesa}">idRemesa</th-->
+								<th th:text="#{recibos.lista.recibo}">Recibo</th>
+								<th th:text="#{recibos.lista.periodo}">Periodo</th>
+								<th th:text="#{recibos.lista.tipo_nomina}">Tipo</th>
+								<th th:text="#{recibos.lista.estado}">Estado</th>
+								<th th:text="#{recibos.lista.fpago}">Fecha pago</th>
+								<th th:text="#{recibos.lista.bruto}">Bruto</th>
+								<th th:text="#{recibos.lista.deducciones}">Deducciones</th>
+								<th th:text="#{recibos.lista.neto}">Neto</th>
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<p
+					th:text="#{recibos.lista.vacia}">
+					</p>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="1">
+								<a th:href="@{/}" class="btn btn-outline-primary btn-block"
+									th:text="#{recibos.lista.volver}"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layouts/base::footer(light)"></footer>
+</body>
+
+</html>

@@ -164,3 +164,5 @@ sftp-config.json
 .settings/
 .vscode/
 
+## SAnti
+*.class

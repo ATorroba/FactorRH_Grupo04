@@ -1,0 +1,116 @@
+-- Carga de empleados
+insert into empleado(id_empleado, CP, IBAN, NASS, NIF,SWIFT,ANTIGUEDAD,APELLIDO_1,APELLIDO_2,DIRECCION,email,email_particular,fecha_alta,fecha_baja,nombre,password,puesto, sueldo_base,telefono) VALUES ('0101','28001','ES3804872268213198473267','095091703337','58550693F','AHCRESVV',200,'Caro','España','Calle Mayor, 10, Ciudad Ficticia, 28001, Madrid','leyre@factor04.es','Leyre@hotmail.com','2022-05-01',null,'Leyre','admin','1111',2200,'10986');
+insert into empleado(id_empleado, CP, IBAN, NASS, NIF,SWIFT,ANTIGUEDAD,APELLIDO_1,APELLIDO_2,DIRECCION,email,email_particular,fecha_alta,fecha_baja,nombre,password,puesto, sueldo_base,telefono) VALUES ('0102','41001','ES4600751973267961564312','413870629520','82274919D','NACNESMM',100,'Córdoba','Barranco','Avenida del Sol, 25, Pueblo Imaginario, 41001, Sevilla','aroa@factor04.es','Aroa@hotmail.com','2022-10-21',null,'Aroa','admin','2222',2200,'442234678');
+insert into empleado(id_empleado, CP, IBAN, NASS, NIF,SWIFT,ANTIGUEDAD,APELLIDO_1,APELLIDO_2,DIRECCION,email,email_particular,fecha_alta,fecha_baja,nombre,password,puesto, sueldo_base,telefono) VALUES ('0103','18001','ES1321006259112157596675','141264242796','43495077F','BCOEESMM021',500,'Sarabia','Benet','Plaza Central, 8, Villa Inexistente, 08001, Barcelona','tatiana@factor04.es','Tatiana@hotmail.com','2023-03-01',null,'Tatiana','admin','3333',3000,'+612 96 5432');
+insert into empleado(id_empleado, CP, IBAN, NASS, NIF,SWIFT,ANTIGUEDAD,APELLIDO_1,APELLIDO_2,DIRECCION,email,email_particular,fecha_alta,fecha_baja,nombre,password,puesto, sueldo_base,telefono) VALUES ('0104','46001','ES9131901233696774366116','130762789022','78969199X','GEBAESMM',300,'Riquelme','Naranjo','Calle del Mar, 3, Población Irreal, 46001, Valencia','elba@factor04.es','Elba@hotmail.com','2022-06-01',null,'Elba','admin','4444',4000,'+4912 567890');
+insert into empleado(id_empleado, CP, IBAN, NASS, NIF,SWIFT,ANTIGUEDAD,APELLIDO_1,APELLIDO_2,DIRECCION,email,email_particular,fecha_alta,fecha_baja,nombre,password,puesto, sueldo_base,telefono) VALUES ('0105','28002','ES7404874884472752759793','395663092552','51045554K','SOGEESMM',10,'Marín','Fajardo','Paseo de la Luna, 7, Ciudad de Ensueño, 28002, Madrid','susana@factor04.es','Susana@hotmail.com','2022-10-01',null,'Susana','admin','5555',1200,'+33145 67 89');
+insert into empleado(id_empleado, CP, IBAN, NASS, NIF,SWIFT,ANTIGUEDAD,APELLIDO_1,APELLIDO_2,DIRECCION,email,email_particular,fecha_alta,fecha_baja,nombre,password,puesto, sueldo_base,telefono) VALUES ('0106','41002','ES8101827956855156137615','271710454304','22870629G','BCOEESMM174',0,'Amor','Sabater','Avenida Principal, 12, Villa Ilusoria, 41002, Sevilla','toni@factor04.es','Toni@hotmail.com','2022-08-01',null,'Toni','admin','6666',3500,'50844');
+insert into empleado(id_empleado, CP, IBAN, NASS, NIF,SWIFT,ANTIGUEDAD,APELLIDO_1,APELLIDO_2,DIRECCION,email,email_particular,fecha_alta,fecha_baja,nombre,password,puesto, sueldo_base,telefono) VALUES ('0107','45003','ES2320954863028839724476','500580559464','83647194N','UCJAES2M',60,'Calzada','García','Calle del Jardín, 5, Localidad Ficticia, 08002, Barcelona','micaela@factor04.es','Micaela@hotmail.com','2023-01-01',null,'Micaela','admin','7777',1500,'+911 67890');
+insert into empleado(id_empleado, CP, IBAN, NASS, NIF,SWIFT,ANTIGUEDAD,APELLIDO_1,APELLIDO_2,DIRECCION,email,email_particular,fecha_alta,fecha_baja,nombre,password,puesto, sueldo_base,telefono) VALUES ('0108','46002','ES8921005497793779255414','303052909091','64495882H','CAZRES2Z',80,'Roig','López','Plaza del Puerto, 1, Pueblo Irreal, 46002, Valencia','julieta@factor04.es','Julieta@hotmail.com','2022-06-15',null,'Julieta','admin','8888',2000,'+3902 34678');
+insert into empleado(id_empleado, CP, IBAN, NASS, NIF,SWIFT,ANTIGUEDAD,APELLIDO_1,APELLIDO_2,DIRECCION,email,email_particular,fecha_alta,fecha_baja,nombre,password,puesto, sueldo_base,telefono) VALUES ('0109','28003','ES5721004195504615576389','087924208639','71283107N','DEUTESBB',93,'Prats','Núñez','Avenida del Paraíso, 9, Ciudad de Fantasía, 28003, Madrid','pedro@factor04.es','Pedro@hotmail.com','2022-05-01',null,'Pedro','admin','9999',2200,'+8610 5678');
+insert into empleado(id_empleado, CP, IBAN, NASS, NIF,SWIFT,ANTIGUEDAD,APELLIDO_1,APELLIDO_2,DIRECCION,email,email_particular,fecha_alta,fecha_baja,nombre,password,puesto, sueldo_base,telefono) VALUES ('0110','41003','ES0920953454113948748314','279472631649','21579710Y','CCRIES2A094',101,'Vives','Echeverría','Calle Mayor, 15, Villa Soñada, 41003, Sevilla','juan@factor04.es','Juan@hotmail.com','2022-05-01',null,'Juan','admin','1212',1300,'6498765432');
+
+
+-- Carga de roles
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0101','EMP','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0102','EMP','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0103','EMP','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0104','EMP','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0105','EMP','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0106','EMP','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0107','EMP','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0108','EMP','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0108','EMP','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0110','EMP','1');
+
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0110','HAB','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0109','REC','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0108','CON','1');
+
+--estructura retributiva
+
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(10,'Sueldo base',0,1);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(11,'Antigüedad',0,1);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(12,'Horas extras',10,2);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(13,'Productividad',100,2);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(70,'IRPF',20,4);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(71,'Seguridad Social',6.45,4);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(80,'Falta de asistencia',0,6);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(81,'Jornada no cumplida',10,7);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(98,'Total devengos',0,8);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(99,'Total deducciones',0,9);
+
+-- turnos
+
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 1, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 2, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 3, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 4, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 5, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 6, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0101', 7, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 1, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 2, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 3, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 4, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 5, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 6, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0102', 7, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 1, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 2, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 3, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 4, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 5, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 6, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0103', 7, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0104', 1, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0104', 2, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0104', 3, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0104', 4, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0104', 5, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0104', 6, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0104', 7, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0105', 1, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0105', 2, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0105', 3, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0105', 4, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0105', 5, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0105', 6, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0105', 7, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0106', 1, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0106', 2, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0106', 3, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0106', 4, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0106', 5, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0106', 6, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0106', 7, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0107', 1, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0107', 2, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0107', 3, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0107', 4, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0107', 5, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0107', 6, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0107', 7, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0108', 1, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0108', 2, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0108', 3, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0108', 4, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0108', 5, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0108', 6, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0108', 7, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0109', 1, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0109', 2, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0109', 3, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0109', 4, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0109', 5, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0109', 6, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0109', 7, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0110', 1, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0110', 2, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0110', 3, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0110', 4, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0110', 5, '09:00:00', '14:00:00', 300);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0110', 6, null, null, 0);
+insert into turnos(id_empleado,id_dia,hora_entrada, hora_salida, minutos_jornada) values('0110', 7, null, null, 0);
+
+

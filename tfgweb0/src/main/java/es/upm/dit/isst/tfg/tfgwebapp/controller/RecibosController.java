@@ -32,6 +32,7 @@ public class RecibosController {
     // Formularios
     public static final String RECIBOS_REMESA = "recibos_remesa";
     public static final String RECIBOS_EMPLEADO = "recibos_empleado";
+    public static final String RECIBOS_VACIO = "recibos_empleado_vacio";
     public static final String RECIBO_FORM = "recibo_form";
 
     private RestTemplate restTemplate = new RestTemplate();
@@ -78,6 +79,7 @@ public class RecibosController {
                         .filter(recibo -> "4".equals(recibo.getIdRemesa().getEstado()))
                         .collect(Collectors.toList());
                 model.addAttribute("recibos", recibosFiltrados);
+                 if (recibosFiltrados.size()==0) return RECIBOS_VACIO;
             }
             return RECIBOS_EMPLEADO;
         } catch (Exception e) {
