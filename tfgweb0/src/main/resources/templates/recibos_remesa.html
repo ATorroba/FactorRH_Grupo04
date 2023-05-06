@@ -11,7 +11,10 @@
 	<div class="container">
 		<div class="card bg-light">
 			<div class="card-header">
-				<h3 th:text="#{recibos.lista.remesa} + ' ' + ${recibos[0].idRemesa.idRemesa}"></h3>
+				<div class="LL">
+					<img th:src="@{/img/nomina_icono2.png}" width="50" height="50" alt="">
+					<h3 th:text="#{recibos.lista.remesa} + ' ' + ${recibos[0].idRemesa.idRemesa}"></h3>
+				</div>
 			</div>
 			<div class="card-body">
 				<table class="table table-striped">
@@ -46,8 +49,8 @@
 								</td>
 								<td th:text="${#numbers.formatCurrency(recibo.neto)}"></td>
 								<td>
-									<a th:href="@{./recibo/} + ${recibo.idRecibo}"
-										th:text="#{recibo.acciones.detalle}" class="btn btn-outline-primary"></a>
+									<a th:href="@{./recibo/} + ${recibo.idRecibo}" th:text="#{recibo.acciones.detalle}"
+										class="btn btn-outline-primary"></a>
 								</td>
 							</div>
 							</span>

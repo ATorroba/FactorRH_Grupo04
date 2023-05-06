@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head th:replace="layouts/base::head(light,${date})">
 	<meta charset="UTF-8" />
@@ -12,7 +11,10 @@
 	<div class="container">
 		<div class="card bg-light">
 			<div class="card-header">
-				<h3 th:text="#{remesa.lista.titulo}"></h3>
+				<div class="LL">
+					<img th:src="@{/img/nomina_icono2.png}" width="50" height="50" alt="">
+					<h3 th:text="#{remesa.lista.titulo}"></h3>
+				</div>
 			</div>
 			<div class="card-body">
 				<table class="table table-striped">
@@ -42,8 +44,8 @@
 								</td>
 								<td th:text="${#numbers.formatCurrency(remesa.bruto)}"></td>
 								<td th:text="${#numbers.formatCurrency(remesa.neto)}"></td>
-								
-								
+
+
 								<td>
 									<a th:if="${remesa.estado == '1'}" th:href="@{calcular/} + ${remesa.idRemesa}"
 										th:text="#{remesa.acciones.calcular}" class="btn btn-outline-primary"></a>
@@ -81,7 +83,7 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan="5">
+							<td colspan="2">
 								<a th:href="@{crear}" class="btn btn-outline-primary btn-block"
 									th:text="#{remesa.acciones.anadir}"></a>
 							</td>

@@ -11,16 +11,19 @@
 	<div class="container">
 		<div class="card bg-light">
 			<div class="card-header">
-				<h5
-					th:text="#{recibo.nomina.titulo}+ ' ' + ${conceptoR[0].idRecibo.idRecibo} + ' Periodo ' + ${conceptoR[0].idRecibo.idRemesa.ejercicio} + '-' + ${conceptoR[0].idRecibo.idRemesa.mes}">
-				</h5>
-				<h5
-					th:text="#{recibo.nomina.tipo} + ' ' + ${conceptoR[0].idRecibo.idRemesa.tipo_nomina == '1' ? 'Ordinaria' : 'Extra'}">
-				</h5>
-				<h3
-					th:text="${conceptoR[0].idRecibo.idEmpleado.nombre + ' ' + conceptoR[0].idRecibo.idEmpleado.apellido_1 + ' ' +conceptoR[0].idRecibo.idEmpleado.apellido_2}">
-				</h3>
-				<!--h5 th:text="#{recibo.nomina.neto} + ' ' + ${#numbers.formatCurrency(conceptoR[0].idRecibo.neto)}"></h5-->
+				<div class="LL">
+					<img th:src="@{/img/nomina_ok.png}" width="50" height="50" alt="">
+					<h5
+						th:text="#{recibo.nomina.titulo}+ ' ' + ${conceptoR[0].idRecibo.idRecibo} + ' Periodo ' + ${conceptoR[0].idRecibo.idRemesa.ejercicio} + '-' + ${conceptoR[0].idRecibo.idRemesa.mes}">
+					</h5>
+					<h5
+						th:text="#{recibo.nomina.tipo} + ' ' + ${conceptoR[0].idRecibo.idRemesa.tipo_nomina == '1' ? 'Ordinaria' : 'Extra'}">
+					</h5>
+					<h3
+						th:text="${conceptoR[0].idRecibo.idEmpleado.nombre + ' ' + conceptoR[0].idRecibo.idEmpleado.apellido_1 + ' ' +conceptoR[0].idRecibo.idEmpleado.apellido_2}">
+					</h3>
+					<!--h5 th:text="#{recibo.nomina.neto} + ' ' + ${#numbers.formatCurrency(conceptoR[0].idRecibo.neto)}"></h5-->
+				</div>
 			</div>
 			<div class="card-body">
 				<table class="table table-striped">
