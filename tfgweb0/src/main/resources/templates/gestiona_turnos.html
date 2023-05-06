@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8">
+</head>
+<body>
+    
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+
+	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 th:text="#{empleados.lista.titulo}"></h3>
+			</div>
+			<div class="card-body">
+				
+				<table class="table table-striped">
+					<thead>
+						<tr><div class="wrap">
+							<th th:text="#{empleados.Empleado.nombre}">nombre</th>
+                            <th th:text="#{empleados.Empleado.apellido1}">Apellido1</th>
+                            <th th:text="#{empleados.Empleado.apellido2}">Apellido2</th>
+						
+						</div>	
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="emp: ${empleadoss}">
+							<div class="wrap">
+							<td th:text="${emp.nombre}">Nombre</td>
+                            <td th:text="${emp.apellido_1}">Apellido1</td>
+                            <td th:text="${emp.apellido_2}">Apellido2</td>
+								<td>
+									<a th:href="@{gestiona_turnos/editar_turno/} + ${emp.idEmpleado}" th:text="#{controlador.turnos.botoneditar}" class="btn btn-outline-primary"></a>
+								</td>
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<footer th:replace="layouts/base::footer(light)"></footer>
+    </body>
+</div>
+
+</html>

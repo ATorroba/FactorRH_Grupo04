@@ -159,7 +159,7 @@ public class JornadasController {
     }
 
     @PostMapping("/incidencia/publicarIncidencia")
-public String publicarIncidencia(@Validated Jornadas jornada, BindingResult result, Map<String, Object> model) {
+    public String publicarIncidencia(@Validated Jornadas jornada, BindingResult result, Map<String, Object> model) {
     if (result.hasErrors()) {
         
         model.put("org.springframework.validation.BindingResult.jor", result);

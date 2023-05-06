@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+    <div class="container">
+        <div class="card bg-light">
+            <div class="LL">
+                <img th:src="@{/img/reloj.png}" width="30" height="30" alt="">
+                <h3 th:text="#{controlador.turnos.edicion}"></h3>
+            </div>
+            <div style="margin-left: 7%;margin-top: 1%;">
+                    <div>
+                    <h3>Lunes</h3>
+                        <tr th:each="t : ${turno}" th:if="${t.idDia} == 1">
+                            <form method="post" th:action="@{gestiona_turnos/editar_turno/} + ${t.idEmpleado}" enctype="multipart/form-data"></form>
+                                
+                                <!-- <input type="hidden" th:field="*{idEmpleado}" th:value="${t.idEmpleado}"/>
+                                <input type="hidden" th:field="*{idTurno}" th:value="${t.idTurno}"/>
+                                <input type="hidden" th:field="*{idDia}" th:value="${t.idDia}"/>
+                                <input type="hidden" th:field="*{hora_entrada}" th:value="${t.hora_entrada}"/>
+                                <input type="hidden" th:field="*{hora_salida}" th:value="${t.hora_salida}"/>
+                                <input type="hidden" th:field="*{minutos_jornada}" th:value="${t.minutos_jornada}"/> -->
+                                
+                                <td th:text="#{controlador.turnos.horaentrada}">Hora Entrada</td>
+                                <input type="text" th:value="${t.hora_entrada}" name="Hora Entrada">
+                                <p></p>
+                                <td th:text="#{controlador.turnos.horasalida}">Hora Salida</td>
+                                <input type="text" th:value="${t.hora_salida}" name="Hora Entrada">
+                                <p></p>
+                                <td th:text="#{controlador.turnos.duracion}">Duración de la jornada</td>
+                                <input type="text" th:value="${t.minutos_jornada}" name="Duración de la jornada">
+
+                                <button type="submit" th:action="@{gestiona_turnos/editar_turno/} + ${t.idEmpleado}" th:text="#{empleados.acciones.guardar}"  class="btn btn-outline-primary" style="margin-left: 2%;margin-top: 1%;"></button>
+                            </form>
+                        </tr>
+                    </div>
+                    <div>
+                        <h3>Martes</h3>
+                            <tr th:each="t : ${turno}" th:if="${t.idDia} == 2">
+                                <form method="post" th:action="@{gestiona_turnos/editar_turno/} + ${t.idEmpleado}" enctype="multipart/form-data"></form>
+                                    
+                                    <!-- <input type="hidden" th:field="*{idTurno}" th:value="${t.idTurno}"/>
+                                    <input type="hidden" th:field="*{idEmpleado}" th:value="${t.idEmpleado}"/>
+                                    <input type="hidden" th:field="*{idDia}" th:value="${t.idDia}"/>
+                                    <input type="hidden" th:field="*{hora_entrada}" th:value="${t.hora_entrada}"/>
+                                    <input type="hidden" th:field="*{hora_salida}" th:value="${t.hora_salida}"/>
+                                    <input type="hidden" th:field="*{minutos_jornada}" th:value="${t.minutos_jornada}"/> -->
+                                    
+                                    <td th:text="#{controlador.turnos.horaentrada}">Hora Entrada</td>
+                                    <input type="text" th:value="${t.hora_entrada}" name="Hora Entrada">
+                                    <p></p>
+                                    <td th:text="#{controlador.turnos.horasalida}">Hora Salida</td>
+                                    <input type="text" th:value="${t.hora_salida}" name="Hora Entrada">
+                                    <p></p>
+                                    <td th:text="#{controlador.turnos.duracion}">Duración de la jornada</td>
+                                    <input type="text" th:value="${t.minutos_jornada}" name="Duración de la jornada">
+    
+                                    <button type="submit" th:action="@{gestiona_turnos/editar_turno/} + ${t.idEmpleado}" th:text="#{empleados.acciones.guardar}"  class="btn btn-outline-primary" style="margin-left: 2%;margin-top: 1%;"></button>
+                                </form>
+                            </tr>
+                        </div>
+                        <div>
+                            <h3>Miércoles</h3>
+                                <tr th:each="t : ${turno}" th:if="${t.idDia} == 3">
+                                    <form method="post" th:action="@{gestiona_turnos/editar_turno/} + ${t.idEmpleado}" enctype="multipart/form-data"></form>
+                                        
+                                        <!-- <input type="hidden" th:field="*{idTurno}" th:value="${t.idTurno}"/>
+                                        <input type="hidden" th:field="*{idEmpleado}" th:value="${t.idEmpleado}"/>
+                                        <input type="hidden" th:field="*{idDia}" th:value="${t.idDia}"/>
+                                        <input type="hidden" th:field="*{hora_entrada}" th:value="${t.hora_entrada}"/>
+                                        <input type="hidden" th:field="*{hora_salida}" th:value="${t.hora_salida}"/>
+                                        <input type="hidden" th:field="*{minutos_jornada}" th:value="${t.minutos_jornada}"/> -->
+                                        
+                                        <td th:text="#{controlador.turnos.horaentrada}">Hora Entrada</td>
+                                        <input type="text" th:value="${t.hora_entrada}" name="Hora Entrada">
+                                        <p></p>
+                                        <td th:text="#{controlador.turnos.horasalida}">Hora Salida</td>
+                                        <input type="text" th:value="${t.hora_salida}" name="Hora Entrada">
+                                        <p></p>
+                                        <td th:text="#{controlador.turnos.duracion}">Duración de la jornada</td>
+                                        <input type="text" th:value="${t.minutos_jornada}" name="Duración de la jornada">
+        
+                                        <button type="submit" th:action="@{gestiona_turnos/editar_turno/} + ${t.idEmpleado}" th:text="#{empleados.acciones.guardar}"  class="btn btn-outline-primary" style="margin-left: 2%;margin-top: 1%;"></button>
+                                    </form>
+                                </tr>
+                            </div>
+                    </div>

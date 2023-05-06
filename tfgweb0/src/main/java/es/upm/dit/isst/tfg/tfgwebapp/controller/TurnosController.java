@@ -6,7 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.Arrays;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.annotation.Validated;
+import java.util.Map;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import org.springframework.web.client.RestTemplate;
@@ -16,17 +20,6 @@ public class TurnosController {
 
     @GetMapping("/turnos")
     public String getTurnosPorIdEmpleado(Principal principal, Model model) {
-        // RestTemplate restTemplate1 = new RestTemplate();
-        // Empleado empleadoLogueado = new Empleado();
-        // String idEmpLog = "";
-        // Empleado[] empleados = restTemplate1.getForObject("http://localhost:8083/empleados/", Empleado[].class);
-        // for(int i=0;i<empleados.length;i++){
-        //     if(empleados[i].getEmail() == principal.getName()){
-        //      empleadoLogueado = empleados[i];
-        //      idEmpLog = empleadoLogueado.getIdEmpleado();
-        //     }
-
-        // }
         try {
             System.out.println(principal.getName());
             RestTemplate restTemplate1 = new RestTemplate();
@@ -51,4 +44,57 @@ public class TurnosController {
         }
         return "401";
     }
+
+    @GetMapping("/gestiona_turnos")
+    public String getTurnos(Principal principal, Model model) {
+        try {
+            String url = "http://localhost:8083/turnos/";
+            RestTemplate restTemplate = new RestTemplate();
+            Turnos[] turnosArray = restTemplate.getForObject(url, Turnos[].class);
+            List<Turnos> turnos = Arrays.asList(turnosArray);
+            model.addAttribute("turno", turnos);
+           
+            String url1 = "http://localhost:8083/empleados/";
+            RestTemplate restTemplate1 = new RestTemplate();
+            Empleado[] empleadosArray = restTemplate1.getForObject(url1, Empleado[].class);
+            List<Empleado> empleados = Arrays.asList(empleadosArray);
+            model.addAttribute("empleadoss",empleados);           
+           
+            return "gestiona_turnos";
+        } catch (Exception e) {
+            return "401";
+
+        }
+    }
+
+    @GetMapping("/gestiona_turnos/editar_turno/{idEmpleado}")
+    public String getTurnoDeEmpleado(@PathVariable(value = "idEmpleado") String idEmpleado, Principal principal, Model model) {
+        try {
+            String url = "http://localhost:8083/turnos/" + idEmpleado;
+            RestTemplate restTemplate = new RestTemplate();
+            Turnos[] turnosArray = restTemplate.getForObject(url, Turnos[].class);
+            List<Turnos> turnos = Arrays.asList(turnosArray);
+            model.addAttribute("turno", turnos);           
+           
+            return "editar_turno";
+        } catch (Exception e) {
+            return "401";
+
+        }
+    }
+
+    @PostMapping("/gestiona_turnos/editar_turno/{idEmpleado}")
+    public String editarTurno(@Validated Turnos turno,BindingResult result, Map<String, Object> model) {
+        RestTemplate restTemplate = new RestTemplate();
+        if (result.hasErrors()) {
+            model.put("org.springframework.validation.BindingResult.jor", result);
+            return "editar_turno";
+        }
+        try {
+            restTemplate.put("http://localhost:8083/turnos/" + turno.getIdTurno() , turno, Turnos.class);
+         } catch (Exception e) {
+
+    }
+    return "redirect:/editar_turno";
+}
 }
