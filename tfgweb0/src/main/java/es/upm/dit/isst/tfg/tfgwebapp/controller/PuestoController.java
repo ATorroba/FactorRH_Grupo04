@@ -237,9 +237,9 @@ public class PuestoController {
                 restTemplate.postForObject(RHMANAGERGER_STRING, Empleado, Empleado.class);
                 restTemplate.delete("http://localhost:8083/candidatos/" + ipc);
                 restTemplate.postForObject(PUESTOMANAGER_STRING + ip + "/cerrar", p, Puesto.class);
-                String remitente = "usuario gmail";
+                String remitente = "factorrhisst@gmail.com";
                 // La clave de aplicación obtenida según se explica en este artículo:
-                String claveemail = "clave google mail";
+                String claveemail = "tyrnsurboetzwbug";
                 String destinatario = principal.getName(); // A quien le quieres escribir.
                 String destinatario2 = Empleado.getEmail(); // A quien le quieres escribir.
 
@@ -365,8 +365,8 @@ public class PuestoController {
             // puestosend.setId_puesto("99");
 
             Puesto p = restTemplate.postForObject(PUESTOMANAGER_STRING, puestosend, Puesto.class);
-            String remitente = "usuariogmail";
-            String claveemail = "clave gmaiñ";
+            String remitente = "factorrhisst@gmail.com";
+            String claveemail = "tyrnsurboetzwbug";
             String destinatario = principal.getName(); // Email reclutador.
 
             String asunto = "Petición de candidatos para puesto: " + p.getNombre();
@@ -428,8 +428,8 @@ public class PuestoController {
         try {
             restTemplate.postForObject(PUESTOMANAGER_STRING, puesto, Puesto.class);
 
-            String remitente = "auser google";
-            String claveemail = "clave google";
+            String remitente = "factorrhisst@gmail.com";
+            String claveemail = "tyrnsurboetzwbug";
             String destinatario = principal.getName(); // Email reclutador.
 
             String asunto = "Petición de candidatos para puesto: " + puesto.getNombre();

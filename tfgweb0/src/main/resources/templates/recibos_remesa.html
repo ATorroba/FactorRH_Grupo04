@@ -19,6 +19,7 @@
 						<tr>
 							<div class="wrap">
 								<!--th th:text="#{recibos.lista.idRemesa}">idRemesa</th-->
+								<th th:text="#{recibos.lista.recibo}">Recibo</th>
 								<th th:text="#{recibos.lista.periodo}">Periodo</th>
 								<th th:text="#{recibos.lista.tipo_nomina}">Tipo</th>
 								<th th:text="#{recibos.lista.estado}">Estado</th>
@@ -31,7 +32,7 @@
 					<tbody>
 						<tr th:each="recibo: ${recibos}">
 							<div class="wrap">
-								<!--td th:text="${recibo.idRemesa.idRemesa}"></td-->
+								<td th:text="${recibo.idRecibo}"></td>
 								<td th:text="${recibo.idRemesa.ejercicio + '-' + recibo.idRemesa.mes+''}"></td>
 								<td
 									th:text="${recibo.idRemesa.tipo_nomina == '1' ? 'Ordinaria' : (recibo.idRemesa.tipo_nomina == '2' ? 'Extra' : 'Otros')}">
@@ -45,7 +46,7 @@
 								</td>
 								<td th:text="${#numbers.formatCurrency(recibo.neto)}"></td>
 								<td>
-									<a th:href="@{conceptos/recibo/} + ${recibo.idRecibo}"
+									<a th:href="@{./recibo/} + ${recibo.idRecibo}"
 										th:text="#{recibo.acciones.detalle}" class="btn btn-outline-primary"></a>
 								</td>
 							</div>

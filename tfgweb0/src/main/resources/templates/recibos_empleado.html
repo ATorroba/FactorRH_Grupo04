@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8">
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3
+					th:text="#{recibos.lista.empleado} + ' ' + ${recibos[0].idEmpleado.nombre + ' ' + recibos[0].idEmpleado.apellido_1 + ' ' + recibos[0].idEmpleado.apellido_2}">
+				</h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<!--th th:text="#{recibos.lista.idRemesa}">idRemesa</th-->
+								<th th:text="#{recibos.lista.recibo}">Recibo</th>
+								<th th:text="#{recibos.lista.periodo}">Periodo</th>
+								<th th:text="#{recibos.lista.tipo_nomina}">Tipo</th>
+								<th th:text="#{recibos.lista.estado}">Estado</th>
+								<th th:text="#{recibos.lista.fpago}">Fecha pago</th>
+								<th th:text="#{recibos.lista.bruto}">Bruto</th>
+								<th th:text="#{recibos.lista.deducciones}">Deducciones</th>
+								<th th:text="#{recibos.lista.neto}">Neto</th>
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="recibo: ${recibos}">
+							<div class="wrap">
+								<td th:text="${recibo.idRecibo}"></td>
+								<td th:text="${recibo.idRemesa.ejercicio + '-' + recibo.idRemesa.mes+''}"></td>
+								<td
+									th:text="${recibo.idRemesa.tipo_nomina == '1' ? 'Ordinaria' : (recibo.idRemesa.tipo_nomina == '2' ? 'Extra' : 'Otros')}">
+								</td>
+								<td
+									th:text="${recibo.idRemesa.estado == '1' ? 'Pendiente' : (recibo.idRemesa.estado == '2' ? 'Calculado' : (recibo.idRemesa.estado == '3' ? 'Emitido' : (recibo.idRemesa.estado == '4' ? 'Pagado' : 'Otros'))) }">
+								</td>
+								<td th:text="${recibo.idRemesa.fecha_pago}"></td>
+								<td th:text="${#numbers.formatCurrency(recibo.bruto)}"></td>
+								<td th:text="${#numbers.formatCurrency(recibo.deduccion)}"></td>
+								<td th:text="${#numbers.formatCurrency(recibo.neto)}"></td>
+								<td>
+									<a th:href="@{/empleado/recibos/recibo/} + ${recibo.idRecibo}"
+										th:text="#{recibo.acciones.detalle}" class="btn btn-outline-primary"></a>
+								</td>
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="1">
+								<a th:href="@{/}" class="btn btn-outline-primary btn-block"
+									th:text="#{recibos.lista.volver}"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layouts/base::footer(light)"></footer>
+</body>
+
+</html>

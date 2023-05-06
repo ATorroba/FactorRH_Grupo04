@@ -70,14 +70,8 @@ public class EmpleadoController {
     public String inicio(Principal principal, Model model) {
         model.addAttribute("date", ZonedDateTime.now());
 
-        if (principal == null || principal.getName().equals("")) {
+        return "home";
 
-            return "login";
-        }
-
-        else {
-            return "home";
-        }
     }
 
     @GetMapping("/login")

@@ -3,13 +3,13 @@ package es.upm.dit.isst.tfg.tfgwebapp.model;
 public class ConceptoRecibo {
 
     public Long idConceptoRecibo;
-    public Recibo recibo;
-    public Concepto concepto;
+    public Recibo idRecibo;
+    public Concepto idConcepto;
     public Double unidades;
     public Double precio;
     public Double devengo;
     public Double deduccion;
-    
+
     public ConceptoRecibo() {
     }
 
@@ -18,11 +18,11 @@ public class ConceptoRecibo {
     }
 
     public Recibo getRecibo() {
-        return recibo;
+        return idRecibo;
     }
 
     public Concepto getConcepto() {
-        return concepto;
+        return idConcepto;
     }
 
     public Double getUnidades() {
@@ -41,6 +41,4 @@ public class ConceptoRecibo {
         return deduccion;
     }
 
-    
-    
 }

@@ -1,0 +1,8 @@
+INSERT INTO EMPLEADO (ID_EMPLEADO, EMAIL, NOMBRE, PASSWORD) VALUES ('777','a@a.es','admin','admin');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('777','EMP','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('777','CON','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('777','REC','1');
+INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('777','HAB','1');
+
+
+
