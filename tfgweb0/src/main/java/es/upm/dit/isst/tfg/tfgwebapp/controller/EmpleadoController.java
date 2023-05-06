@@ -1,59 +1,25 @@
 package es.upm.dit.isst.tfg.tfgwebapp.controller;
 
-import java.io.Console;
-import java.lang.reflect.Array;
 import java.security.Principal;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
 import java.util.Arrays;
-
 import java.util.List;
-
 import java.util.Map;
 
-import javax.validation.Constraint;
-import javax.validation.Valid;
-import javax.validation.executable.ValidateOnExecution;
-
-import org.springframework.core.io.ByteArrayResource;
-
-import org.springframework.http.HttpHeaders;
-
-import org.springframework.http.HttpStatus;
-
-import org.springframework.http.MediaType;
-
-import org.springframework.http.ResponseEntity;
-
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestParam;
-
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import org.springframework.web.client.HttpClientErrorException;
-
 import org.springframework.web.client.RestTemplate;
 
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
 
 @Controller
 public class EmpleadoController {
@@ -109,29 +75,23 @@ public class EmpleadoController {
 
         Empleado empleado1 = new Empleado();
 
-        if (principal.getName().contains("@empleado.es"))
+        // if (principal.getName().contains("@empleado.es"))
 
-            try {
-                System.out.println(principal.getName());
-
-                Empleado empleado2 = restTemplate.getForObject("http://localhost:8083/datos/"
-
-                        + principal.getName(), Empleado.class);
-
-                if (empleado2 != null) {
-                    empleado1 = empleado2;
-                    System.out.println(empleado1.getEmail());
-                    model.addAttribute("empleado", empleado1);
-                    model.addAttribute("date", ZonedDateTime.now());
-
-                    return "datos";
-                } else {
-                    return "401";
-                }
-            } catch (Exception e) {
-
+        try {
+            System.out.println(principal.getName());
+            Empleado empleado2 = restTemplate.getForObject("http://localhost:8083/datos/"
+                    + principal.getName(), Empleado.class);
+            if (empleado2 != null) {
+                empleado1 = empleado2;
+                System.out.println(empleado1.getEmail());
+                model.addAttribute("empleado", empleado1);
+                model.addAttribute("date", ZonedDateTime.now());
+                return "datos";
+            } else {
+                return "401";
             }
-
+        } catch (Exception e) {
+        }
         return "403";
     }
 
