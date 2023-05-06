@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+    <div class="card-header">
+        <h4 style="font-weight: bold;text-align: center;" th:text="'Roles'"></h4>
+    </div>
+<div style="display: flex; flex-direction: row;">
+
+  
+	<div class="container">
+      
+		<div class="card bg-light">
+       
+			<div class="card-header">
+				<h4 th:text="'Empleados'"></h4>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th >ID</th>
+								<th >Borrar</th>
+                               
+
+
+					
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="emp: ${listaemp}">
+							<div class="wrap">
+								<td th:text="${emp.clave.idempleado}"></td>
+							
+								<td>
+									<a th:href="@{eliminarrol/} + 'EMP/'+ ${emp.clave.idempleado}"
+										th:text="#{puestos.acciones.eliminar}" class="btn btn-outline-danger"></a>
+								</td>
+							
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{crearrol}+'/EMP/'" class="btn btn-outline-primary btn-block"
+									th:text="'Añadir Empleado'"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+
+
+    <div class="container">
+      
+		<div class="card bg-light">
+       
+			<div class="card-header">
+				<h4 th:text="'Controladores'"></h4>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th >ID</th>
+								<th >Borrar</th>
+                               
+
+
+					
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="emp: ${listacon}">
+							<div class="wrap">
+								<td th:text="${emp.clave.idempleado}"></td>
+							
+								<td>
+									<a th:href="@{eliminarrol/} + 'CON/'+ ${emp.clave.idempleado}"
+										th:text="#{puestos.acciones.eliminar}" class="btn btn-outline-danger"></a>
+								</td>
+							
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{crearrol}+'/CON/'" class="btn btn-outline-primary btn-block"
+									th:text="'Añadir Controlador'"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+    <div class="container">
+      
+		<div class="card bg-light">
+       
+			<div class="card-header">
+				<h4 th:text="'Reclutador'"></h4>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th >ID</th>
+								<th >Borrar</th>
+                               
+
+
+					
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="emp: ${listarec}">
+							<div class="wrap">
+								<td th:text="${emp.clave.idempleado}"></td>
+							
+								<td>
+									<a th:href="@{eliminarrol/} + 'REC/'+ ${emp.clave.idempleado}"
+										th:text="#{puestos.acciones.eliminar}" class="btn btn-outline-danger"></a>
+								</td>
+							
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{crearrol}+'/REC/'" class="btn btn-outline-primary btn-block"
+									th:text="'Añadir Reclutador'"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+    <div class="container">
+      
+		<div class="card bg-light">
+       
+			<div class="card-header">
+				<h4 th:text="'Habilitados'"></h4>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th >ID</th>
+								<th >Borrar</th>
+                               
+
+
+					
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="emp: ${listahab}">
+							<div class="wrap">
+								<td th:text="${emp.clave.idempleado}"></td>
+							
+								<td>
+									<a th:href="@{eliminarrol/} + 'HAB/'+ ${emp.clave.idempleado}"
+										th:text="#{puestos.acciones.eliminar}" class="btn btn-outline-danger"></a>
+								</td>
+							
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{crearrol}+'/HAB/'" class="btn btn-outline-primary btn-block"
+									th:text="'Añadir Habilitados'"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+
+    
+   
+	
+</div>
+    
+	<footer th:replace="layouts/base::footer(light)"></footer>
+</body>
+
+</html>

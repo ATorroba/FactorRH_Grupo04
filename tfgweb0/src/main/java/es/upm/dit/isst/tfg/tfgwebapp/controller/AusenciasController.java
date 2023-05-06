@@ -2,7 +2,6 @@ package es.upm.dit.isst.tfg.tfgwebapp.controller;
 
 import java.util.stream.Collectors;
 
-
 import java.io.Console;
 import java.lang.reflect.Array;
 import java.security.Principal;
@@ -82,60 +81,55 @@ public class AusenciasController {
         return "gestion";
 
     }
+
     @GetMapping("/vacaciones")
-public String getAusenciasPorIdEmpleado(Principal principal, Model model) {
-    try {
-        RestTemplate restTemplate1 = new RestTemplate();
+    public String getAusenciasPorIdEmpleado(Principal principal, Model model) {
+        try {
+            RestTemplate restTemplate1 = new RestTemplate();
 
-        Empleado empleado2 = restTemplate1.getForObject("http://localhost:8083/datos/" + principal.getName(), Empleado.class);
-        String idEmpLog = empleado2.getIdEmpleado();
+            Empleado empleado2 = restTemplate1.getForObject("http://localhost:8083/datos/" + principal.getName(),
+                    Empleado.class);
+            String idEmpLog = empleado2.getIdEmpleado();
 
-        if (empleado2 != null) {
-            String url = "http://localhost:8083/ausencias/" + idEmpLog;
-            RestTemplate restTemplate = new RestTemplate();
-            Ausencias[] ausenciasArray = restTemplate.getForObject(url, Ausencias[].class);
-            List<Ausencias> ausencias = Arrays.asList(ausenciasArray);
+            if (empleado2 != null) {
+                String url = "http://localhost:8083/ausencias/" + idEmpLog;
+                RestTemplate restTemplate = new RestTemplate();
+                Ausencias[] ausenciasArray = restTemplate.getForObject(url, Ausencias[].class);
+                List<Ausencias> ausencias = Arrays.asList(ausenciasArray);
 
-            url = "http://localhost:8083/permisos/" + idEmpLog;
-            restTemplate = new RestTemplate();
-            Permisos[] permisosArray = restTemplate.getForObject(url, Permisos[].class);
-            List<Permisos> permisos = Arrays.asList(permisosArray);
-            int vacacionesTotales = permisos.get(0).getVacaciones();
+                url = "http://localhost:8083/permisos/" + idEmpLog;
+                restTemplate = new RestTemplate();
+                Permisos[] permisosArray = restTemplate.getForObject(url, Permisos[].class);
+                List<Permisos> permisos = Arrays.asList(permisosArray);
+                int vacacionesTotales = permisos.get(0).getVacaciones();
 
+                // Filtrar las ausencias por tipo_ausencia = "vac"
+                List<Ausencias> vacaciones = ausencias.stream()
+                        .filter(a -> "vac".equals(a.getTipo_ausencia()))
+                        .collect(Collectors.toList());
 
-            // Filtrar las ausencias por tipo_ausencia = "vac"
-            List<Ausencias> vacaciones = ausencias.stream()
-                .filter(a -> "vac".equals(a.getTipo_ausencia()))
-                .collect(Collectors.toList());
-                    
-            int vacacionesGastadas = 0;
-            for (Ausencias vacacion : vacaciones) {
-                if(vacacion.getN_dias() != null){
-                    vacacionesGastadas += vacacion.getN_dias();
-                }else {
-                    continue;
+                int vacacionesGastadas = 0;
+                for (Ausencias vacacion : vacaciones) {
+                    if (vacacion.getN_dias() != null) {
+                        vacacionesGastadas += vacacion.getN_dias();
+                    } else {
+                        continue;
+                    }
+
                 }
-               
+                int vacacionesDisponibles = vacacionesTotales - vacacionesGastadas;
+
+                model.addAttribute("vacacionesTotales", vacacionesTotales);
+                model.addAttribute("vacacionesDisponibles", vacacionesDisponibles);
+                model.addAttribute("vacaciones", vacaciones);
+                return "vacaciones";
             }
-            int vacacionesDisponibles = vacacionesTotales - vacacionesGastadas;
+        } catch (Exception e) {
+            return "401";
 
-            model.addAttribute("vacacionesTotales", vacacionesTotales);
-            model.addAttribute("vacacionesDisponibles", vacacionesDisponibles);
-            model.addAttribute("vacaciones", vacaciones);
-            return "vacaciones";
         }
-    } catch (Exception e) {
         return "401";
-
     }
-    return "401";
-}
-
-
-    
-    
-    
-
 
     @PostMapping("/guardarausencia")
 

@@ -56,21 +56,29 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 
+				<div style="display: flex;flex-direction: column;" class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 
-					<li class="nav-item active">
-						<a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
-					</li>
+				
+				</ul>
+				<ul class="navbar-nav mr-auto">
 
 					<span class="RR" sec:authorize="hasRole('ROLE_CONTROLADOR')">
+						<li class="nav-item active">
+							<a class="nav-link" >Controlador:  </a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link" th:href="@{/permisos/lista}" th:text="#{permisos.ver.titulo}"></a>
 						</li>
 
 					</span>
+				</ul>
+					<ul class="navbar-nav mr-auto">
 					<span class="RR" sec:authorize="hasRole('ROLE_HABILITADO')">
+						<li class="nav-item active">
+							<a class="nav-link" >Habilitado:  </a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link" th:href="@{/incidencias_n}" th:text="#{habilitado.incidencias}"></a>
 						</li>
@@ -78,8 +86,17 @@
 							<a class="nav-link" th:href="@{/remesas}" th:text="#{habilitado.gestion}"></a>
 						</li>
 					</span>
+					</ul>
+					<ul class="navbar-nav mr-auto">
 					<span class="RR" sec:authorize="hasRole('ROLE_EMPLEADO')">
+						<li class="nav-item active">
+							<a class="nav-link" >Empleado:  </a>
+						</li>
 						<li class="nav-item">
+							<a class="nav-link" th:href="@{/}">Home </a>
+						</li>
+						<li class="nav-item">
+							
 							<a class="nav-link" th:href="@{/organigrama}" th:text="#{empleados.organigrama}"></a>
 						</li>
 						<!--li class="nav-item">
@@ -102,7 +119,12 @@
 						</li>
 
 					</span>
+					</ul>
+					<ul class="navbar-nav mr-auto">
 					<span class="RR" sec:authorize="hasRole('ROLE_RECLUTADOR')">
+						<li class="nav-item active">
+							<a class="nav-link" >Reclutador:  </a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link" th:href="@{/IPS}">Iniciar proceso de selección</a>
 						</li>
@@ -118,10 +140,13 @@
 						<li class="nav-item">
 							<a class="nav-link" th:href="@{/candidatos/lista}" th:text="#{candidatos.lista.titulo}"></a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/roles}" th:text="'Roles'"></a>
+						</li>
 					</span>
+					</ul>
 
-
-				</ul>
+				
 
 				<!--h2 th:inline="text">[[${#httpServletRequest.remoteUser}]]</h2-->
 

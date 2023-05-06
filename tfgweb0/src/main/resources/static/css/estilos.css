@@ -133,7 +133,28 @@ header .idiomas {
     box-sizing: border-box;
 }
 
-button {
+.buttone {
+	background-color: green;
+	color: white;
+    font-size: 1.5rem;
+    padding: 1em;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    text-align: center;
+    width: 96%; 
+    height: 4.0em; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em; 
+	margin-right: 3em;
+}
+.buttons {
+	
+	background-color: #8B0000;
+	color: white;
     font-size: 1.5rem;
     padding: 1em;
     border: none;

@@ -9,7 +9,7 @@ public class ConceptoRecibo {
     public Double precio;
     public Double devengo;
     public Double deduccion;
-    
+
     public ConceptoRecibo() {
     }
 
@@ -18,11 +18,11 @@ public class ConceptoRecibo {
     }
 
     public Recibo getRecibo() {
-        return recibo;
+        return idRecibo;
     }
 
     public Concepto getConcepto() {
-        return concepto;
+        return idConcepto;
     }
 
     public Double getUnidades() {
@@ -41,6 +41,4 @@ public class ConceptoRecibo {
         return deduccion;
     }
 
-    
-    
 }
