@@ -24,6 +24,7 @@ public class NominaController {
     // API REST que devuelve los datos
     public final String REMESAMANAGER_STRING = "http://localhost:8083/remesas/";
     public final String REMESACALCULAR_STRING = "http://localhost:8083/crear_recibos?idRemesa=";
+    public final String REMESABORRAR_STRING = "http://localhost:8083/borrar_remesa?idRemesa=";
 
     // Formulario de manejo
     public static final String VISTA_LISTA_REMESAS = "lista_remesas";
@@ -50,7 +51,7 @@ public class NominaController {
     @GetMapping("remesas/crear")
     public String crear(Map<String, Object> model) {
         Remesa remesa = new Remesa();
-        //System.out.printf("REMESAS CREAR%n");
+        // System.out.printf("REMESAS CREAR%n");
         model.put("remesa", remesa);
         model.put("accion", "guardar");
         return VISTA_FORM_REMESA;
@@ -58,7 +59,7 @@ public class NominaController {
 
     @PostMapping("remesas/guardar")
     public String guardar(@Validated Remesa remesa, BindingResult result) {
-        //System.out.printf("REMESAS GUARDAR%n");
+        // System.out.printf("REMESAS GUARDAR%n");
         if (result.hasErrors()) {
             return VISTA_FORM_REMESA;
         }
@@ -78,7 +79,7 @@ public class NominaController {
     public String editar(@PathVariable(value = "id") Integer id,
             Map<String, Object> model, Principal principal) {
 
-        //System.out.printf("REMESA EDITAR 1 %n");
+        // System.out.printf("REMESA EDITAR 1 %n");
         Remesa remesa = null;
         try {
             remesa = restTemplate.getForObject(REMESAMANAGER_STRING + id, Remesa.class);
@@ -91,14 +92,11 @@ public class NominaController {
 
     @PostMapping("remesas/editar/actualizar")
     public String actualizar(@Validated Remesa remesa, BindingResult result) {
-        //System.out.printf("REMESA EDITAR 2 %n");
+        // System.out.printf("REMESA EDITAR 2 %n");
         if (result.hasErrors()) {
             return VISTA_FORM_REMESA;
         }
         try {
-            //System.out.printf("REMESA EDITAR 3 %n");
-            //System.out.printf(REMESAMANAGER_STRING);
-            //System.out.printf("%d",remesa.getIdRemesa());
             restTemplate.put(REMESAMANAGER_STRING + remesa.getIdRemesa(),
                     remesa, Remesa.class);
         } catch (Exception e) {
@@ -126,7 +124,8 @@ public class NominaController {
 
     @GetMapping("remesas/eliminar/{id}")
     public String eliminar(@PathVariable(value = "id") Integer id) {
-        restTemplate.delete(REMESAMANAGER_STRING + id);
+        //restTemplate.delete(REMESAMANAGER_STRING + id);
+        restTemplate.postForObject(REMESABORRAR_STRING + id, null, Remesa.class);
         return "redirect:/remesas";
     }
 

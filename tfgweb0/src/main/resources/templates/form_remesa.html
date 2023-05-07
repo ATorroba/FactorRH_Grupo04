@@ -23,10 +23,9 @@
 					</ul>
 				</div>
 				<form th:action="@{${accion}}" th:object="${remesa}" method="post">
-					<!-- <input type="hidden" th:field="*{email}" /> -->
+					
 					<p th:if="${result}" th.object="${result}" th:text="${result}" class="alert alert-danger"></p>
-					<!--p class="alert alert-danger" th:each="error: ${result}"
-						th:text="${error.field}+': '+${error.defaultMessage}"></p-->
+					
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{remesa.remesa.idRemesa}"></label>
 						<div class="col-sm-6">
@@ -34,11 +33,11 @@
 								<input type="text" th:field="*{idRemesa}" readonly>
 							</strong-->
 							<strong>
-							<span th:text="*{idRemesa}">
-							</span></strong>
+								<span th:text="*{idRemesa}">
+								</span></strong>
 							<input type="hidden" th:field="*{idRemesa}" />
 							<input type="hidden" th:field="*{estado}" />
-							
+
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('idRemesa')}"
 								th:errors="*{idRemesa}"></small>
 						</div>

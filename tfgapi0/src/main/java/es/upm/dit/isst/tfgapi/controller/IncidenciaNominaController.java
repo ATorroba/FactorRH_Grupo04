@@ -26,13 +26,13 @@ import es.upm.dit.isst.tfgapi.repository.empleadoRepository;
 
 @RestController
 public class IncidenciaNominaController {
-    
+
     private final IncidenciaNominaRepository incRepository;
     public static final Logger log = LoggerFactory.getLogger(IncidenciaNominaRepository.class);
 
     @Autowired
     private empleadoRepository emRepository;
-    
+
     public IncidenciaNominaController(IncidenciaNominaRepository inc) {
         this.incRepository = inc;
     }
@@ -85,8 +85,11 @@ public class IncidenciaNominaController {
         }
         Empleado empleado = opcionalEmpleado.get();
         return (List<IncidenciaNomina>) incRepository.findByIdEmpleado(empleado);
-        
+    }
+
+    @GetMapping("/incidencias_n/empleado/{ej}/{mes}")
+    List<IncidenciaNomina> incidencias_ejercicio_mes(@PathVariable Integer ej, @PathVariable Integer mes) {
+        return (List<IncidenciaNomina>) incRepository.findByEjercicioAndMes(ej, mes);
     }
 
 }
-

@@ -4,14 +4,14 @@ package es.upm.dit.isst.tfg.tfgwebapp.model;
 public class IncidenciaNomina {
 
     public Integer idIncidencia;
-    public Remesa idRemesa;
     public Concepto idConcepto;
     public Empleado idEmpleado;
     public Integer ejercicio;
     public Integer mes;
-    private Double importe;
-    private Double unidades;
-    private Double precio;
+    public Double importe;
+    public Double unidades;
+    public Double precio;
+    public Remesa idRemesa;
         
     public IncidenciaNomina() {
     }
@@ -88,7 +88,6 @@ public class IncidenciaNomina {
         this.precio = precio;
     }
 
-    
-    
+       
     
 }

@@ -58,6 +58,7 @@ public class RemesasController {
 
     @DeleteMapping("remesas/{id}")
     ResponseEntity<Remesa> delete(@PathVariable Integer id) {
+        
         remRepository.deleteById(id);
         return ResponseEntity.ok().body(null);
     }

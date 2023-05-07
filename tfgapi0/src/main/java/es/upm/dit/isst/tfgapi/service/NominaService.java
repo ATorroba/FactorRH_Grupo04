@@ -3,6 +3,9 @@ package es.upm.dit.isst.tfgapi.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import java.time.LocalDate;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,11 +21,14 @@ import es.upm.dit.isst.tfgapi.model.ConceptoRecibo;
 import es.upm.dit.isst.tfgapi.model.Empleado;
 import es.upm.dit.isst.tfgapi.model.Recibo;
 import es.upm.dit.isst.tfgapi.model.Remesa;
+import es.upm.dit.isst.tfgapi.model.IncidenciaNomina;
+
 import es.upm.dit.isst.tfgapi.repository.ConceptoReciboRepository;
 import es.upm.dit.isst.tfgapi.repository.ConceptoRepository;
 import es.upm.dit.isst.tfgapi.repository.RecibosRepository;
 import es.upm.dit.isst.tfgapi.repository.RemesasRepository;
 import es.upm.dit.isst.tfgapi.repository.empleadoRepository;
+import es.upm.dit.isst.tfgapi.repository.IncidenciaNominaRepository;
 
 @Service
 public class NominaService {
@@ -41,7 +47,11 @@ public class NominaService {
     @Autowired
     private ConceptoReciboRepository concR; // Concepto remesa
 
+    @Autowired
+    private IncidenciaNominaRepository incNRepo; // incidencias de nómina
+
     @Async
+    @Transactional
     public void crearRecibos(Integer remesa_entrada) {
         java.util.Date desde, hasta, inicio, fin;
         double importe_sueldo, importe_antiguedad, bruto, deducciones;
@@ -91,6 +101,8 @@ public class NominaService {
         // Bucle para recorrer todos los trabajadores a calcular
         for (Empleado empleado : listaEmpleados) {
             Recibo recibo = new Recibo();
+            bruto = 0;
+            deducciones = 0;
 
             recibo.setIdRemesa(remesa);
             recibo.setIdEmpleado(empleado);
@@ -176,6 +188,56 @@ public class NominaService {
             }
             ;
 
+            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            // TRATAMIENTO DE LAS INCIDENCIAS DE NÓMINA
+            // SOLO PARA LAS NOMINAS ORDINARIAS
+
+            if ("1".equals(remesa.getTipo_nomina())) {
+                List<IncidenciaNomina> listaIncidencias = (List<IncidenciaNomina>) incNRepo
+                        .findByIdEmpleadoAndEjercicioAndMes(recibo.getIdEmpleado(), remesa.getEjercicio(),
+                                remesa.getMes());
+
+                // Bucle para recorrer todos los trabajadores a calcular
+                for (IncidenciaNomina inc : listaIncidencias) {
+
+                    ConceptoRecibo conc_inc = new ConceptoRecibo();
+                    conc_inc.setIdRecibo(recibo);
+                    conc_inc.setIdConcepto(inc.getIdConcepto());
+                    if (inc.getUnidades() != null) {
+                        conc_inc.setUnidades(redondear(inc.getUnidades()));
+                    } else {
+                        conc_inc.setUnidades((double) 0);
+                    }
+                    if (inc.getPrecio() != null) {
+                        conc_inc.setPrecio(redondear(inc.getPrecio()));
+                    } else {
+                        conc_inc.setPrecio((double) 0);
+                    }
+                    if (inc.getIdConcepto().getIdConcepto() < 50) {
+                        conc_inc.setDevengo(redondear(inc.getImporte()));
+                        conc_inc.setDeduccion((double) 0);
+                        bruto = bruto + redondear(inc.getImporte());
+                    } else {
+                        conc_inc.setDevengo((double) 0);
+                        conc_inc.setDeduccion(redondear(inc.getImporte()));
+                        deducciones = deducciones + redondear(inc.getImporte());
+                    }
+                    try {
+                        concR.save(conc_inc);
+                    } catch (Exception e) {
+                        throw new DataIntegrityViolationException("Error en alta incidencia");
+                    }
+                    // Finalmente marcamos la incidencia con la remesa actual
+                    inc.setIdRemesa(remesa);
+                    try {
+                        incNRepo.save(inc);
+                    } catch (Exception e) {
+                        throw new DataIntegrityViolationException("Error en marcado incidencia como calculada");
+                    }
+                }
+            }
+            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            // Finalmente se calcula el IRPF y la SS
             // IRPF. Concepto 70
             ConceptoRecibo conc70 = new ConceptoRecibo();
             conc70.setIdRecibo(recibo);
@@ -208,14 +270,10 @@ public class NominaService {
             }
             ;
             if ("1".equals(remesa.getTipo_nomina())) {
-                deducciones = (bruto * concM70.getPrecio() / 100) + (bruto * concM71.getPrecio() / 100);
+                deducciones = deducciones + (bruto * concM70.getPrecio() / 100) + (bruto * concM71.getPrecio() / 100);
             } else {
-                deducciones = (bruto * concM70.getPrecio() / 100);
+                deducciones = deducciones + (bruto * concM70.getPrecio() / 100);
             }
-
-            // EN ESTE PUNTO HAY QUE INTRODUCIR EL TRATAMIENTO DE LAS INCIDENCIAS DE NÓMINA
-            // E IR AÑADIENDO
-            // EL IMPORTE QUE CORRESPONDA A BRUTO O A DEDUCCION
 
             // BRUTO. Concepto 98
             ConceptoRecibo conc98 = new ConceptoRecibo();
@@ -261,7 +319,8 @@ public class NominaService {
             deduccion_total += deducciones;
         }
 
-        // Finalmente se marca la remesa como calculada si ha habido empleados y se guardan los acumulados
+        // Finalmente se marca la remesa como calculada si ha habido empleados y se
+        // guardan los acumulados
 
         if (n_empleados > 0) {
             remesa.setEstado("2");
@@ -284,7 +343,29 @@ public class NominaService {
         return bd.doubleValue();
     }
 
-    // private void crear_Concepto(Remesa remesa, Recibo recibo, Concepto concepto,
-    // Double unidades, Double precio, Double importe ){}
+    @Transactional
+    public void borrarRemesa(Integer remesa_entrada) {
 
+        Optional<Remesa> opcionalRemesa = remesasRepository.findById(remesa_entrada);
+        Remesa remesa = opcionalRemesa
+                .orElseThrow(() -> new NoSuchElementException("No se encontró la remesa con el ID proporcionado."));
+
+        List<IncidenciaNomina> listaIncidencias = (List<IncidenciaNomina>) incNRepo.findByIdRemesa(remesa);
+        // Bucle para recorrer todas las incidencias a actualizar eliminando la remesa
+        for (IncidenciaNomina inc : listaIncidencias) {
+            inc.setIdRemesa(null);
+            try {
+                incNRepo.save(inc);
+            } catch (Exception e) {
+                throw new DataIntegrityViolationException("Error en desmarcado incidencia como calculada");
+            }
+        }
+        // Finalmente se borra la remesa
+        try {
+            remesasRepository.delete(remesa);
+        } catch (Exception e) {
+            throw new DataIntegrityViolationException("Error en borrado de remesa");
+        }
+
+    }
 }
