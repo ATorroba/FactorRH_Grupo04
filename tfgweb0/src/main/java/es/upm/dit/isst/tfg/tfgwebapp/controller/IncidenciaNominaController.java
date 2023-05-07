@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,9 @@ public class IncidenciaNominaController {
     // API REST que devuelve los datos
     public final String INCIDENCIAS_N_MANAGER_STRING = "http://localhost:8083/incidencias_n/";
     public final String INCIDENCIAS_N_E_MANAGER_STRING = "http://localhost:8083/incidencias_n/empleado";
+    // API para los empleados
+    public final String RHMANAGER_STRING = "http://localhost:8083/empleados/";
+
 
      // Formularios de manejo
     public static final String VISTA_LISTA_INCIDENCIAS_N = "lista_incidencias_n";
@@ -34,6 +38,8 @@ public class IncidenciaNominaController {
     public static final String INCIDENCIAS_EMPLEADO_VACIO = "incidencia_n_empleado_V";
  
     private RestTemplate restTemplate = new RestTemplate();
+
+   
 
     @GetMapping("/incidencias_n")
     public String inicio() {
@@ -53,24 +59,26 @@ public class IncidenciaNominaController {
     // Crear una incidencia de nómina
     @GetMapping("incidencias_n/crear")
     public String crear(Map<String, Object> model) {
+        //Buscamos empleados a los que poder imputar incidencias: los que estén de alte aen el día:
+        List<Empleado> lista_empleados = new ArrayList<Empleado>();
+        lista_empleados = Arrays.asList(restTemplate.getForEntity(RHMANAGER_STRING, Empleado[].class).getBody());
+        model.put("empleados", lista_empleados);
+        //Creamos el objeto que guardará la incidencia
         IncidenciaNomina inc_n = new IncidenciaNomina();
         //System.out.printf("IncidenciaNomina CREAR%n");
-        model.put("inc_n", inc_n);
+        model.put("incidenciaNomina", inc_n);
         model.put("accion", "guardar");
         return VISTA_FORM_INC_N;
     }
 
     @PostMapping("incidencias_n/guardar")
     public String guardar(@Validated IncidenciaNomina inc_n, BindingResult result) {
-        //System.out.printf("IncidenciaNomina GUARDAR%n");
+        System.out.printf("IncidenciaNomina GUARDAR%n");
         if (result.hasErrors()) {
             return VISTA_FORM_INC_N;
         }
         try {
             System.out.printf("IncidenciaNomina GUARDAR TRY%n");
-            // if (inc_n.getEstado() == null) {
-            //     inc_n.setEstado("1");
-            // }
             restTemplate.postForObject(INCIDENCIAS_N_MANAGER_STRING, inc_n, IncidenciaNomina.class);
         } catch (Exception e) {
         }
@@ -90,7 +98,7 @@ public class IncidenciaNominaController {
         }
         model.put("inc_n", inc_n);
         model.put("accion", "actualizar");
-        return inc_n != null ? VISTA_FORM_INC_N : "redirect:/remesas";
+        return inc_n != null ? VISTA_FORM_INC_N : "redirect:/incidencias_n";
     }
 
     @PostMapping("incidencias_n/editar/actualizar")
@@ -106,6 +114,13 @@ public class IncidenciaNominaController {
         }
         return "redirect:/incidencias_n";
     }
+
+    @GetMapping("incidencias_n/eliminar/{id}")
+    public String eliminar(@PathVariable(value = "id") Integer id) {
+        restTemplate.delete(INCIDENCIAS_N_MANAGER_STRING + id);
+        return "redirect:/incidencias_n";
+    }
+
 
     @GetMapping("/incidencias_empleado")
     public String incidencias_n_mpleado(Principal principal, Model model) {
