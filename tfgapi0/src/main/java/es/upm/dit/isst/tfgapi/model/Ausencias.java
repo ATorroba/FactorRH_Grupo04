@@ -7,13 +7,14 @@ import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "Ausencias")
-@IdClass(value = ausenciasPK.class)
 public class Ausencias {
 
     @Id
-    @Column(name = "idEmpleado", length = 4)
-    private String idEmpleado;
-    @Id
+    @Column(name = "idausencia")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer idausencia;
+    @Column(name = "idempleado", length = 4)
+    private String idempleado;
     @Temporal(TemporalType.DATE)
     @Column(name = "inicio", nullable = true, columnDefinition = "DATE DEFAULT null")
     private Date inicio;
@@ -37,12 +38,12 @@ public class Ausencias {
 
     }
 
-    public String getIdEmpleado() {
-        return idEmpleado;
+    public String getIdempleado() {
+        return idempleado;
     }
 
-    public void setEmpleado(String idempleado) {
-        this.idEmpleado = idempleado;
+    public void setIdempleado(String idempleado) {
+        this.idempleado = idempleado;
     }
 
     public Date getInicio() {
@@ -99,6 +100,14 @@ public class Ausencias {
 
     public void setNotas(String notas) {
         this.notas = notas;
+    }
+
+    public Integer getIdausencia() {
+        return idausencia;
+    }
+
+    public void setIdausencia(Integer idausencia) {
+        this.idausencia = idausencia;
     }
 
 }

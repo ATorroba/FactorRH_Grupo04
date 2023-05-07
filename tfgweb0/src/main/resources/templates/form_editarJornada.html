@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8">
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+	<div class="container">
+		<div class="card bg-light">
+
+			<div class="card-header">
+				<h3 th:text="#{jornadas.crear.titulo.nueva}"></h3>
+			</div>
+			<div class="card-body">
+				<th:block th:object="${jornada}">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+						<li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+					</ul>
+                </th:block>
+
+				<form th:action="@{/jornadas/guardar}" th:object="${jornada}" method="post">
+                    <input type="hidden" th:field="*{idEmpleado}" />
+                    <input type="hidden" th:field="*{entrada_teorica}" />
+					<input type="hidden" th:field="*{salida_teorica}" />
+                    <input type="hidden" th:field="*{minutos_trabajados}" />
+                    <input type="hidden" th:field="*{minutos_teoricos}" />
+                    <input type="hidden" th:field="*{saldo}" />
+
+                    <div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{jornada.crear.fecha}"></label>
+						<div class="col-sm-6">
+							<input type="date" th:field="*{fecha}" value="2023-02-01" required>
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('fecha')}"
+								th:errors="*{fecha}"></small>
+						</div>
+					</div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{jornada.crear.hora_entrada}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_entrada}" class="form-control" style="width: 25%;" required step="1">
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('hora_entrada')}"
+                                th:errors="*{hora_entrada}"></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{jornada.crear.hora_salida}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_salida}" class="form-control" style="width: 25%;" required step="1">
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('hora_salida')}"
+                                th:errors="*{hora_salida}"></small>
+                        </div>
+                    </div>
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{jornada.crear.incidencia}"></label>
+						<div class="col-sm-6">
+							<select name="incidencia" th:field="*{incidencia}" class="form-control" required>
+								<option value="">Selecciona una incidencia</option>
+								<option value="f1">No ficho</option>
+								<option value="f2">Ficho mal</option>
+								<option value="f3">Fichaje regular</option>
+							</select>
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('incidencia')}"
+								th:errors="*{incidencia}"></small>
+						</div>
+					</div>
+
+                    <div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{jornada.crear.estado}"></label>
+						<div class="col-sm-6">
+							<select name="estado" th:field="*{estado}" class="form-control" required>
+								<option value="">Selecciona un estado</option>
+								<option value="1">Por Validar</option>
+								<option value="2">Validado</option>
+							</select>
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('estado')}"
+								th:errors="*{estado}"></small>
+						</div>
+					</div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{jornada.crear.notas}"></label>
+                        <div class="col-sm-6">
+                            <textarea th:field="*{notas}" rows="4" cols="80" class="form-control">Escribir aquí</textarea>
+                        </div>
+                    </div>
+
+			    	<div class="form-group">
+					    <div class="col-sm-6">
+						    <input type="submit" th:value="#{jornada.acciones.guardar}" class="btn btn-outline-primary">
+						    <a th:href="@{/jornadas/lista}"
+						    	class="btn btn-outline-danger" th:text="#{jornada.acciones.cancelar}"></a>
+					    </div>
+				    </div>
+			    </form>
+		    </div>
+	    </div>
+    </div>
+</body>
+</html>

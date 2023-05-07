@@ -12,8 +12,9 @@ import javax.persistence.Temporal*/
 import java.util.Date;;
 
 public class Ausencias {
+    private Integer idausencia;
 
-    private String empleado;
+    private String idempleado;
 
     private String inicio;
     private String fin;// date
@@ -27,12 +28,12 @@ public class Ausencias {
 
     }
 
-    public String getEmpleado() {
-        return empleado;
+    public String getIdempleado() {
+        return idempleado;
     }
 
-    public void setEmpleado(String idempleado) {
-        this.empleado = idempleado;
+    public void setIdempleado(String idempleado) {
+        this.idempleado = idempleado;
     }
 
     public String getInicio() {
@@ -89,6 +90,14 @@ public class Ausencias {
 
     public void setNotas(String notas) {
         this.notas = notas;
+    }
+
+    public Integer getIdausencia() {
+        return idausencia;
+    }
+
+    public void setIdausencia(Integer idausencia) {
+        this.idausencia = idausencia;
     }
 
 }

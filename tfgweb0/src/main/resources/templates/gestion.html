@@ -5,8 +5,11 @@
 </head>
 <body>
 	<header th:replace="layouts/base::header(dark,${date})"></header>
-        <div class="container">
-            <h3 style="padding-left: 5%;"> Gestión ausencias</h3>
+    
+    <h3 style="padding-left: 5%;padding-top: 1%;"> Gestión ausencias</h3>
+
+    <div style="display: flex; flex-direction: row;justify-content: center;">
+        <div style="flex-grow:2;padding-left: 5%;" class="container">
 
             <div class="card bg-light">
 
@@ -92,6 +95,81 @@
             </div>
         </div>
 
+
+        <div   class="container">
+           
+
+            <div class="card bg-light">
+
+                <div class="card-header">
+                    <div style="display: flex;justify-content: flex-start;gap:2%">
+                    <img th:src="@{/img/tick.png}" width="30" height="30" alt="">
+
+                    <h4 >Ausencias aceptadas</h4>
+                </div>
+
+
+
+
+
+
+                </div>
+              	<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+                                <th >tipo</th>
+                                <th >inicio</th>
+                                <th >fin</th>
+							
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="Aus: ${aus}">
+							<div th:if="${Aus.autorizada == '1'}" class="wrap">
+						
+                                <td th:text="${Aus.tipo_ausencia}"></td>
+                                <td th:text="${Aus.inicio}"></td>
+                                <td th:text="${Aus.fin}"></td>
+						
+								<!--td>
+									<a th:href="@{candidatos/} + ${Puesto.id_puesto}"
+										th:text="#{puestos.acciones.candidatos}" class="btn btn-outline-danger"></a>
+								</td-->
+							</div>
+						
+						</tr>
+					</tbody>
+					<!--tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{crear}" class="btn btn-outline-primary btn-block"
+									th:text="#{puestos.acciones.anadir}"></a>
+							</td>
+						</tr>
+					</tfoot-->
+				</table>
+			</div>
+                    
+                    <!-- Mostrar los errores en una lista -->
+                    <!-- 
+                    <div th:object="${TFG}" th:remove="tag">
+                        <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                            <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+                        </ul>
+                    </div>
+                     -->
+                
+
+                     
+                   
+                    
+          
+            </div>
+        </div>
+    </div>
     </body>
 </div>
 

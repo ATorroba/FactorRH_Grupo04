@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+
+	<div class="container">
+		<div class="card bg-light">
+			<div style="display:flex;flex-direction: row;gap:2%" class="card-header">
+                <img th:src="@{/img/req.png}" width="30" height="30" alt="">
+				<h3 th:text="'Solicitudes pendientes'"></h3>
+                
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th >id_ausencia</th>
+                                <th >id_empleado</th>
+                                <th >tipo</th>
+                                <th >inicio</th>
+                                <th >fin</th>
+							
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="Aus: ${aus}">
+							<div th:if="${Aus.autorizada == '0'}" class="wrap">
+								<td th:text="${Aus.idausencia}"></td>
+                                <td th:text="${Aus.idempleado}"></td>
+                                <td th:text="${Aus.tipo_ausencia}"></td>
+                                <td th:text="${Aus.inicio}"></td>
+                                <td th:text="${Aus.fin}"></td>
+								<td>
+									<a th:href="@{/aceptaraus/} + ${Aus.idausencia}" th:text="'Aceptar'"
+										class="btn btn-outline-primary"></a>
+								</td>
+                                <td>
+									<a th:href="@{/denegaraus/} + ${Aus.idausencia}" th:text="'Denegar'"
+										class="btn btn-outline-primary"></a>
+								</td>
+								<td>
+									<a th:href="@{/eliminaraus/} + ${Aus.idausencia}"
+										th:text="#{puestos.acciones.eliminar}" class="btn btn-outline-danger"></a>
+								</td>
+								<!--td>
+									<a th:href="@{candidatos/} + ${Puesto.id_puesto}"
+										th:text="#{puestos.acciones.candidatos}" class="btn btn-outline-danger"></a>
+								</td-->
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<!--tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{crear}" class="btn btn-outline-primary btn-block"
+									th:text="#{puestos.acciones.anadir}"></a>
+							</td>
+						</tr>
+					</tfoot-->
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="card bg-light">
+			<div style="display:flex;flex-direction: row;gap:2%" class="card-header">
+                <img th:src="@{/img/tick.png}" width="30" height="30" alt="">
+
+				<h3 th:text="'Aceptadas'"></h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th >id_ausencia</th>
+                                <th >id_empleado</th>
+                                <th >tipo</th>
+                                <th >inicio</th>
+                                <th >fin</th>
+							
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="Aus: ${aus}">
+							<div th:if="${Aus.autorizada == '1'}" class="wrap">
+								<td th:text="${Aus.idausencia}"></td>
+                                <td th:text="${Aus.idempleado}"></td>
+                                <td th:text="${Aus.tipo_ausencia}"></td>
+                                <td th:text="${Aus.inicio}"></td>
+                                <td th:text="${Aus.fin}"></td>
+							
+								<td>
+									<a th:href="@{/eliminaraus/} + ${Aus.idausencia}"
+										th:text="#{puestos.acciones.eliminar}" class="btn btn-outline-danger"></a>
+								</td>
+								<!--td>
+									<a th:href="@{candidatos/} + ${Puesto.id_puesto}"
+										th:text="#{puestos.acciones.candidatos}" class="btn btn-outline-danger"></a>
+								</td-->
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<!--tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{crear}" class="btn btn-outline-primary btn-block"
+									th:text="#{puestos.acciones.anadir}"></a>
+							</td>
+						</tr>
+					</tfoot-->
+				</table>
+			</div>
+		</div>
+	</div>
+    <div class="container">
+		<div class="card bg-light">
+			<div style="display:flex;flex-direction: row;gap:2%" class="card-header">
+                <img th:src="@{/img/cross.png}" width="30" height="30" alt="">
+
+				<h3 th:text="'Denegadas'"></h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th >id_ausencia</th>
+                                <th >id_empleado</th>
+                                <th >tipo</th>
+                                <th >inicio</th>
+                                <th >fin</th>
+							
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="Aus: ${aus}">
+							<div th:if="${Aus.autorizada == '2'}" class="wrap">
+								<td th:text="${Aus.idausencia}"></td>
+                                <td th:text="${Aus.idempleado}"></td>
+                                <td th:text="${Aus.tipo_ausencia}"></td>
+                                <td th:text="${Aus.inicio}"></td>
+                                <td th:text="${Aus.fin}"></td>
+								
+								
+								<td>
+									<a th:href="@{/eliminaraus/} + ${Aus.idausencia}"
+										th:text="#{puestos.acciones.eliminar}" class="btn btn-outline-danger"></a>
+								</td>
+								<!--td>
+									<a th:href="@{candidatos/} + ${Puesto.id_puesto}"
+										th:text="#{puestos.acciones.candidatos}" class="btn btn-outline-danger"></a>
+								</td-->
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<!--tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{crear}" class="btn btn-outline-primary btn-block"
+									th:text="#{puestos.acciones.anadir}"></a>
+							</td>
+						</tr>
+					</tfoot-->
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+
+	<footer th:replace="layouts/base::footer(light)"></footer>
+</body>
+
+</html>
