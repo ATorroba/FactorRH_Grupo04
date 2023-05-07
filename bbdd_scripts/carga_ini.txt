@@ -32,13 +32,19 @@ INSERT INTO ROL (IDEMPLEADO, idrol, activo) VALUES ('0108','CON','1');
 insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(10,'Sueldo base',0,1);
 insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(11,'Antigüedad',0,1);
 insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(12,'Horas extras',10,2);
-insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(13,'Productividad',100,2);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(13,'Productividad',100,3);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(50,'Huelga',0,4);
+insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(51,'Ausencias no justificadas',0,4);
 insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(70,'IRPF',20,4);
 insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(71,'Seguridad Social',6.45,4);
 insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(80,'Falta de asistencia',0,6);
 insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(81,'Jornada no cumplida',10,7);
 insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(98,'Total devengos',0,8);
 insert into concepto_retributivo(id_concepto, desc_concepto, precio, tipo) values(99,'Total deducciones',0,9);
+
+-- incidencias
+
+insert into incidencia_nomina(ejercicio,mes,unidades,id_concepto,id_empleado) values(2023,8,3,12,'0101');
 
 -- turnos
 

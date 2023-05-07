@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+
+	<div class="container">
+		<div class="row justify-content-end">
+			<div class="form-group">
+				<select name="status" onchange="location = this.value;" class="form-control">
+					<option value="">Selecciona una opción</option>
+					<option value="/jornadas/lista">Todas las Jornadas</option>
+					<option value="/jornadas/validadas">Validado</option>
+					<option value="/jornadas/porvalidar">Por validar</option>
+					<option value="/jornadas/especificas/1/f1">Por Incidencia No Ficho</option>
+					<option value="/jornadas/especificas/1/f2">Por validar Incidencia Ficho Mal</option>
+					<option value="/jornadas/especificas/1/f3">Por validar Fichaje Estandar</option>
+					<option value="/jornadas/especificas/2/f1">Validadas Incidencia No Ficho</option>
+					<option value="/jornadas/especificas/2/f2">Validadas Incidencia Ficho Mal</option>
+					<option value="/jornadas/especificas/2/f3">Validadas Fichaje Estandar</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col text-center">
+				<div class="jornadasbutton">
+					<button type="button" class="btn btn-primary" onclick="location.href='/jornadas/crear'">Crear</button>
+				</div>
+			</div>
+		</div>
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 th:text="#{jornadas.lista.titulo}"></h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<th th:text="#{jornada.jornada.idEmpleado}">idEmpleado</th>
+								<th th:text="#{jornada.jornada.fecha}">fecha</th>
+								<th th:text="#{jornada.jornada.hora_entrada}">Hora de Entrada</th>
+								<th th:text="#{jornada.jornada.hora_salida}">Hora de Salida</th>
+								<th th:text="#{jornada.jornada.minutos_trabajados}">Minutos Trabajados</th>
+
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="jornada: ${jornadas}">
+							<div class="wrap">
+								<td th:text="${jornada.idEmpleado}"></td>
+								<td th:text="${jornada.fecha}"></td>
+                                <td th:text="${jornada.hora_entrada}"></td>
+                                <td th:text="${jornada.hora_salida}"></td>
+                                <td th:text="${jornada.minutos_trabajados}"></td>
+								<td>
+									<a th:if="${jornada.estado == '2'}" th:href="@{/jornadas/revisar/} + ${jornada.idEmpleado} + '/' + ${jornada.fecha}"
+										th:text="#{jornada.acciones.revisar}" class="btn btn-outline-primary"></a>
+									<a th:if="${jornada.estado == '1'}" th:href="@{/jornadas/validar/} + ${jornada.idEmpleado} + '/' + ${jornada.fecha}"
+										th:text="#{jornada.acciones.validar}" class="btn btn-outline-primary"></a>
+								</td>
+								<td>
+									<a th:href="@{/jornadas/editar/} + ${jornada.idEmpleado} + '/' + ${jornada.fecha}" th:text="#{jornada.acciones.editar}" class="btn btn-outline-warning"></a>
+								</td>
+								<td>
+									<a th:href="@{/jornadas/delete/} + ${jornada.idEmpleado} + '/' + ${jornada.fecha}" th:text="#{jornada.acciones.delete}" class="btn btn-outline-danger" onclick="return confirm('¿Está seguro de que quiere eliminar este elemento?');"></a>
+								</td>
+							</div>
+							</span>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="margenjornadas"></div>
+	</div>
+</body>
+</html>

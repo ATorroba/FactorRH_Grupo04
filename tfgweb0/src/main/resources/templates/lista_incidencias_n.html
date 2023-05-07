@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+
+	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+				<div class="LL">
+					<img th:src="@{/img/incidencia.png}" width="50" height="50" alt="">
+					<h3 th:text="#{incs_n.lista}"></h3>
+				</div>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+								<!--th th:text="#{incs_n.lista.idRemesa}">idRemesa</th-->
+								<th th:text="#{incs_n.lista.empleado}">Empleado</th>
+								<th th:text="#{incs_n.lista.periodo}">Periodo</th>
+								<th th:text="#{incs_n.lista.Tipo}">Tipo</th>
+								<th th:text="#{incs_n.lista.concepto}">Concepto</th>
+								<th th:text="#{incs_n.lista.remesa}">Estado</th>
+								<th th:text="#{incs_n.lista.unidades}">Cantidad</th>
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="inc_n: ${incs_n}">
+							<div class="wrap">
+								<td
+									th:text="${inc_n.idEmpleado.nombre + ' ' + inc_n.idEmpleado.apellido_1 + ' ' + inc_n.idEmpleado.apellido_2}">
+								</td>
+								<td th:text="${inc_n.ejercicio + '-' + inc_n.mes+''}"></td>
+								
+								<td th:text="${inc_n.idConcepto.idConcepto < 50 ? 'Devengos' : 'Deducciones'}"></td>
+								
+								<td th:text="${inc_n.idConcepto.desc_concepto}"></td>
+								
+								<td
+									th:text="${inc_n.idRemesa != null ? 'En nómina' : 'Pendiente'}">
+								</td>
+
+								<td th:if="${inc_n.idConcepto.idConcepto == 12}" th:text="${inc_n.unidades + ' horas'}"></td>
+								<td th:unless="${inc_n.idConcepto.idConcepto == 12}" th:text="${#numbers.formatCurrency(inc_n.importe)}"></td>
+
+								<td>
+									<a th:if="${inc_n.idRemesa == null}" th:href="@{editar/} + ${inc_n.idIncidencia}"
+										th:text="#{inc_n.acciones.editar}" class="btn btn-outline-primary"></a>
+								</td>
+								
+								<td th:if="${inc_n.idRemesa == null}">
+									<a th:href="@{eliminar/} + ${inc_n.idIncidencia}" th:text="#{inc_n.acciones.eliminar}"
+										class="btn btn-outline-danger"
+										onclick="return confirm('¿Está seguro que desea eliminar esta incidencia?')"></a>
+								</td>
+
+								
+								<!-- <td>
+									<a th:href="@{./inc_n/} + ${inc_n.idRecibo}" th:text="#{inc_n.acciones.detalle}"
+										class="btn btn-outline-primary"></a>
+								</td> -->
+							
+							</div>
+							</span>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="2">
+								<a th:href="@{crear}" class="btn btn-outline-primary btn-block"
+									th:text="#{inc_n.acciones.anadir}"></a>
+							</td>
+							<td colspan="2">
+								<a th:href="@{/incidencias_n}" class="btn btn-outline-primary btn-block"
+									th:text="#{incs_n.lista.volver}"></a>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layouts/base::footer(light)"></footer>
+</body>
+
+</html>

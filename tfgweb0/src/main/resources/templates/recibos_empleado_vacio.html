@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="layouts/base::head(light,${date})">
 	<meta charset="UTF-8">
 </head>
@@ -9,9 +10,11 @@
 	<div class="container">
 		<div class="card bg-light">
 			<div class="card-header">
-				<h3
-					th:text="#{recibos.lista.empleado}">
-				</h3>
+				<div class="LL">
+					<img th:src="@{/img/nomina_ok.png}" width="50" height="50" alt="">
+					<h3 th:text="#{recibos.lista.empleado}">
+					</h3>
+				</div>
 			</div>
 			<div class="card-body">
 				<table class="table table-striped">
@@ -31,9 +34,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<p
-					th:text="#{recibos.lista.vacia}">
-					</p>
+						<p th:text="#{recibos.lista.vacia}">
+						</p>
 					</tbody>
 					<tfoot>
 						<tr>

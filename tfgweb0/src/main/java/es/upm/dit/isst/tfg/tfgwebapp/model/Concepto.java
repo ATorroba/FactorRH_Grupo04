@@ -5,7 +5,7 @@ public class Concepto {
 
     public Integer idConcepto;
     public String desc_concepto;
-    public String tipo; // Date
+    public String tipo; 
     public String IBAN;
     public Double precio;
     
