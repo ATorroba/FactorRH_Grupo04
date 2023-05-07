@@ -196,3 +196,13 @@ td.alineado-derecha {
 .negrita {
 	font-weight: bold;
 }
+
+.jornadasbutton{
+	width: 120px;
+	margin-left: 10px;
+	text-align: center;
+}
+
+.margenjornadas{
+	margin-bottom: 20px
+}

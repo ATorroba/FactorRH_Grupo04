@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import es.upm.dit.isst.tfgapi.model.Jornadas;
@@ -32,8 +31,10 @@ public class JornadasController {
     
     @PostMapping("/jornadas")
     ResponseEntity<Jornadas> create(@RequestBody Jornadas newJornada) throws URISyntaxException {
+        int minTrabajados = calculateMinutosTrabajados(newJornada);
+        newJornada.setMinutos_trabajados(minTrabajados);
         Jornadas result = jornadasRepository.save(newJornada);
-        return ResponseEntity.created(new URI("/jornada/" + result.getIdEmpleado() + "/" + result.getFecha())).body(result);
+        return ResponseEntity.created(new URI("/jornadas/" + result.getIdEmpleado() + "/" + result.getFecha())).body(result);
     }
 
     @GetMapping("/jornadas/{idEmpleado}/{fecha}")
@@ -46,6 +47,9 @@ public class JornadasController {
 
     @PutMapping("/jornadas/{idEmpleado}/{fecha}")
     ResponseEntity<Jornadas> update(@RequestBody Jornadas newJornada, @PathVariable String idEmpleado, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+        int minTrabajados = calculateMinutosTrabajados(newJornada);
+        newJornada.setMinutos_trabajados(minTrabajados);
+        
         jornadasPK jornadaPk = new jornadasPK(idEmpleado, fecha);
         return jornadasRepository.findById(jornadaPk).map(jornada -> {
             jornada.setIdEmpleado(newJornada.getIdEmpleado());
@@ -91,5 +95,21 @@ public class JornadasController {
     @GetMapping("/jornadas/estado/{estado}/{incidencia}")
     List<Jornadas> jornadasIncidencia(@PathVariable String estado, @PathVariable String incidencia) {
         return (List<Jornadas>) jornadasRepository.findByIncidenciaAndEstado(incidencia, estado);
+    }
+
+    private int calculateMinutosTrabajados(Jornadas jornada) {
+        if (jornada.getHora_salida() == null) {
+            return 0;
+        }
+    
+        int horaEntr = jornada.getHora_entrada().getHour();
+        int minEntr = jornada.getHora_entrada().getMinute();
+        int minutosEnt = horaEntr * 60 + minEntr;
+        int horaSal = jornada.getHora_salida().getHour();
+        int minSal = jornada.getHora_salida().getMinute();
+        int minutosSal = horaSal * 60 + minSal;
+        int minTrabajados = minutosSal - minutosEnt;
+    
+        return Math.max(minTrabajados, 0);
     }
 }

@@ -6,11 +6,11 @@ import java.time.LocalTime;
 public class Jornadas {
     
     private String idEmpleado;
-    private LocalDate fecha;
-    private LocalTime hora_entrada;
-    private LocalTime hora_salida;
-    private LocalTime entrada_teorica;
-    private LocalTime salida_teorica;
+    private String fecha;
+    private String hora_entrada;
+    private String hora_salida;
+    private String entrada_teorica;
+    private String salida_teorica;
     private int minutos_trabajados;
     private int minutos_teoricos;
     private int saldo;
@@ -29,38 +29,38 @@ public class Jornadas {
         this.idEmpleado = idEmpleado;
     }
 
-    public LocalDate getFecha() {
+    public String getFecha() {
         return fecha;
     }
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
-    public LocalTime getHora_entrada() {
+    public String getHora_entrada() {
         return hora_entrada;
     }
 
-    public void setHora_entrada(LocalTime hora_entrada) {
+    public void setHora_entrada(String hora_entrada) {
         this.hora_entrada = hora_entrada;
     }
-    public LocalTime getHora_salida() {
+    public String getHora_salida() {
         return hora_salida;
     }
 
-    public void setHora_salida(LocalTime hora_salida) {
+    public void setHora_salida(String hora_salida) {
         this.hora_salida = hora_salida;
     }
-    public LocalTime getEntrada_teorica() {
+    public String getEntrada_teorica() {
         return entrada_teorica;
     }
 
-    public void setEntrada_teorica(LocalTime entrada_teorica) {
+    public void setEntrada_teorica(String entrada_teorica) {
         this.entrada_teorica = entrada_teorica;
     }
-    public LocalTime getSalida_teorica() {
+    public String getSalida_teorica() {
         return salida_teorica;
     }
 
-    public void setSalida_teorica(LocalTime salida_teorica) {
+    public void setSalida_teorica(String salida_teorica) {
         this.salida_teorica = salida_teorica;
     }
     public int getMinutos_trabajados() {
