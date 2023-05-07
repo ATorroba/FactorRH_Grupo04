@@ -74,11 +74,67 @@ public class AusenciasController {
     @GetMapping("/gestion")
 
     public String gestion(Model model, Principal principal) {
+
         Ausencias Asencia = new Ausencias();
+        Empleado empleado2 = restTemplate.getForObject("http://localhost:8083/datos/" + principal.getName(),
+                Empleado.class);
+        List<Ausencias> aus = new ArrayList<Ausencias>();
+        aus = Arrays.asList(restTemplate.getForEntity("http://localhost:8083/ausencias/" + empleado2.getIdEmpleado(),
+
+                Ausencias[].class).getBody());
+
+        model.addAttribute("aus", aus);
+
         model.addAttribute("Ausencia", Asencia);
         model.addAttribute("date", ZonedDateTime.now());
 
         return "gestion";
+
+    }
+
+    @GetMapping("/listaaus")
+
+    public String listaaus(Model model, Principal principal) {
+
+        List<Ausencias> aus = new ArrayList<Ausencias>();
+        aus = Arrays.asList(restTemplate.getForEntity("http://localhost:8083/ausencias/",
+
+                Ausencias[].class).getBody());
+
+        model.addAttribute("aus", aus);
+        model.addAttribute("date", ZonedDateTime.now());
+
+        return "lista_ausencias";
+
+    }
+
+    @GetMapping("/aceptaraus/{idausencia}")
+
+    public String aceptaraus(@PathVariable(value = "idausencia") Integer idausencia, Model model, Principal principal) {
+
+        Ausencias aus = restTemplate.getForObject("http://localhost:8083/ausenciasaus/" + idausencia, Ausencias.class);
+
+        restTemplate.postForObject("http://localhost:8083/aceptaraus/" + idausencia, aus, Ausencias.class);
+
+        model.addAttribute("aus", aus);
+        model.addAttribute("date", ZonedDateTime.now());
+
+        return "redirect:/listaaus";
+
+    }
+
+    @GetMapping("/denegaraus/{idausencia}")
+
+    public String denegaraus(@PathVariable(value = "idausencia") Integer idausencia, Model model, Principal principal) {
+
+        Ausencias aus = restTemplate.getForObject("http://localhost:8083/ausenciasaus/" + idausencia, Ausencias.class);
+
+        restTemplate.postForObject("http://localhost:8083/denegaraus/" + idausencia, aus, Ausencias.class);
+
+        model.addAttribute("aus", aus);
+        model.addAttribute("date", ZonedDateTime.now());
+
+        return "redirect:/listaaus";
 
     }
 
@@ -125,6 +181,8 @@ public class AusenciasController {
                 return "vacaciones";
             }
         } catch (Exception e) {
+            System.out.println(e);
+
             return "401";
 
         }
@@ -157,7 +215,9 @@ public class AusenciasController {
 
                         + principal.getName(), Empleado.class);
                 if (empleado2 != null) {
-                    Ausencia.setEmpleado(empleado2.getIdEmpleado());
+                    Ausencia.setIdempleado(empleado2.getIdEmpleado());
+                    Ausencia.setAutorizada("0");
+                    Ausencia.setFecha_comunicacion(ZonedDateTime.now().toLocalDateTime().toString());
 
                 } else {
                     return "401";
@@ -178,5 +238,15 @@ public class AusenciasController {
             model.put("date", ZonedDateTime.now());
             return "gestion";
         }
+    }
+
+    @GetMapping("eliminaraus/{idausencia}")
+
+    public String eliminar(@PathVariable(value = "idausencia") Integer id) {
+
+        restTemplate.delete(RHMANAGERGER_STRING + id);
+
+        return "redirect:/listaaus";
+
     }
 }
