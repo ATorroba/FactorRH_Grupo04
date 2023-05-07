@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.thymeleaf.TemplateEngine;
 
 import es.upm.dit.isst.tfg.tfgwebapp.model.Remesa;
 
@@ -29,6 +31,7 @@ public class NominaController {
     // Formulario de manejo
     public static final String VISTA_LISTA_REMESAS = "lista_remesas";
     public static final String VISTA_FORM_REMESA = "form_remesa";
+    public static final String INFORME_REMESA ="/remesas/recibos/";
 
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -113,7 +116,8 @@ public class NominaController {
     @GetMapping("remesas/emitir/{id}")
     public String emitir(@PathVariable(value = "id") Integer id) {
         restTemplate.postForObject(REMESAMANAGER_STRING + id + "/emitida", null, Remesa.class);
-        return "redirect:/remesas";
+        return "redirect:" + INFORME_REMESA + id + "?format=pdf";
+        //return "redirect:/remesas";
     }
 
     @GetMapping("remesas/pagar/{id}")
