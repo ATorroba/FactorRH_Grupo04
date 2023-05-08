@@ -23,9 +23,9 @@ public class Permisos {
 
     }
 
-public Integer getEjercicio(){
-    return ejercicio;
-}
+    public Integer getEjercicio(){
+        return ejercicio;
+    }
 
     public String getIdEmpleado(){
         return idEmpleado;
@@ -37,6 +37,14 @@ public Integer getEjercicio(){
 
     public Integer getDiasGracia() {
         return diasGracia;
+    }
+
+    public void setEjercicio(Integer ejercicio) {
+        this.ejercicio = ejercicio;
+    }
+
+    public void setIdEmpleado(String idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public void setVacaciones(Integer vacaciones) {

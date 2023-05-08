@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8">
+</head>
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 th:text="${accion} == 'guardar' ? #{permisos.formulario.titulo.nuevo} : #{permisos.formulario.titulo.editar}"></h3>
+			</div>
+			<div class="card-body">
+				<!-- Mostrar los errores en una lista -->
+				<!-- 
+				<div th:object="${candidato}" th:remove="tag">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+						<li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+					</ul>
+				</div>
+				 -->
+				 
+				<form th:action="@{${accion}}" th:object="${Permisos}" method="post">
+					<!-- <input type="hidden" th:field="*{email}" /> -->
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{permisos.Permisos.idEmpleado}"></label>
+						<div class="col-sm-6">
+							<input type="text" id="idEmpleado" th:field="*{idEmpleado}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('idEmpleado')}" th:errors="*{idEmpleado}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{permisos.Permisos.ejercicio}"></label>
+						<div class="col-sm-6">
+							<input type="text" ejercicio="ejercicio" th:field="*{ejercicio}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('ejercicio')}" th:errors="*{ejercicio}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{permisos.Permisos.diasGracia}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{diasGracia}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('diasGracia')}" th:errors="*{diasGracia}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" th:text="#{permisos.Permisos.vacaciones}"></label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{vacaciones}">
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('vacaciones')}" th:errors="*{vacaciones}"></small>
+						</div>
+					</div>
+									
+					<div th:if="${#fields.hasAnyErrors()}">
+						<ul>
+							<li th:each="err : ${#fields.allErrors()}" th:text="${err}" ></li>
+						</ul>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-6">
+							<input type="submit" th:value="#{permisos.acciones.guardar}" class="btn btn-outline-primary">
+							<a th:href="@{${accion} == 'guardar' AND !${#fields.hasErrors('*')} ? '../permisos' : '/permisos/crear'}"
+							class="btn btn-outline-danger" th:text="#{permisos.acciones.cancelar}"></a>
+							<!-- a th:href="@{${accion} == 'guardar' OR ${#fields.hasErrors('*')} ? 'lista' : '../lista'}" class="btn btn-outline-danger" th:text="#{tfgs.acciones.cancelar}"></a-->
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<!--footer th:replace="layouts/base::footer(dark)"></footer-->
+</body>
+</html>
