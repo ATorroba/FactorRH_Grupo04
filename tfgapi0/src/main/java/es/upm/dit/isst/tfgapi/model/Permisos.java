@@ -6,11 +6,12 @@ import javax.persistence.*;
 @IdClass(value = permisosPK.class )
 public class Permisos {
 
-    @Id
-    private Integer ejercicio;
+
     @Id
     @Column(name = "idEmpleado", length = 4)
     private String idEmpleado;
+    @Id
+    private Integer ejercicio;
     private Integer vacaciones;
     private Integer diasGracia;
 
@@ -18,14 +19,9 @@ public class Permisos {
 
     }
 
-    @Override
-    public String toString() {
-        return "Permisos []";
+    public Integer getEjercicio(){
+        return ejercicio;
     }
-
-public Integer getEjercicio(){
-    return ejercicio;
-}
 
     public String getIdEmpleado(){
         return idEmpleado;
@@ -35,12 +31,20 @@ public Integer getEjercicio(){
         return vacaciones;
     }
 
-    public void setVacaciones(Integer vacaciones) {
-        this.vacaciones = vacaciones;
-    }
-
     public Integer getDiasGracia() {
         return diasGracia;
+    }
+
+    public void setEjercicio(Integer ejercicio) {
+        this.ejercicio = ejercicio;
+    }
+
+    public void setIdEmpleado(String idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    public void setVacaciones(Integer vacaciones) {
+        this.vacaciones = vacaciones;
     }
 
     public void setDiasGracia(Integer diasGracia) {

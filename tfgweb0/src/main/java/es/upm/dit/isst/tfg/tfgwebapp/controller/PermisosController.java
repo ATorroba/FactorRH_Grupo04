@@ -65,7 +65,7 @@ public class PermisosController {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    @GetMapping("permisos/lista")
+    @GetMapping("permisos")
     public String lista(Model model, Principal principal) {
         List<Permisos> lista = new ArrayList<Permisos>();
         lista = Arrays.asList(restTemplate.getForEntity("http://localhost:8083/permisos/",
@@ -77,5 +77,79 @@ public class PermisosController {
         return "permisos";
     }
     
+    @GetMapping("/permisos/crear")
+    public String crear(Map<String, Object> model) {
+        Permisos permiso = new Permisos();
+        model.put("Permisos", permiso);
+        model.put("accion", "guardar");
+        return "form_permiso";
+    }
+
+    @PostMapping("permisos/guardar")
+    public String guardar(@Validated Permisos permiso, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("Permiso", permiso);
+            return "form_permiso";
+        }
+        try {
+            restTemplate.postForObject("http://localhost:8083/permisos/", permiso, Permisos.class);
+        } catch (Exception e) {
+        }
+        return "redirect:/" + "permisos";
+    }
+
+    @PostMapping("permisos/actualizar")
+    public String actualizar(@Validated Permisos permiso, BindingResult result, Map<String, Object> model) {
+
+        if (result.hasErrors()) {
+
+            model.put("Permisos", permiso);
+            List<ObjectError> r = result.getAllErrors();
+            model.put("result", r);// .getDefaultMessage());
+            model.put("date", ZonedDateTime.now());
+
+            return "form_permisos";
+
+        }
+
+        try {
+            restTemplate.put("http://localhost:8083/permisos/" + permiso.getIdEmpleado() + "/" + permiso.getEjercicio() ,
+
+                    permiso, Permisos.class);
+
+        } catch (Exception e) {
+        }
+
+        return "redirect:/" + "permisos";
+
+    }
+
+    @GetMapping("permisos/eliminar/{idEmpleado}/{ejercicio}")
+    public String eliminar(@PathVariable(value = "idEmpleado") String id, @PathVariable(value = "ejercicio") String ejercicio) {
+        System.out.println("Antes");
+        restTemplate.delete("http://localhost:8083/permisos/" + id + "/" + ejercicio);
+        System.out.println(ejercicio);
+        return "redirect:/" + "permisos";
+
+    }
+
+    @GetMapping("permisos/editar/{idEmpleado}/{ejercicio}")
+    public String editar(@PathVariable(value = "idEmpleado") String idEmpleado, @PathVariable(value = "ejercicio") Integer ejercicio, Map<String, Object> model, Principal principal) {
+
+        Permisos permiso = null;
+        try {
+            permiso = restTemplate.getForObject("http://localhost:8083/permisos/" + idEmpleado + "/" + ejercicio, Permisos.class);
+
+        } catch (HttpClientErrorException.NotFound ex) {
+            System.out.println("idEmpleado");
+        }
+
+        model.put("Permisos", permiso);
+        model.put("accion", "../../actualizar");
+        model.put("date", LocalDate.now());
+
+        return permiso != null ? "form_permiso" : "redirect:/" + "permisos";
+
+    }
     
 }
