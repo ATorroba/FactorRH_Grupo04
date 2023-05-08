@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <header th:replace="layouts/base::header(dark,${date})"></header>
+    <div class="container">
+        <div class="card bg-light">
+            <div class="card-header">
+                <div style="display: flex;justify-content: flex-start;gap:2%">
+                    <img th:src="@{/img/incidencia.png}" width="50" height="50" alt="">
+                    <h3
+                        th:text="${accion} == 'guardar' ? #{inc_n.formulario.titulo.nuevo} : #{inc_n.formulario.titulo.editar}">
+                    </h3>
+                </div>
+            </div>
+            <div style="padding-left: 5%;" class="card-body">
+
+                <!-- Mostrar los errores en una lista -->
+                <div th:object="${inc_n}" th:remove="tag">
+                    <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                        <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+                    </ul>
+                </div>
+
+                <form th:action="@{${accion}}" th:object="${inc_n}" method="post">
+
+                    <p th:if="${result}" th.object="${result}" th:text="${result}" class="alert alert-danger"></p>
+
+                    <p class="alert alert-danger" th:each="error: ${result}"
+                        th:text="${error.field}+': '+${error.defaultMessage}"></p>
+
+                    <div class="col-sm-6">
+                        <input type="hidden" th:field="*{idIncidencia}" />
+
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('idIncidencia')}"
+                            th:errors="*{idIncidencia}"></small>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{inc_n.formulario.empleado}"></label>
+                        <div class="col-sm-6">
+                            <select name="idEmpleado" th:field="*{idEmpleado.idEmpleado}">
+                                <option th:each="empleado : ${empleados}" th:value="${empleado.idEmpleado}"
+                                    th:text="${empleado.nombre + ' ' + empleado.apellido_1 + ' ' + empleado.apellido_2}"
+                                    th:selected="${inc_n.idEmpleado == empleado.idEmpleado}"></option>
+                            </select>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('idEmpleado')}"
+                                th:errors="*{idEmpleado}"></small>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{inc_n.formulario.tipo}"></label>
+                        <div class="col-sm-6">
+                            <select name="idConcepto" th:field="*{idConcepto.idConcepto}" required>
+                                <option value=12 th:text="#{inc_n.formulario.horas}"></option>
+                                <option value=13 th:text="#{inc_n.formulario.productividad}"></option>
+                                <option value=50 th:text="#{inc_n.formulario.seguro}"></option>
+                                <option value=51 th:text="#{inc_n.formulario.ausencia}"></option>
+                            </select>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('idConcepto')}"
+                                th:errors="*{idConcepto}"></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{inc_n.formulario.ejercicio}"></label>
+                        <div class="col-sm-6">
+                            <input type="number" name="ejercicio" th:field="*{ejercicio}" min="2020" max="2100" step="1"
+                                th:value="${ejercicio != null ? ejercicio : 2023}" required>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('ejercicio')}"
+                                th:errors="*{ejercicio}"></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{inc_n.formulario.mes}"></label>
+                        <div class="col-sm-6">
+                            <select name="mes" th:field="*{mes}" required>
+                                <option value="">Selecciona un mes</option>
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('mes')}"
+                                th:errors="*{mes}"></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{inc_n.formulario.unidades}"></label>
+                        <div class="col-sm-6">
+                            <input type="number" min="0" step="1" th:field="*{unidades}" required>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('unidades')}"
+                                th:errors="*{unidades}"></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{inc_n.formulario.precio}"></label>
+                        <div class="col-sm-6">
+                            <input type="number" min="0" step="1" th:field="*{precio}">
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('precio')}"
+                                th:errors="*{precio}"></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{inc_n.formulario.importe}"></label>
+                        <div class="col-sm-6">
+                            <input type="number" min="0" step="0.01" th:field="*{importe}" required>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('importe')}"
+                                th:errors="*{importe}"></small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <input type="submit" th:value="#{inc_n.acciones.guardar}" class="btn btn-outline-primary">
+                            <a th:href="@{${accion} == 'guardar' AND !${#fields.hasErrors('*')} ? 'lista' : '/incidencias_n'}"
+                                class="btn btn-outline-danger" th:text="#{inc_n.acciones.cancelar}"></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

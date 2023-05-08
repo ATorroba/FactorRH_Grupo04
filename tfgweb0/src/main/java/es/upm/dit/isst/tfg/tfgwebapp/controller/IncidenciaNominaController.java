@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,14 +27,20 @@ public class IncidenciaNominaController {
     // API REST que devuelve los datos
     public final String INCIDENCIAS_N_MANAGER_STRING = "http://localhost:8083/incidencias_n/";
     public final String INCIDENCIAS_N_E_MANAGER_STRING = "http://localhost:8083/incidencias_n/empleado";
+    // API para los empleados
+    public final String RHMANAGER_STRING = "http://localhost:8083/empleados/";
+    // API para los conceptos
+    public final String CONCEPTOSMANAGER_STRING = "http://localhost:8083/empleados/";
 
-     // Formularios de manejo
+    // Formularios de manejo
     public static final String VISTA_LISTA_INCIDENCIAS_N = "lista_incidencias_n";
     public static final String VISTA_FORM_INC_N = "form_incidencia_n";
     public static final String INCIDENCIAS_EMPLEADO = "incidencia_n_empleado";
     public static final String INCIDENCIAS_EMPLEADO_VACIO = "incidencia_n_empleado_V";
- 
+
     private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate_emp = new RestTemplate();
+    private RestTemplate restTemplate_conc = new RestTemplate();
 
     @GetMapping("/incidencias_n")
     public String inicio() {
@@ -45,7 +52,7 @@ public class IncidenciaNominaController {
     public String lista(Model model, Principal principal) {
         List<IncidenciaNomina> lista = new ArrayList<IncidenciaNomina>();
         lista = Arrays.asList(restTemplate.getForEntity(INCIDENCIAS_N_MANAGER_STRING,
-        IncidenciaNomina[].class).getBody());
+                IncidenciaNomina[].class).getBody());
         model.addAttribute("incs_n", lista);
         return VISTA_LISTA_INCIDENCIAS_N;
     }
@@ -53,24 +60,28 @@ public class IncidenciaNominaController {
     // Crear una incidencia de nómina
     @GetMapping("incidencias_n/crear")
     public String crear(Map<String, Object> model) {
+        
+        // Buscamos empleados a los que poder imputar incidencias: los que estén de alta
+        // en el día:
+        List<Empleado> lista_empleados = new ArrayList<Empleado>();
+        lista_empleados = Arrays.asList(restTemplate_emp.getForEntity(RHMANAGER_STRING, Empleado[].class).getBody());
+        model.put("empleados", lista_empleados);
+        
+        // Creamos el objeto que guardará la incidencia
         IncidenciaNomina inc_n = new IncidenciaNomina();
-        //System.out.printf("IncidenciaNomina CREAR%n");
         model.put("inc_n", inc_n);
+        
         model.put("accion", "guardar");
         return VISTA_FORM_INC_N;
     }
 
     @PostMapping("incidencias_n/guardar")
     public String guardar(@Validated IncidenciaNomina inc_n, BindingResult result) {
-        //System.out.printf("IncidenciaNomina GUARDAR%n");
+        System.out.printf("IncidenciaNomina GUARDAR%n");
         if (result.hasErrors()) {
             return VISTA_FORM_INC_N;
         }
         try {
-            System.out.printf("IncidenciaNomina GUARDAR TRY%n");
-            // if (inc_n.getEstado() == null) {
-            //     inc_n.setEstado("1");
-            // }
             restTemplate.postForObject(INCIDENCIAS_N_MANAGER_STRING, inc_n, IncidenciaNomina.class);
         } catch (Exception e) {
         }
@@ -82,7 +93,13 @@ public class IncidenciaNominaController {
     public String editar(@PathVariable(value = "id") Integer id,
             Map<String, Object> model, Principal principal) {
 
-        //System.out.printf("IncidenciaNomina EDITAR 1 %n");
+        // Buscamos empleados a los que poder imputar incidencias: los que estén de alta
+        // en el día:
+        List<Empleado> lista_empleados = new ArrayList<Empleado>();
+        lista_empleados = Arrays.asList(restTemplate.getForEntity(RHMANAGER_STRING, Empleado[].class).getBody());
+        model.put("empleados", lista_empleados);
+
+        // System.out.printf("IncidenciaNomina EDITAR 1 %n");
         IncidenciaNomina inc_n = null;
         try {
             inc_n = restTemplate.getForObject(INCIDENCIAS_N_MANAGER_STRING + id, IncidenciaNomina.class);
@@ -90,20 +107,26 @@ public class IncidenciaNominaController {
         }
         model.put("inc_n", inc_n);
         model.put("accion", "actualizar");
-        return inc_n != null ? VISTA_FORM_INC_N : "redirect:/remesas";
+        return inc_n != null ? VISTA_FORM_INC_N : "redirect:/incidencias_n";
     }
 
     @PostMapping("incidencias_n/editar/actualizar")
     public String actualizar(@Validated IncidenciaNomina inc_n, BindingResult result) {
-        //System.out.printf("IncidenciaNomina EDITAR 2 %n");
+        // System.out.printf("IncidenciaNomina EDITAR 2 %n");
         if (result.hasErrors()) {
             return VISTA_FORM_INC_N;
         }
         try {
-            restTemplate.put(INCIDENCIAS_N_MANAGER_STRING + inc_n.getIdRemesa(),
-            inc_n, IncidenciaNomina.class);
+            restTemplate.put(INCIDENCIAS_N_MANAGER_STRING + inc_n.getIdIncidencia(),
+                    inc_n, IncidenciaNomina.class);
         } catch (Exception e) {
         }
+        return "redirect:/incidencias_n";
+    }
+
+    @GetMapping("incidencias_n/eliminar/{id}")
+    public String eliminar(@PathVariable(value = "id") Integer id) {
+        restTemplate.delete(INCIDENCIAS_N_MANAGER_STRING + id);
         return "redirect:/incidencias_n";
     }
 
@@ -116,13 +139,14 @@ public class IncidenciaNominaController {
                     + principal.getName(), Empleado.class).getBody());
             if (empleado2 != null) {
                 String idEmpLog = empleado2.getIdEmpleado();
-                //System.out.printf("Empleado NUMERO %s %n", idEmpLog);
+                // System.out.printf("Empleado NUMERO %s %n", idEmpLog);
                 List<IncidenciaNomina> lista_inc = new ArrayList<IncidenciaNomina>();
                 try {
                     lista_inc = Arrays
-                            .asList(restTemplate.getForEntity(INCIDENCIAS_N_E_MANAGER_STRING + idEmpLog, IncidenciaNomina[].class)
+                            .asList(restTemplate
+                                    .getForEntity(INCIDENCIAS_N_E_MANAGER_STRING + idEmpLog, IncidenciaNomina[].class)
                                     .getBody());
-                    //System.out.printf("leida lista de recibos.%n");
+                    // System.out.printf("leida lista de recibos.%n");
                 } catch (HttpClientErrorException.NotFound ex) {
                 }
                 // Filtrar y dejar solo incidencias confirmadas (con remesa pagada)
@@ -130,12 +154,13 @@ public class IncidenciaNominaController {
                         .filter(IncidenciaNomina -> "4".equals(IncidenciaNomina.getIdRemesa().getEstado()))
                         .collect(Collectors.toList());
                 model.addAttribute("recibos", inc_n_Filtradas);
-                 if (inc_n_Filtradas.size()==0) return INCIDENCIAS_EMPLEADO_VACIO;
+                if (inc_n_Filtradas.size() == 0)
+                    return INCIDENCIAS_EMPLEADO_VACIO;
             }
             return INCIDENCIAS_EMPLEADO;
         } catch (Exception e) {
             return "401";
         }
     }
-    
+
 }

@@ -33,16 +33,31 @@
 							    <td th:text="${p.idEmpleado}">Id empleado</td>
                                 <td th:text="${p.vacaciones}">Dias de vacaciones disponibles</td>
                                 <td th:text="${p.diasGracia}">Dias gracia</td>
-                           
+								<td>
+									<a th:href="@{'/permisos/editar/' + ${p.idEmpleado} + '/' + ${p.ejercicio}}" th:text="#{permisos.acciones.editar}"
+										class="btn btn-outline-primary"></a>
+								</td>
+								<td>
+									<a th:href="@{permisos/eliminar/} + ${p.idEmpleado} + '/' + ${p.ejercicio}"
+										th:text="#{permisos.acciones.eliminar}" class="btn btn-outline-danger"></a>
+								</td>
                             </div>
                         </span>
 						</tr>
 					</tbody>
-					
+					<tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{permisos/crear}" class="btn btn-outline-primary btn-block"
+									th:text="#{permisos.acciones.anadir}"></a>
+							</td>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 		</div>
 	</div>
+
 	
 	<footer th:replace="layouts/base::footer(light)"></footer>
 </body>

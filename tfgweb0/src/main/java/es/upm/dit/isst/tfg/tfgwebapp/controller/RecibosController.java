@@ -35,6 +35,7 @@ public class RecibosController {
     public static final String RECIBOS_VACIO = "recibos_empleado_vacio";
     public static final String RECIBO_FORM = "recibo_form";
 
+
     private RestTemplate restTemplate = new RestTemplate();
 
     // Listar recibos de una remesa

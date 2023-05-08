@@ -31,4 +31,21 @@ public class NominaController {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
     }
+
+    @PostMapping("/borrar_remesa")
+    public ResponseEntity<Void> borrarRemesa(@RequestParam(name = "idRemesa") Integer idRemesa) {
+        if (idRemesa == null)
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        try {
+            nominaService.borrarRemesa(idRemesa);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        }
+    }
+
+
+
+
 }
+

@@ -153,11 +153,13 @@ public class AusenciasController {
                 Ausencias[] ausenciasArray = restTemplate.getForObject(url, Ausencias[].class);
                 List<Ausencias> ausencias = Arrays.asList(ausenciasArray);
 
-                url = "http://localhost:8083/permisos/" + idEmpLog;
-                restTemplate = new RestTemplate();
-                Permisos[] permisosArray = restTemplate.getForObject(url, Permisos[].class);
-                List<Permisos> permisos = Arrays.asList(permisosArray);
-                int vacacionesTotales = permisos.get(0).getVacaciones();
+                LocalDate currentDate = LocalDate.now();
+                int year = currentDate.getYear();              
+                url = "http://localhost:8083/permisos/" + idEmpLog + "/" + year;
+                System.out.println(url);
+                Permisos permisos = restTemplate.getForObject(url, Permisos.class);
+                System.out.println(permisos);
+                int vacacionesTotales = permisos.getVacaciones();
 
                 // Filtrar las ausencias por tipo_ausencia = "vac"
                 List<Ausencias> vacaciones = ausencias.stream()
