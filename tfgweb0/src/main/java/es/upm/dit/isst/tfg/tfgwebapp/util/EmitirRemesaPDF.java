@@ -1,7 +1,9 @@
 package es.upm.dit.isst.tfg.tfgwebapp.util;
 
+import java.awt.Color;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -29,51 +31,118 @@ public class EmitirRemesaPDF extends AbstractPdfView {
     @Override
     protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<Recibo> lista_recibos = (List<Recibo>) model.get("recibos");
 
-        document.setPageSize(PageSize.A4.rotate());
-        document.open();
+        List<Recibo> lista_recibos = (List<Recibo>) model.get("recibos");
 
         PdfPTable tablaTitulo = new PdfPTable(1);
         PdfPTable tablaPie = new PdfPTable(1);
-              
-        Font fuenteTitulo = FontFactory.getFont("Helvetica", 16, CMYKColor.BLUE);
 
-        PdfPCell celdaTit = null;
-        celdaTit = new PdfPCell(new Phrase("REMESA DE NÓMINA", fuenteTitulo));
-        celdaTit.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celdaTit.setVerticalAlignment(Element.ALIGN_CENTER);
-        celdaTit.setPadding(20);
-        tablaTitulo.addCell(celdaTit);
+        Font fuenteTitulo = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20, Color.BLACK);
+        Font fuenteTitCols = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, Color.BLACK);
+        Font fuenteCeldas = FontFactory.getFont(FontFactory.COURIER, 12, Color.BLACK);
+
+        document.setPageSize(PageSize.A4.rotate());
+        document.setMargins(-20, -20, 30, 20);
+        document.open();
+
+        PdfPCell celda = null;
+        celda = new PdfPCell(new Phrase("REMESA DE NÓMINA", fuenteTitulo));
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(20);
+        tablaTitulo.addCell(celda);
         tablaTitulo.setSpacingAfter(30);
-        
-        Font ft = FontFactory.getFont("Helvetica", 9, CMYKColor.BLUE);
-        
-        PdfPTable tablaRecibos = new PdfPTable(7);
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
-        
-        double[] acumulado = {0,0};
 
-        lista_recibos.forEach(recibo -> {
-            tablaRecibos.addCell(recibo.getIdRecibo().toString());
-            tablaRecibos.addCell(recibo.getIdEmpleado().getIBAN());
-            tablaRecibos.addCell(recibo.getIdEmpleado().getApellido_1());
-            tablaRecibos.addCell(recibo.getIdEmpleado().getApellido_2());
-            tablaRecibos.addCell(recibo.getIdEmpleado().getNombre());
-            acumulado[0] = acumulado[0] + recibo.getNeto();
+        PdfPTable tablaRecibos = new PdfPTable(5);
+        tablaRecibos.setWidths(new float[] { 2f, 6f, 6f, 3f, 3f });
+
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        celda = new PdfPCell(new Phrase("Recibo", fuenteTitCols));
+        celda.setBackgroundColor((Color.lightGray));
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaRecibos.addCell(celda);
+
+        celda = new PdfPCell(new Phrase("IBAN", fuenteTitCols));
+        celda.setBackgroundColor((Color.lightGray));
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaRecibos.addCell(celda);
+
+        celda = new PdfPCell(new Phrase("Perceptor", fuenteTitCols));
+        celda.setBackgroundColor((Color.lightGray));
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaRecibos.addCell(celda);
+
+        celda = new PdfPCell(new Phrase("Importe", fuenteTitCols));
+        celda.setBackgroundColor((Color.lightGray));
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaRecibos.addCell(celda);
+
+        celda = new PdfPCell(new Phrase("Fecha", fuenteTitCols));
+        celda.setBackgroundColor((Color.lightGray));
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaRecibos.addCell(celda);
+
+        double acumulado = 0;
+
+        for (Recibo recibo : lista_recibos) {
+            celda = new PdfPCell(new Phrase(recibo.getIdRecibo().toString(), fuenteCeldas));
+            celda.setPadding(5);
+            celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tablaRecibos.addCell(celda);
+
+            // celda = new PdfPCell(new
+            // Phrase(recibo.getIdEmpleado().getIBAN(),fuenteCeldas));
+            celda = new PdfPCell(new Phrase(recibo.getIBAN(), fuenteCeldas));
+            celda.setPadding(5);
+            celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tablaRecibos.addCell(celda);
+
+            celda = new PdfPCell(
+                    new Phrase(recibo.getIdEmpleado().getApellido_1() + " " + recibo.getIdEmpleado().getApellido_2()
+                            + ", " + recibo.getIdEmpleado().getNombre(), fuenteCeldas));
+            celda.setPadding(5);
+            tablaRecibos.addCell(celda);
+
+            acumulado = acumulado + recibo.getNeto();
+
             String formattedNeto = currencyFormatter.format(recibo.getNeto());
-            tablaRecibos.addCell(formattedNeto);
-            tablaRecibos.addCell(LocalDate.now().toString());
-        });
+
+            celda = new PdfPCell(new Phrase(formattedNeto, fuenteCeldas));
+            celda.setPadding(5);
+            celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            tablaRecibos.addCell(celda);
+
+            String fechaFormateada = LocalDate.now().format(formatter);
+            celda = new PdfPCell(new Phrase(fechaFormateada, fuenteCeldas));
+            //celda = new PdfPCell(new Phrase(LocalDate.now().toString(), fuenteCeldas));
+            celda.setPadding(5);
+            celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+            tablaRecibos.addCell(celda);
+        }
+        ;
+
         tablaRecibos.setSpacingAfter(30);
 
-        String formattedNeto = currencyFormatter.format(acumulado[0]);
-        PdfPCell celdaPie = null;
-        celdaPie = new PdfPCell(new Phrase("TOTAL REMESA: " + formattedNeto , fuenteTitulo));
-        celdaPie.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celdaPie.setVerticalAlignment(Element.ALIGN_CENTER);
-        celdaPie.setPadding(20);
-        tablaPie.addCell(celdaPie);
+        String formattedNeto = currencyFormatter.format(acumulado);
+
+        celda = new PdfPCell(new Phrase("TOTAL REMESA: " + formattedNeto, fuenteTitulo));
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setBackgroundColor((Color.lightGray));
+        celda.setPadding(20);
+        tablaPie.addCell(celda);
 
         document.add(tablaTitulo);
         document.add(tablaRecibos);

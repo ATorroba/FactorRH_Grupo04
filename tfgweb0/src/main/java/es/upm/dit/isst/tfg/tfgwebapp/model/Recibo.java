@@ -46,6 +46,38 @@ public class Recibo {
     public Double getNeto() {
         return neto;
     }
+
+    public void setIdRecibo(Integer idRecibo) {
+        this.idRecibo = idRecibo;
+    }
+
+    public void setIdRemesa(Remesa idRemesa) {
+        this.idRemesa = idRemesa;
+    }
+
+    public void setIdEmpleado(Empleado idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    public void setSWIFT(String sWIFT) {
+        SWIFT = sWIFT;
+    }
+
+    public void setIBAN(String iBAN) {
+        IBAN = iBAN;
+    }
+
+    public void setBruto(Double bruto) {
+        this.bruto = bruto;
+    }
+
+    public void setDeduccion(Double deduccion) {
+        this.deduccion = deduccion;
+    }
+
+    public void setNeto(Double neto) {
+        this.neto = neto;
+    }
     
     
     
