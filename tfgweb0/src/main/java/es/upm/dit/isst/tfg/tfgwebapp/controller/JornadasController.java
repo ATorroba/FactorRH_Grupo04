@@ -41,6 +41,7 @@ public class JornadasController {
     public static final String VISTA_LISTA_JORNADAS_ESPECIFICAS = "lista_jornadas_especificas";
     public static final String VISTA_FORM_JORNADAS_NUEVA = "form_crearJornada";
     public static final String VISTA_FORM_JORNADAS_EDITAR = "form_editarJornada";
+    public final String JORNADASINCIDENCIA_STRING = "http://localhost:8083/jornadas/empleadoIncidencias/";
 
     @GetMapping("/jornadas/lista")
     public String listaJornadas(Principal principal, Model model) {
@@ -174,7 +175,6 @@ public class JornadasController {
     public String Validar(@PathVariable(value = "idEmpleado") String idEmpleado,
             @PathVariable(value = "fecha") String fecha) {
         Jornadas jornada = new Jornadas();
-        System.out.println(idEmpleado);
         try {
             jornada = restTemplate.getForObject(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha, Jornadas.class);
         } catch (Exception e) {
@@ -230,7 +230,7 @@ public class JornadasController {
             return VISTA_FORM_JORNADAS_EDITAR;
         }
         try {
-            restTemplate.put(JORNADASMANAGER_STRING, jornada, Jornadas.class);
+            restTemplate.put(JORNADASMANAGER_STRING + jornada.getIdEmpleado() + "/" + jornada.getFecha(), jornada, Jornadas.class);
         } catch (Exception e) {
         }
         return "redirect:/jornadas/lista";
@@ -274,7 +274,6 @@ public class JornadasController {
             jornada.setEstado("1");
             jornada.setIncidencia("f3");
             restTemplate.postForObject(JORNADASMANAGER_STRING, jornada, Jornadas.class);
-            // System.out.println(jornada);
 
             model.addAttribute("jor", jornada);
 
@@ -345,64 +344,67 @@ public class JornadasController {
     }
 
     @GetMapping("/incidencias")
-    public String recuperarIncidencia(Principal principal, Map<String, Object> model) {
+    public String listaIncidenciasEmpleado(Principal principal, Map<String, Object> model) {
 
         String idEmpleado;
 
         try {
-            Empleado empleadoActual = restTemplate.getForObject(DATOSMANAGER_STRING + principal.getName(),
-                    Empleado.class);
+            Empleado empleadoActual = restTemplate.getForObject(DATOSMANAGER_STRING + principal.getName(), Empleado.class);
             idEmpleado = empleadoActual.getIdEmpleado();
         } catch (Exception e) {
             return "401";
         }
 
-        // Jornadas[] jornadaArray;
-        // List<Jornadas> jornadas;
-        Jornadas jornadaHoy = new Jornadas();
-        LocalDate fecha = LocalDate.now();
-
-        try {
-            jornadaHoy = restTemplate.getForObject(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha, Jornadas.class);
-
-        } catch (HttpClientErrorException.NotFound ex) {
+        List <Jornadas> listaIncidenciasEmpleado = new ArrayList<Jornadas>();
+        try{
+            listaIncidenciasEmpleado = Arrays.asList(restTemplate.getForEntity(JORNADASINCIDENCIA_STRING + idEmpleado, Jornadas[].class).getBody());
+        } catch (HttpClientErrorException.NotFound e) {
+            listaIncidenciasEmpleado = new ArrayList<>();
+        } catch (Exception e) {
         }
-        model.put("jor", jornadaHoy);
-        model.put("accion", "/incidencia/publicarIncidencia");
-        return "incidencias";
+        
+        Collections.sort(listaIncidenciasEmpleado, new Comparator<Jornadas>() {
+            @Override
+            public int compare(Jornadas j1, Jornadas j2) {
+                return j2.getFecha().compareTo(j1.getFecha()); 
+            }
+        });
 
+        Jornadas incidencia = new Jornadas();
+        incidencia.setIdEmpleado(idEmpleado);
+
+        model.put("incidenciaEmpleado", incidencia);
+        model.put("listaincidencias", listaIncidenciasEmpleado);
+        return "incidencias";
     }
 
-    @PostMapping("/incidencia/publicarIncidencia")
-    public String publicarIncidencia(@Validated Jornadas jornada, BindingResult result, Map<String, Object> model) {
+    @PostMapping("jornadas/incidencias/guardar")
+    public String nuevaIncidencia(@Validated Jornadas incidencia, BindingResult result, Map<String, Object> model) {
         if (result.hasErrors()) {
-
-            model.put("org.springframework.validation.BindingResult.jor", result);
-
-            return "incidencias";
+            model.put("incidenciaEmpleado", incidencia);
+            return VISTA_FORM_JORNADAS_EDITAR;
         }
 
+        Jornadas newIncidencia = new Jornadas();
+        
         try {
-            jornada.setEstado(String.valueOf(1));
-            restTemplate.put(JORNADASMANAGER_STRING + jornada.getIdEmpleado() + "/" + jornada.getFecha(), jornada,
-                    Jornadas.class);
+            newIncidencia = restTemplate.getForObject(JORNADASMANAGER_STRING + incidencia.getIdEmpleado() + "/" + incidencia.getFecha(), Jornadas.class);
+            newIncidencia.setIncidencia(incidencia.getIncidencia());
+            newIncidencia.setEstado("1");
+            newIncidencia.setNotas(incidencia.getNotas());
+            restTemplate.put(JORNADASMANAGER_STRING + incidencia.getIdEmpleado() + "/" + incidencia.getFecha(), newIncidencia, Jornadas.class);
+
+        }  catch (HttpClientErrorException.NotFound e) {
+            newIncidencia.setIdEmpleado(incidencia.getIdEmpleado());
+            newIncidencia.setFecha(incidencia.getFecha());
+            newIncidencia.setIncidencia(incidencia.getIncidencia());
+            newIncidencia.setEstado("1");
+            newIncidencia.setNotas(incidencia.getNotas());
+            restTemplate.postForObject(JORNADASMANAGER_STRING, newIncidencia, Jornadas.class);
         } catch (Exception e) {
 
         }
 
         return "redirect:/incidencias";
-    }
-
-    @GetMapping("/form")
-    public String mostrarFormulario(Model model) {
-        model.addAttribute("incidenciaForm", new Jornadas());
-        return "formulario";
-    }
-
-    @PostMapping("/form")
-    public String procesarFormulario(@ModelAttribute Jornadas incidenciaForm) {
-        String incidencia = incidenciaForm.getIncidencia();
-        // hacer algo con el valor de incidencia
-        return "resultado";
     }
 }

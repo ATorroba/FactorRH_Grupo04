@@ -1,74 +1,100 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layouts/base::head(light,${date})">
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
 </head>
 <body>
     
-	<header th:replace="layouts/base::header(dark,${date})"></header>
-        <div class="container">
-            <h3 style="padding-left: 5%;"> Gestión de incidencias</h3>
-            <div class="card bg-light">
-
-                <div class="card-header">
-                    <div style="display: flex;justify-content: flex-start;gap:2%">
+    <header th:replace="layouts/base::header(dark,${date})"></header>
+    <div class="container">
+        <h3 style="padding-left: 5%;">Gestión de incidencias</h3>
+        <div class="card bg-light">
+            <div class="card-header">
+                <div style="display: flex;justify-content: flex-start;gap:2%">
                     <img th:src="@{/img/inc.png}" width="30" height="30" alt="">
-
-                    <h4 >Cambiar fichajes</h4>
+                    <h4>Cambiar fichajes</h4>
                 </div>
-                </div>
-             </p>
-             <div style="margin-left: 2%;margin-top: 1%;">
-            <label class="bold" >Comunicar incidencia</label>
-             </div>
-            <form method="post" th:action="@{incidencia/publicarIncidencia}" th:object="${jor}" enctype="multipart/form-data">
+            </div>
+            <div style="margin-left: 2%;margin-top: 1%;">
+                <label class="bold">Comunicar incidencia</label>
+            </div>
 
-                <ul  style="list-style-type: none">
-                    <li >
+            <div class="margenjornadas"></div>
+
+            <form method="post" th:action="@{/jornadas/incidencias/guardar}" th:object="${incidenciaEmpleado}" enctype="multipart/form-data">
+                
+                <input type="hidden" th:field="*{idEmpleado}" />
+                
+                <div class="form-group row">
+                    <div class="col-sm-2">
+                        <label style="margin-left: 25%; font-size: 20px;" th:text="#{jornada.incidecia.fecha}"></label>
+                    </div>
+                    
+                    <div class="col-sm-6">
+                        <input type="date" th:field="*{fecha}" required>
+                    </div>
+                </div>
+                
+                <ul style="list-style-type: none">
+                    <li>
                         <input type="radio" th:field="*{incidencia}" th:value="f1" />
-                        <label  th:text="#{incidencias.tipo.f1}"></label>
-                    </li><li>
-                        <input type="radio" th:field="*{incidencia}" th:value="f2" />
-                        <label  th:text="#{incidencias.tipo.f2}"></label>
+                        <label th:text="#{incidencias.tipo.f1}"></label>
                     </li>
-                </ul> 
+                    <li>
+                        <input type="radio" th:field="*{incidencia}" th:value="f2" />
+                        <label th:text="#{incidencias.tipo.f2}"></label>
+                    </li>
+                </ul>
                 
-                
-                    <input type="hidden" th:field="*{idEmpleado}"/>
-                    <input type="hidden" th:field="*{fecha}"/>
-                    <input type="hidden" th:field="*{estado}" th:value="1" />
-                    <input type="hidden" th:field="*{hora_entrada}" th:value="${jor.hora_entrada}"/>
-                    <input type="hidden" th:field="*{hora_salida}" th:value="${jor.hora_salida}"/>
-                    <div class="form-group" style="margin-left: 2%;margin-top: 1%;">
-                        <h4>Hora fichaje de entrada:</h4>
-                        <p th:text="${jor.hora_entrada}"></p>
-                    </div>
-                    <div class="form-group" style="margin-left: 2%;margin-top: 1%;">
-                        <h4>Hora fichaje de salida:</h4>
-                        <p th:text="${jor.hora_salida}"></p>
-                    </div>
-                <!-- <div class="form-group" style="margin-left: 2%;margin-top: 1%;">
-                    <h4>Actualizar hora entrada:</h4>
-                    <input type="text" th:value="${jor.hora_entrada}" th:field="*{hora_entrada}" name="Hora Entrada">
+                <div class="form-group" style="margin-left: 2%;margin-top: 1%;">
+                    <h4>Justificación:</h4>
                 </div>
                 <div class="form-group" style="margin-left: 2%;margin-top: 1%;">
-                    <h4>Actualizar hora salida:</h4>
-                    <input type="text" th:value="${jor.hora_salida}" th:field="*{hora_salida}" name="Hora Salida">
-                </div> -->
-                <div class="form-group" style="margin-left: 2%;margin-top: 1%;">
-                <h4>Justificación:</h4>
+                    <textarea th:field="*{notas}" rows="4" cols="80">Escribir aquí</textarea>
                 </div>
-                <div class="form-group" style="margin-left: 2%;margin-top: 1%;">
-                <textarea th:field="*{notas}" rows="4" cols="80">Escribir aquí</textarea>
-            </div>
-            </p>
-            <button type="submit" th:action="@{${accion}}" th:text="#{empleados.acciones.guardar}"  class="btn btn-outline-primary" style="margin-left: 2%;margin-top: 1%;"></button>
-        </form>
-            </div>
-        
+                
+                <button type="submit" th:action="@{${accion}}" th:text="#{empleados.acciones.guardar}" class="btn btn-outline-primary" style="margin-left: 2%;margin-top: 1%;"></button>
+            </form>
+
+            <div class="card-body">
+				<table class="table table-striped">
+					<div class="form-group" style="margin-left: 2%;margin-top: 1%;">
+                        <h4>Incidencias en proceso de Validación</h4>
+                    </div>
+                    <thead>
+						<tr>
+							<div class="wrap">
+								<th th:text="#{jornada.jornada.idEmpleado}">idEmpleado</th>
+								<th th:text="#{jornada.jornada.fecha}">fecha</th>
+								<th th:text="#{jornada.jornada.hora_entrada}">Hora de Entrada</th>
+								<th th:text="#{jornada.jornada.hora_salida}">Hora de Salida</th>
+								<th th:text="#{jornada.jornada.minutos_trabajados}">Minutos Trabajados</th>
+                                <th th:text="#{jornada.jornada.incidencias}">Minutos Trabajados</th>
+
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<div th:each="incidencia : ${listaincidencias}">
+							<div class="wrap">
+								<td th:text="${incidencia.idEmpleado}"></td>
+								<td th:text="${incidencia.fecha}"></td>
+                                <td th:text="${incidencia.hora_entrada}"></td>
+                                <td th:text="${incidencia.hora_salida}"></td>
+                                <td th:text="${incidencia.minutos_trabajados}"></td>
+                                <td>
+                                    <span th:if="${incidencia.incidencia} == 'f1'" th:text="'Se me olvidó fichar'"></span>
+                                    <span th:if="${incidencia.incidencia} == 'f2'" th:text="'Fiché incorrectamente'"></span>
+                                </td>
+							</div>
+							</span>
+						</tr>
+					</tbody>
+				</table>
+			</div>
         </div>
-
-    </body>
-</div>
-
+        <div class="margenjornadas"></div>
+        <div class="margenjornadas"></div>
+    </div>
+</body>
 </html>

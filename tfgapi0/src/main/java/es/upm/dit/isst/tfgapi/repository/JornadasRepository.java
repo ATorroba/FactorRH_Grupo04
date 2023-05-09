@@ -14,4 +14,5 @@ public interface JornadasRepository extends CrudRepository<Jornadas, jornadasPK>
     List<Jornadas> findByFecha(LocalDate fecha);
     List<Jornadas> findByEstado(String estado);
     List<Jornadas> findByIncidenciaAndEstado(String incidencia, String estado);
+    List<Jornadas> findByIdEmpleadoAndIncidenciaAndEstado(String idEmpleado, String incidencia, String estado);
 }

@@ -97,6 +97,16 @@ public class JornadasController {
         return (List<Jornadas>) jornadasRepository.findByIncidenciaAndEstado(incidencia, estado);
     }
 
+    @GetMapping("/jornadas/empleadoIncidencias/{idEmpleado}")
+    List<Jornadas> IncidenciasEmpleado(@PathVariable String idEmpleado) {
+        List<Jornadas> listaNoFichado = jornadasRepository.findByIdEmpleadoAndIncidenciaAndEstado(idEmpleado, "f1", "1");
+        List<Jornadas> listaFichadoMal = jornadasRepository.findByIdEmpleadoAndIncidenciaAndEstado(idEmpleado, "f2", "1");
+
+        listaNoFichado.addAll(listaFichadoMal);
+
+        return listaNoFichado;
+    }
+
     private int calculateMinutosTrabajados(Jornadas jornada) {
         if (jornada.getHora_salida() == null) {
             return 0;
