@@ -240,7 +240,7 @@ public class PuestoController {
                 String remitente = "factorrhisst@gmail.com";
                 // La clave de aplicación obtenida según se explica en este artículo:
                 String claveemail = "tyrnsurboetzwbug";
-                String destinatario = principal.getName(); // A quien le quieres escribir.
+                String destinatario = "a.maesob@alumnos.upm.es"; // A quien le quieres escribir.
                 String destinatario2 = Empleado.getEmail(); // A quien le quieres escribir.
 
                 String asunto = "Fin de petición de candidatos para puesto: " + p.getNombre();
@@ -367,7 +367,7 @@ public class PuestoController {
             Puesto p = restTemplate.postForObject(PUESTOMANAGER_STRING, puestosend, Puesto.class);
             String remitente = "factorrhisst@gmail.com";
             String claveemail = "tyrnsurboetzwbug";
-            String destinatario = principal.getName(); // Email reclutador.
+            String destinatario = "a.maesob@alumnos.upm.es"; // Email reclutador.
 
             String asunto = "Petición de candidatos para puesto: " + p.getNombre();
 
@@ -430,7 +430,7 @@ public class PuestoController {
 
             String remitente = "factorrhisst@gmail.com";
             String claveemail = "tyrnsurboetzwbug";
-            String destinatario = principal.getName(); // Email reclutador.
+            String destinatario = "a.maesob@alumnos.upm.es"; // Email reclutador.
 
             String asunto = "Petición de candidatos para puesto: " + puesto.getNombre();
 
@@ -475,19 +475,19 @@ public class PuestoController {
     }
 
     @GetMapping("procesos/pasaruno/{ip}/{ipc}")
-    public String procesospasaruno(@Validated Candidato candidato, @PathVariable String ipc, @PathVariable Integer ip,
-            BindingResult result,
-            Model model) {
-        if (result.hasErrors()) {
-            // model.addAttribute("candidato", candidato);
-            model.addAttribute("result", result.getAllErrors().toString());
-            System.out.println(result.getAllErrors().toString());
+    public String procesospasaruno(@PathVariable String ipc, @PathVariable Integer ip,
 
-            return "403";
-        }
+            Model model) {
+        // if (result.hasErrors()) {
+        // model.addAttribute("candidato", candidato);
+        // model.addAttribute("result", result.getAllErrors().toString());
+        // System.out.println(result.getAllErrors().toString());
+
+        // return "403";
+        // }
         try {
-            candidato = new Candidato();
-            candidato = restTemplate.getForObject("http://localhost:8083/candidatos/" + ipc,
+            // candidato = new Candidato();
+            Candidato candidato = restTemplate.getForObject("http://localhost:8083/candidatos/" + ipc,
                     Candidato.class);
             System.out.println();
 
@@ -508,19 +508,19 @@ public class PuestoController {
     }
 
     @GetMapping("procesos/quitaruno/{ip}/{ipc}")
-    public String procesosquitaruno(@Validated Candidato candidato, @PathVariable String ipc, @PathVariable Integer ip,
-            BindingResult result,
-            Model model) {
-        if (result.hasErrors()) {
-            // model.addAttribute("candidato", candidato);
-            model.addAttribute("result", result.getAllErrors().toString());
-            System.out.println(result.getAllErrors().toString());
+    public String procesosquitaruno(@PathVariable String ipc, @PathVariable Integer ip,
 
-            return "403";
-        }
+            Model model) {
+        // if (result.hasErrors()) {
+        // model.addAttribute("candidato", candidato);
+        // model.addAttribute("result", result.getAllErrors().toString());
+        // System.out.println(result.getAllErrors().toString());
+
+        // return "403";
+        // }
         try {
-            candidato = new Candidato();
-            candidato = restTemplate.getForObject("http://localhost:8083/candidatos/" + ipc,
+            // candidato = new Candidato();
+            Candidato candidato = restTemplate.getForObject("http://localhost:8083/candidatos/" + ipc,
                     Candidato.class);
             System.out.println();
 

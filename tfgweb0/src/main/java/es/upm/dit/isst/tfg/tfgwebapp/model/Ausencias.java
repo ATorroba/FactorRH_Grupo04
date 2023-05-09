@@ -12,6 +12,7 @@ import javax.persistence.Temporal*/
 import java.util.Date;;
 
 public class Ausencias {
+
     private Integer idausencia;
 
     private String idempleado;

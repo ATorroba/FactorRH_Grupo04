@@ -32,7 +32,7 @@
                                 <th style="font-size:1vw;"th:text="#{candidatos.candidato.notas_reclutador}">Notas reclutador</th>
                                 <th style="font-size:1vw;"th:text="#{candidatos.candidato.preseleccionado}">Preseleccionado</th>
 								<th style="font-size:1vw;">edit</th>
-								<th style="font-size:1vw;">erase</th>
+						
 
 
 
@@ -55,10 +55,10 @@
                                 <td th:text="${Candidato.notas_reclutador}"></td>
                                 <td th:text="${Candidato.preseleccionado}"></td>
                                 
-								<td>
+								<!--td>
 									<a th:href="@{editar/} + ${Candidato.idcandidato}" th:text="#{candidatos.acciones.editar}"
 										class="btn btn-outline-primary"></a>
-								</td>
+								</td-->
 								<td>
 									<a th:href="@{eliminar/} + ${Candidato.idcandidato}"
 										th:text="#{candidatos.acciones.eliminar}" class="btn btn-outline-danger"></a>
