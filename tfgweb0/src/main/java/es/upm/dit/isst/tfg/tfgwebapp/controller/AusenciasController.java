@@ -1,65 +1,32 @@
 package es.upm.dit.isst.tfg.tfgwebapp.controller;
 
-import java.util.stream.Collectors;
-
-import java.io.Console;
-import java.lang.reflect.Array;
 import java.security.Principal;
-import java.time.Instant;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-
-import es.upm.dit.isst.tfg.tfgwebapp.model.Ausencias;
-import es.upm.dit.isst.tfg.tfgwebapp.model.Permisos;
-
-import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
 import java.util.Arrays;
-
+import java.util.Date;
 import java.util.List;
-
+import java.util.Locale;
 import java.util.Map;
-
-import javax.validation.Constraint;
-import javax.validation.Valid;
-import javax.validation.executable.ValidateOnExecution;
-
-import org.springframework.core.io.ByteArrayResource;
-
-import org.springframework.http.HttpHeaders;
-
-import org.springframework.http.HttpStatus;
-
-import org.springframework.http.MediaType;
-
-import org.springframework.http.ResponseEntity;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestParam;
-
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import org.springframework.web.client.HttpClientErrorException;
-
 import org.springframework.web.client.RestTemplate;
 
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+import es.upm.dit.isst.tfg.tfgwebapp.model.Ausencias;
+import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
+import es.upm.dit.isst.tfg.tfgwebapp.model.Permisos;
 
 @Controller
 public class AusenciasController {
@@ -163,7 +130,7 @@ public class AusenciasController {
 
                 // Filtrar las ausencias por tipo_ausencia = "vac"
                 List<Ausencias> vacaciones = ausencias.stream()
-                        .filter(a -> "VAC".equals(a.getTipo_ausencia()))
+                        .filter(a -> "VAC".equals(a.getTipo_ausencia()) && a.getAutorizada().equals("1"))
                         .collect(Collectors.toList());
 
                 int vacacionesGastadas = 0;
@@ -231,9 +198,26 @@ public class AusenciasController {
 
                         + principal.getName(), Empleado.class);
                 if (empleado2 != null) {
+
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+                    Date date1 = formatter.parse(Ausencia.getInicio());
+                    Date date2 = formatter.parse(Ausencia.getFin());
+
+                    Long datei = date1.getTime();
+                    Long datef = date2.getTime();
+
+                    Long timeDiff = Math.abs(datef - datei);
+
+                    Long daysDiff = TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
+
                     Ausencia.setIdempleado(empleado2.getIdEmpleado());
                     Ausencia.setAutorizada("0");
                     Ausencia.setFecha_comunicacion(ZonedDateTime.now().toLocalDateTime().toString());
+
+                    System.out.println(daysDiff);
+
+                    Ausencia.setN_dias(daysDiff.intValue());
 
                 } else {
                     return "401";
