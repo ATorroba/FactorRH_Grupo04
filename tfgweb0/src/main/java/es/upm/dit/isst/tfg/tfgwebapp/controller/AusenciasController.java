@@ -163,7 +163,7 @@ public class AusenciasController {
 
                 // Filtrar las ausencias por tipo_ausencia = "vac"
                 List<Ausencias> vacaciones = ausencias.stream()
-                        .filter(a -> "vac".equals(a.getTipo_ausencia()))
+                        .filter(a -> "VAC".equals(a.getTipo_ausencia()))
                         .collect(Collectors.toList());
 
                 int vacacionesGastadas = 0;
