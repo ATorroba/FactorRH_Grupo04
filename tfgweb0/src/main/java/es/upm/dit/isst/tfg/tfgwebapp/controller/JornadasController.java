@@ -28,6 +28,7 @@ import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
 import java.util.Map;
@@ -156,18 +157,36 @@ public class JornadasController {
 
     @GetMapping("jornadas/crear")
     public String crear(Map<String, Object> model) {
+        
         Jornadas jornada = new Jornadas();
         model.put("jornada", jornada);
+        
+        List<Empleado> lista_empleados = generaListaEmpleados();
+        model.put("empleados", lista_empleados);
+        
         return VISTA_FORM_JORNADAS_NUEVA;
 
     }
 
     @PostMapping("jornadas/guardar")
     public String guardar(@Validated Jornadas jornada, BindingResult result, Map<String, Object> model) {
+        
+        if (jornada.getHora_entrada() != null && jornada.getHora_salida() != null) {
+            LocalTime horaEntrada = LocalTime.parse(jornada.getHora_entrada());
+            LocalTime horaSalida = LocalTime.parse(jornada.getHora_salida());
+            
+            if (!horaEntrada.isBefore(horaSalida)) {
+                FieldError error = new FieldError("jornada", "hora_entrada", "La hora de entrada debe ser menor que la hora de salida");
+                result.addError(error);
+            }
+        }
+
         if (result.hasErrors()) {
             model.put("jornada", jornada);
             List<ObjectError> r = result.getAllErrors();
             model.put("result", r);
+            List<Empleado> lista_empleados = generaListaEmpleados();
+            model.put("empleados", lista_empleados);
             return VISTA_FORM_JORNADAS_NUEVA;  
         }
         try {
@@ -231,6 +250,17 @@ public class JornadasController {
 
     @PostMapping("jornadas/actualizar")
     public String actualizar(@Validated Jornadas jornada, BindingResult result, Map<String, Object> model) {
+        
+        if (jornada.getHora_entrada() != null && jornada.getHora_salida() != null) {
+            LocalTime horaEntrada = LocalTime.parse(jornada.getHora_entrada());
+            LocalTime horaSalida = LocalTime.parse(jornada.getHora_salida());
+            
+            if (!horaEntrada.isBefore(horaSalida)) {
+                FieldError error = new FieldError("jornada", "hora_entrada", "La hora de entrada debe ser menor que la hora de salida");
+                result.addError(error);
+            }
+        }
+        
         if (result.hasErrors()) {
             model.put("jornada", jornada);
             List<ObjectError> r = result.getAllErrors();
@@ -431,4 +461,15 @@ public class JornadasController {
 
         return "redirect:/incidencias";
     }
+
+    public List<Empleado> generaListaEmpleados() {
+        List<Empleado> lista_empleados = new ArrayList<Empleado>();
+        try {
+            lista_empleados = Arrays.asList(restTemplate.getForEntity(RHMANAGER_STRING, Empleado[].class).getBody());
+        } catch (Exception e) {
+            // Puedes manejar la excepción aquí si es necesario
+        }
+        return lista_empleados;
+    }
+
 }

@@ -28,8 +28,12 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label" th:text="#{jornada.crear.idEmpleado}"></label>
                         <div class="col-sm-6">
-                            <input type="text" th:field="*{idEmpleado}" class="form-control" style="width: 25%;" required />
-                        </div>
+							<select th:field="*{idEmpleado}" required>
+                                <option th:each="empleado : ${empleados}" th:value="${empleado.idEmpleado}"
+                                    th:text="${empleado.nombre + ' ' + empleado.apellido_1 + ' ' + empleado.apellido_2}"
+                                    th:selected="${jornada.idEmpleado == empleado.idEmpleado}"></option>
+                            </select>
+						</div>
                     </div>
 
                     <div class="form-group row">
