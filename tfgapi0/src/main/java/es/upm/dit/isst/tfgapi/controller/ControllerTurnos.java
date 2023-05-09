@@ -31,6 +31,17 @@ public class ControllerTurnos {
         return (List<Turnos>) turnosRepository.findByidEmpleado(idEmpleado);
     }
 
+    @GetMapping("/turnos/{idEmpleado}/{idDia}")
+    ResponseEntity<Turnos> readByIdEmpleadoYDia(@PathVariable String idEmpleado, @PathVariable Integer idDia) {
+        Turnos turno = turnosRepository.findByIdEmpleadoAndIdDia(idEmpleado, idDia);
+    
+        if (turno == null) {
+            return new ResponseEntity<Turnos>(HttpStatus.NOT_FOUND);
+        } else {
+            return ResponseEntity.ok().body(turno);
+        }
+    }
+
     @PutMapping("/turnos/{id}")
     ResponseEntity<Turnos> update(@RequestBody Turnos newTurno, @PathVariable Integer id) {
         return turnosRepository.findById(id).map(turno -> {

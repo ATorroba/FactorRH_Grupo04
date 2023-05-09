@@ -7,7 +7,7 @@ import es.upm.dit.isst.tfgapi.model.Turnos;
 public interface RepositoryTurnos extends CrudRepository<Turnos, Integer> {
 
     List<Turnos> findByidEmpleado(String idEmpleado);
-    // List<Turnos> findByidEmpleadoyDia(String idEmpleado, Integer idDia);
+    Turnos findByIdEmpleadoAndIdDia(String idEmpleado, Integer idDia);
 
 
 

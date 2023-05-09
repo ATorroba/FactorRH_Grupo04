@@ -7,8 +7,8 @@ public class Turnos {
     private Integer idTurno;
     private String idEmpleado;
     private Integer idDia;
-    private Time hora_entrada;
-    private Time hora_salida;
+    private String hora_entrada;
+    private String hora_salida;
     private int minutos_jornada;
     
 
@@ -55,25 +55,25 @@ public class Turnos {
 
 
 
-    public Time getHora_entrada() {
+    public String getHora_entrada() {
         return hora_entrada;
     }
 
 
 
-    public void setHora_entrada(Time hora_entrada) {
+    public void setHora_entrada(String hora_entrada) {
         this.hora_entrada = hora_entrada;
     }
 
 
 
-    public Time getHora_salida() {
+    public String getHora_salida() {
         return hora_salida;
     }
 
 
 
-    public void setHora_salida(Time hora_salida) {
+    public void setHora_salida(String hora_salida) {
         this.hora_salida = hora_salida;
     }
 

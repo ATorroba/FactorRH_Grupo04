@@ -71,30 +71,59 @@ public class TurnosController {
     public String getTurnoDeEmpleado(@PathVariable(value = "idEmpleado") String idEmpleado, Principal principal, Model model) {
         try {
             String url = "http://localhost:8083/turnos/" + idEmpleado;
-            RestTemplate restTemplate = new RestTemplate();
-            Turnos[] turnosArray = restTemplate.getForObject(url, Turnos[].class);
-            List<Turnos> turnos = Arrays.asList(turnosArray);
-            model.addAttribute("turno", turnos);           
+            System.out.println(url);
+            
+            RestTemplate restTemplateLunes = new RestTemplate();
+            Turnos turnoLunes = restTemplateLunes.getForObject(url  + "/1", Turnos.class);
+            model.addAttribute("turno1", turnoLunes);      
+            
+            RestTemplate restTemplateMartes = new RestTemplate();
+            Turnos turnoMartes = restTemplateMartes.getForObject(url  + "/2", Turnos.class);
+            model.addAttribute("turno2", turnoMartes);
+
+            RestTemplate restTemplateMiercoles = new RestTemplate();
+            Turnos turnoMiercoles = restTemplateMiercoles.getForObject(url  + "/3", Turnos.class);
+            model.addAttribute("turno3", turnoMiercoles);
+
+            RestTemplate restTemplateJueves = new RestTemplate();
+            Turnos turnoJueves = restTemplateJueves.getForObject(url  + "/4", Turnos.class);
+            model.addAttribute("turno4", turnoJueves);
+
+            RestTemplate restTemplateViernes = new RestTemplate();
+            Turnos turnoViernes = restTemplateViernes.getForObject(url  + "/5", Turnos.class);
+            model.addAttribute("turno5", turnoViernes);
+
+            RestTemplate restTemplateSabado = new RestTemplate();
+            Turnos turnoSabado = restTemplateSabado.getForObject(url  + "/6", Turnos.class);
+            model.addAttribute("turno6", turnoSabado);
+
+            RestTemplate restTemplateDomingo = new RestTemplate();
+            Turnos turnoDomingo = restTemplateDomingo.getForObject(url  + "/7", Turnos.class);
+            model.addAttribute("turno7", turnoDomingo);
            
             return "editar_turno";
         } catch (Exception e) {
-            return "401";
+            // e.printStackTrace();
+            return "403";
 
         }
     }
 
     @PostMapping("/gestiona_turnos/editar_turno/{idEmpleado}")
-    public String editarTurno(@Validated Turnos turno,BindingResult result, Map<String, Object> model) {
+    public String editarTurno(@Validated Turnos turno,BindingResult result, Map<String, Object> model, @PathVariable String idEmpleado) {
         RestTemplate restTemplate = new RestTemplate();
-        if (result.hasErrors()) {
-            model.put("org.springframework.validation.BindingResult.jor", result);
-            return "editar_turno";
-        }
+        // if (result.hasErrors()) {
+        //     model.put("org.springframework.validation.BindingResult.jor", result);
+        //     System.out.println(turno.getHora_entrada());
+        //     return "editar_turno";
+        // }
+        System.out.println(turno.getHora_entrada());
+        System.out.println(turno.getHora_salida());
         try {
             restTemplate.put("http://localhost:8083/turnos/" + turno.getIdTurno() , turno, Turnos.class);
          } catch (Exception e) {
 
     }
-    return "redirect:/editar_turno";
+    return "redirect:/gestiona_turnos/editar_turno/" + idEmpleado;
 }
 }

@@ -31,7 +31,7 @@
                             <td th:text="${emp.apellido_1}">Apellido1</td>
                             <td th:text="${emp.apellido_2}">Apellido2</td>
 								<td>
-									<a th:href="@{gestiona_turnos/editar_turno/} + ${emp.idEmpleado}" th:text="#{controlador.turnos.botoneditar}" class="btn btn-outline-primary"></a>
+									<a th:href="@{/gestiona_turnos/editar_turno/} + ${emp.idEmpleado}" th:text="#{controlador.turnos.botoneditar}" class="btn btn-outline-primary"></a>
 								</td>
 							</div>
 							</span>
