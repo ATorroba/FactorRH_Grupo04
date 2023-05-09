@@ -117,9 +117,8 @@ public class JornadasController {
     }
 
     @GetMapping("/jornadas/especificas/{estado}/{incidencias}")
-    public String listaJornadasEspecificas(Principal principal, Model model,
-            @PathVariable(value = "estado") String estado, @PathVariable(value = "incidencias") String incidencias) {
-
+    public String listaJornadasEspecificas(Principal principal, Model model, @PathVariable(value = "estado") String estado, @PathVariable(value = "incidencias") String incidencias) {
+       
         List<Jornadas> listaEspecifica = new ArrayList<Jornadas>();
         try {
             listaEspecifica = Arrays.asList(restTemplate
@@ -260,7 +259,7 @@ public class JornadasController {
                 result.addError(error);
             }
         }
-        
+
         if (result.hasErrors()) {
             model.put("jornada", jornada);
             List<ObjectError> r = result.getAllErrors();
