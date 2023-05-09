@@ -416,7 +416,7 @@ public class JornadasController {
         return "incidencias";
     }
 
-    @PostMapping("jornadas/incidencias/guardar")
+    @PostMapping("/incidenciasj/guardar")
     public String nuevaIncidencia(@Validated Jornadas incidencia, BindingResult result, Map<String, Object> model) {
        
         if (result.hasErrors()) {

@@ -23,7 +23,7 @@
 
             <p th:each="error:${result}" th:text="${error.defaultMessage}" class="text-danger" style="margin-left: 5%"></p>
 
-            <form method="post" th:action="@{/jornadas/incidencias/guardar}" th:object="${incidenciaEmpleado}" enctype="multipart/form-data">
+            <form method="post" th:action="@{/incidenciasj/guardar}" th:object="${incidenciaEmpleado}" enctype="multipart/form-data">
                 
                 <input type="hidden" th:field="*{idEmpleado}" />
                 
