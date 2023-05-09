@@ -50,7 +50,7 @@ public class NominaService {
     @Autowired
     private IncidenciaNominaRepository incNRepo; // incidencias de nómina
 
-    @Async
+    //@Async
     @Transactional
     public void crearRecibos(Integer remesa_entrada) {
         java.util.Date desde, hasta, inicio, fin;
