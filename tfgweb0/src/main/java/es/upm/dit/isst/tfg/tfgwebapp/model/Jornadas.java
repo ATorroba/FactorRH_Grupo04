@@ -3,8 +3,11 @@ package es.upm.dit.isst.tfg.tfgwebapp.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javax.validation.constraints.Size;
+
 public class Jornadas {
     
+    @Size(max = 4, message = "Longitud máxima de idEmpleado es 4 caracteres")
     private String idEmpleado;
     private String fecha;
     private String hora_entrada;
@@ -16,6 +19,7 @@ public class Jornadas {
     private int saldo;
     private String incidencia;
     private String estado;
+    @Size(max = 255, message = "Longitud máxima de la nota es 255 caracteres")
     private String notas;
 
     public Jornadas() {

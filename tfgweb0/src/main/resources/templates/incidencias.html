@@ -21,6 +21,8 @@
 
             <div class="margenjornadas"></div>
 
+            <p th:each="error:${result}" th:text="${error.defaultMessage}" class="text-danger" style="margin-left: 5%"></p>
+
             <form method="post" th:action="@{/jornadas/incidencias/guardar}" th:object="${incidenciaEmpleado}" enctype="multipart/form-data">
                 
                 <input type="hidden" th:field="*{idEmpleado}" />
@@ -37,7 +39,7 @@
                 
                 <ul style="list-style-type: none">
                     <li>
-                        <input type="radio" th:field="*{incidencia}" th:value="f1" />
+                        <input type="radio" th:field="*{incidencia}" th:value="f1" required/>
                         <label th:text="#{incidencias.tipo.f1}"></label>
                     </li>
                     <li>
@@ -50,7 +52,7 @@
                     <h4>Justificación:</h4>
                 </div>
                 <div class="form-group" style="margin-left: 2%;margin-top: 1%;">
-                    <textarea th:field="*{notas}" rows="4" cols="80">Escribir aquí</textarea>
+                    <textarea th:field="*{notas}" rows="4" cols="80" required>Escribir aquí</textarea>
                 </div>
                 
                 <button type="submit" th:action="@{${accion}}" th:text="#{empleados.acciones.guardar}" class="btn btn-outline-primary" style="margin-left: 2%;margin-top: 1%;"></button>

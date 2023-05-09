@@ -28,6 +28,8 @@ import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+
 import java.util.Map;
 
 @Controller
@@ -162,7 +164,9 @@ public class JornadasController {
     public String guardar(@Validated Jornadas jornada, BindingResult result, Map<String, Object> model) {
         if (result.hasErrors()) {
             model.put("jornada", jornada);
-            return VISTA_FORM_JORNADAS_NUEVA;
+            List<ObjectError> r = result.getAllErrors();
+            model.put("result", r);
+            return VISTA_FORM_JORNADAS_NUEVA;  
         }
         try {
             restTemplate.postForObject(JORNADASMANAGER_STRING, jornada, Jornadas.class);
@@ -382,7 +386,21 @@ public class JornadasController {
     public String nuevaIncidencia(@Validated Jornadas incidencia, BindingResult result, Map<String, Object> model) {
         if (result.hasErrors()) {
             model.put("incidenciaEmpleado", incidencia);
-            return VISTA_FORM_JORNADAS_EDITAR;
+            List<ObjectError> r = result.getAllErrors();
+            model.put("result", r);
+            
+            List <Jornadas> listaIncidenciasEmpleado = new ArrayList<Jornadas>();
+            try{
+                listaIncidenciasEmpleado = Arrays.asList(restTemplate.getForEntity(JORNADASINCIDENCIA_STRING + incidencia.getIdEmpleado(), Jornadas[].class).getBody());
+            } catch (HttpClientErrorException.NotFound e) {
+                listaIncidenciasEmpleado = new ArrayList<>();
+            } catch (Exception e) {
+            
+            }
+
+            model.put("listaincidencias", listaIncidenciasEmpleado);
+
+            return "incidencias";  
         }
 
         Jornadas newIncidencia = new Jornadas();
