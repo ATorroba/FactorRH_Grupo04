@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/base::head(light,${date})">
+	<meta charset="UTF-8">
+</head>
+
+<body>
+	<header th:replace="layouts/base::header(dark,${date})"></header>
+	<div class="container">
+		<div class="card bg-light">
+
+			<div class="card-header">
+				<h3 th:text="#{controlador.turnos.crearTurno}"></h3>
+			</div>
+			<div class="card-body">
+				
+				<p th:each="error:${result}" th:text="${error.defaultMessage}" class="text-danger"></p>
+                <h3>Lunes</h3>
+				<form th:action="@{/turnos/guardar}" th:object="${turno}" method="post">
+                    
+                    <input type="hidden" th:field="*{idTurno}" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idemp}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idEmpleado}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idDia}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idDia}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horaentrada}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_entrada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horasalida}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_salida}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.duracion}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{minutos_jornada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+			    	<div class="form-group">
+					    <div class="col-sm-6">
+						    <input type="submit" th:value="#{jornada.acciones.guardar}" class="btn btn-outline-primary">
+						    <a th:href="@{/turnos/gestiona_turnos}"
+						    	class="btn btn-outline-danger" th:text="#{jornada.acciones.cancelar}"></a>
+					    </div>
+				    </div>
+			    </form>
+
+                <h3>Martes</h3>
+				<form th:action="@{/turnos/guardar}" th:object="${turno}" method="post">
+                    
+                    <input type="hidden" th:field="*{idTurno}" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idemp}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idEmpleado}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idDia}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idDia}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horaentrada}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_entrada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horasalida}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_salida}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.duracion}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{minutos_jornada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+			    	<div class="form-group">
+					    <div class="col-sm-6">
+						    <input type="submit" th:value="#{jornada.acciones.guardar}" class="btn btn-outline-primary">
+						    <a th:href="@{/turnos/gestiona_turnos}"
+						    	class="btn btn-outline-danger" th:text="#{jornada.acciones.cancelar}"></a>
+					    </div>
+				    </div>
+			    </form>
+
+                <h3>Miércoles</h3>
+				<form th:action="@{/turnos/guardar}" th:object="${turno}" method="post">
+                    
+                    <input type="hidden" th:field="*{idTurno}" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idemp}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idEmpleado}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idDia}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idDia}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horaentrada}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_entrada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horasalida}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_salida}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.duracion}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{minutos_jornada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+			    	<div class="form-group">
+					    <div class="col-sm-6">
+						    <input type="submit" th:value="#{jornada.acciones.guardar}" class="btn btn-outline-primary">
+						    <a th:href="@{/turnos/gestiona_turnos}"
+						    	class="btn btn-outline-danger" th:text="#{jornada.acciones.cancelar}"></a>
+					    </div>
+				    </div>
+			    </form>
+
+                <h3>Jueves</h3>
+				<form th:action="@{/turnos/guardar}" th:object="${turno}" method="post">
+                    
+                    <input type="hidden" th:field="*{idTurno}" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idemp}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idEmpleado}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idDia}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idDia}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horaentrada}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_entrada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horasalida}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_salida}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.duracion}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{minutos_jornada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+			    	<div class="form-group">
+					    <div class="col-sm-6">
+						    <input type="submit" th:value="#{jornada.acciones.guardar}" class="btn btn-outline-primary">
+						    <a th:href="@{/turnos/gestiona_turnos}"
+						    	class="btn btn-outline-danger" th:text="#{jornada.acciones.cancelar}"></a>
+					    </div>
+				    </div>
+			    </form>
+
+                <h3>Viernes</h3>
+				<form th:action="@{/turnos/guardar}" th:object="${turno}" method="post">
+                    
+                    <input type="hidden" th:field="*{idTurno}" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idemp}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idEmpleado}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idDia}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idDia}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horaentrada}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_entrada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horasalida}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_salida}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.duracion}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{minutos_jornada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+			    	<div class="form-group">
+					    <div class="col-sm-6">
+						    <input type="submit" th:value="#{jornada.acciones.guardar}" class="btn btn-outline-primary">
+						    <a th:href="@{/turnos/gestiona_turnos}"
+						    	class="btn btn-outline-danger" th:text="#{jornada.acciones.cancelar}"></a>
+					    </div>
+				    </div>
+			    </form>
+
+                <h3>Sábado</h3>
+				<form th:action="@{/turnos/guardar}" th:object="${turno}" method="post">
+                    
+                    <input type="hidden" th:field="*{idTurno}" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idemp}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idEmpleado}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idDia}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idDia}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horaentrada}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_entrada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horasalida}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_salida}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.duracion}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{minutos_jornada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+			    	<div class="form-group">
+					    <div class="col-sm-6">
+						    <input type="submit" th:value="#{jornada.acciones.guardar}" class="btn btn-outline-primary">
+						    <a th:href="@{/turnos/gestiona_turnos}"
+						    	class="btn btn-outline-danger" th:text="#{jornada.acciones.cancelar}"></a>
+					    </div>
+				    </div>
+			    </form>
+
+                <h3>Domingo</h3>
+				<form th:action="@{/turnos/guardar}" th:object="${turno}" method="post">
+                    
+                    <input type="hidden" th:field="*{idTurno}" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idemp}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idEmpleado}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.idDia}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{idDia}" class="form-control" style="width: 25%;" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horaentrada}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_entrada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.horasalida}"></label>
+                        <div class="col-sm-6">
+                            <input type="time" th:field="*{hora_salida}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" th:text="#{controlador.turnos.duracion}"></label>
+                        <div class="col-sm-6">
+                            <input type="text" th:field="*{minutos_jornada}" class="form-control" style="width: 25%;" step="1">
+                        </div>
+                    </div>
+
+			    	<div class="form-group">
+					    <div class="col-sm-6">
+						    <input type="submit" th:value="#{jornada.acciones.guardar}" class="btn btn-outline-primary">
+						    <a th:href="@{/turnos/gestiona_turnos}"
+						    	class="btn btn-outline-danger" th:text="#{jornada.acciones.cancelar}"></a>
+					    </div>
+				    </div>
+			    </form>
+		    </div>
+	    </div>
+    </div>
+</body>
+</html>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.validation.annotation.Validated;
 import java.util.Map;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
@@ -126,4 +127,22 @@ public class TurnosController {
     }
     return "redirect:/gestiona_turnos/editar_turno/" + idEmpleado;
 }
+
+    @GetMapping("turnos/crear")
+        public String crear(Map<String, Object> model) {
+            Turnos turno = new Turnos();
+            model.put("turno", turno);
+            return "crear_turno";
+
+        }
+
+    @PostMapping("turnos/guardar")
+    public String guardar(@Validated Turnos turno, BindingResult result, Map<String, Object> model) {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.postForObject("http://localhost:8083/turnos/", turno, Turnos.class);
+        } catch (Exception e) {
+        }
+        return "redirect:/turnos/crear";
+    }
 }

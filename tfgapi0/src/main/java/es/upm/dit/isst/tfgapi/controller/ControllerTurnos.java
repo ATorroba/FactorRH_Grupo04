@@ -5,8 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import es.upm.dit.isst.tfgapi.model.Turnos;
 import es.upm.dit.isst.tfgapi.repository.RepositoryTurnos;
@@ -40,6 +44,12 @@ public class ControllerTurnos {
         } else {
             return ResponseEntity.ok().body(turno);
         }
+    }
+
+    @PostMapping("/turnos")
+    ResponseEntity<Turnos> create(@RequestBody Turnos newTurno) throws URISyntaxException{
+        Turnos result = turnosRepository.save(newTurno);
+        return ResponseEntity.created(new URI("/turnos" + result.getIdTurno())).body(result);
     }
 
     @PutMapping("/turnos/{id}")
