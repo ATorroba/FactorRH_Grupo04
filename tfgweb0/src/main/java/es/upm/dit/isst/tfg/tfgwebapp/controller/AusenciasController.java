@@ -154,7 +154,7 @@ public class AusenciasController {
                 List<Ausencias> ausencias = Arrays.asList(ausenciasArray);
 
                 LocalDate currentDate = LocalDate.now();
-                int year = currentDate.getYear();              
+                int year = currentDate.getYear();
                 url = "http://localhost:8083/permisos/" + idEmpLog + "/" + year;
                 System.out.println(url);
                 Permisos permisos = restTemplate.getForObject(url, Permisos.class);
@@ -196,8 +196,22 @@ public class AusenciasController {
     public String guardar(@Validated Ausencias Ausencia, BindingResult result, Map<String, Object> model,
             Principal principal) {
         Empleado empleado1 = new Empleado();
+
         if (result.hasErrors()) {
+
+            Empleado empleado2 = restTemplate.getForObject("http://localhost:8083/datos/"
+
+                    + principal.getName(), Empleado.class);
+
             System.out.println("errores");
+
+            List<Ausencias> aus = new ArrayList<Ausencias>();
+            aus = Arrays
+                    .asList(restTemplate.getForEntity("http://localhost:8083/ausencias/" + empleado2.getIdEmpleado(),
+
+                            Ausencias[].class).getBody());
+
+            model.put("aus", aus);
             model.put("Ausencia", Ausencia);
             List<ObjectError> r = result.getAllErrors();
             // r.stream().map(a -> a);
@@ -227,7 +241,13 @@ public class AusenciasController {
 
                 restTemplate.postForObject(RHMANAGERGER_STRING, Ausencia, Ausencias.class);
                 System.out.println("result");
+                List<Ausencias> aus = new ArrayList<Ausencias>();
+                aus = Arrays.asList(
+                        restTemplate.getForEntity("http://localhost:8083/ausencias/" + empleado2.getIdEmpleado(),
 
+                                Ausencias[].class).getBody());
+
+                model.put("aus", aus);
             } catch (Exception e) {
                 System.out.println(e);
             }

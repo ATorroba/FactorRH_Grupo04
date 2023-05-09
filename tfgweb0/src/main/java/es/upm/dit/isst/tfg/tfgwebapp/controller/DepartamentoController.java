@@ -20,6 +20,7 @@ public class DepartamentoController {
 
     @GetMapping("/organigrama")
     public String pintaOrganigrama(Model model) {
+        DepOrganigrama departm = new DepOrganigrama();
         Departamento[] depArray = restTemplate.getForObject(DEPARTAMENTOSMANAGER_STRING + "raiz/",
                 Departamento[].class);
         Departamento raiz;
@@ -28,7 +29,12 @@ public class DepartamentoController {
         } else {
             raiz = null;
         }
-        DepOrganigrama departm = crearOrganigrama(raiz);
+        if (raiz == null) {
+
+        } else {
+            departm = crearOrganigrama(raiz);
+        }
+
         model.addAttribute("raiz", departm);
         model.addAttribute("date", ZonedDateTime.now());
 

@@ -52,7 +52,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" th:text="#{empleados.Empleado.email}"></label>
 						<div class="col-sm-6">
-							<input type="text" th:value="${candidato.java.email}"  name="email" id="email">
+							<input type="text" th:value="${candidato.email}"  name="email" id="email">
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
 						</div>
 					</div>

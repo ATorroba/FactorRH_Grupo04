@@ -1,25 +1,29 @@
 package es.upm.dit.isst.tfg.tfgwebapp.model;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
-import java.math.BigDecimal;
+import javax.validation.constraints.NotBlank;
 
 public class Candidato {
+    @NotBlank(message = "campo obligatorio")
 
     public String idcandidato;
+    @NotBlank(message = "campo obligatorio")
+
     public String nombre;
     public String apellido_1;
     public String apellido_2;
+    @NotBlank(message = "campo obligatorio")
+
     public String email;
     public String form_Experiencia;
     public String idiomas;
     public String disponibilidad;
     public String notas_reclutador;
     public String curriculum;
+    @NotBlank(message = "campo obligatorio")
+
     public String preseleccionado;
+    @NotBlank(message = "campo obligatorio")
+
     public String puesto;
 
     public Candidato() {

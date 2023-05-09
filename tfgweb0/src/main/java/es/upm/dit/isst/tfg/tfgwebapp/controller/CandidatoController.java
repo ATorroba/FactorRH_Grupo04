@@ -1,21 +1,22 @@
 package es.upm.dit.isst.tfg.tfgwebapp.controller;
 
 import java.security.Principal;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.time.ZonedDateTime;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
+
 import es.upm.dit.isst.tfg.tfgwebapp.model.Candidato;
 
 @Controller
@@ -84,7 +85,7 @@ public class CandidatoController {
     @GetMapping("candidatos/crear")
     public String crear(Map<String, Object> model) {
         Candidato candidato = new Candidato();
-        model.put("Candidato", candidato);
+        model.put("candidato", candidato);
         model.put("accion", "guardar");
         return VISTA_FORMULARIO_CANDIDATO;
     }
@@ -92,12 +93,17 @@ public class CandidatoController {
     @PostMapping("candidatos/guardar")
     public String guardar(@Validated Candidato candidato, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("Candidato", candidato);
+            List<ObjectError> r = result.getAllErrors();
+            model.addAttribute("candidato", candidato);
+            model.addAttribute("result", r);
+
             return VISTA_FORMULARIO_CANDIDATO;
         }
         try {
             restTemplate.postForObject(CANDIDATOMANAGER_STRING, candidato, Candidato.class);
         } catch (Exception e) {
+            return VISTA_FORMULARIO_CANDIDATO;
+
         }
         return "redirect:/" + "candidatos/lista";
     }

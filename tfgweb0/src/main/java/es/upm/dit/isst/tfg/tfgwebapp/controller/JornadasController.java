@@ -30,7 +30,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.validation.BindingResult;
 import java.util.Map;
 
-
 @Controller
 public class JornadasController {
 
@@ -42,22 +41,22 @@ public class JornadasController {
     public static final String VISTA_LISTA_JORNADAS_ESPECIFICAS = "lista_jornadas_especificas";
     public static final String VISTA_FORM_JORNADAS_NUEVA = "form_crearJornada";
     public static final String VISTA_FORM_JORNADAS_EDITAR = "form_editarJornada";
-    
+
     @GetMapping("/jornadas/lista")
     public String listaJornadas(Principal principal, Model model) {
 
-        List <Jornadas> lista = new ArrayList<Jornadas>();
-        try{
+        List<Jornadas> lista = new ArrayList<Jornadas>();
+        try {
             lista = Arrays.asList(restTemplate.getForEntity(JORNADASMANAGER_STRING, Jornadas[].class).getBody());
         } catch (Exception e) {
             return "401";
         }
-        
+
         Collections.sort(lista, new Comparator<Jornadas>() {
-        @Override
-        public int compare(Jornadas j1, Jornadas j2) {
-            return j2.getFecha().compareTo(j1.getFecha()); 
-        }
+            @Override
+            public int compare(Jornadas j1, Jornadas j2) {
+                return j2.getFecha().compareTo(j1.getFecha());
+            }
         });
         model.addAttribute("jornadas", lista);
         return VISTA_LISTA_JORNADAS;
@@ -66,19 +65,20 @@ public class JornadasController {
     @GetMapping("/jornadas/porvalidar")
     public String listaJornadasSinValidad(Principal principal, Model model) {
 
-        List <Jornadas> listaPorValidar = new ArrayList<Jornadas>();
-        try{
-            listaPorValidar = Arrays.asList(restTemplate.getForEntity(JORNADASESTADOMANAGER_STRING + "1", Jornadas[].class).getBody());
+        List<Jornadas> listaPorValidar = new ArrayList<Jornadas>();
+        try {
+            listaPorValidar = Arrays
+                    .asList(restTemplate.getForEntity(JORNADASESTADOMANAGER_STRING + "1", Jornadas[].class).getBody());
         } catch (HttpClientErrorException.NotFound e) {
             listaPorValidar = new ArrayList<>();
         } catch (Exception e) {
         }
-        
+
         Collections.sort(listaPorValidar, new Comparator<Jornadas>() {
-        @Override
-        public int compare(Jornadas j1, Jornadas j2) {
-            return j2.getFecha().compareTo(j1.getFecha()); 
-        }
+            @Override
+            public int compare(Jornadas j1, Jornadas j2) {
+                return j2.getFecha().compareTo(j1.getFecha());
+            }
         });
         model.addAttribute("jornadasPorValidar", listaPorValidar);
         model.addAttribute("opcionElegida", "porValidar");
@@ -89,20 +89,22 @@ public class JornadasController {
     @GetMapping("/jornadas/validadas")
     public String listaJornadasValidadas(Principal principal, Model model) {
 
-        List <Jornadas> listaValidada = new ArrayList<Jornadas>();
-        try{
-            listaValidada = Arrays.asList(restTemplate.getForEntity(JORNADASESTADOMANAGER_STRING + "2", Jornadas[].class).getBody());
+        List<Jornadas> listaValidada = new ArrayList<Jornadas>();
+        try {
+            listaValidada = Arrays
+                    .asList(restTemplate.getForEntity(JORNADASESTADOMANAGER_STRING + "2", Jornadas[].class).getBody());
         } catch (HttpClientErrorException.NotFound e) {
             listaValidada = new ArrayList<>();
         } catch (Exception e) {
         }
-        listaValidada = Arrays.asList(restTemplate.getForEntity(JORNADASESTADOMANAGER_STRING + "2", Jornadas[].class).getBody());
+        listaValidada = Arrays
+                .asList(restTemplate.getForEntity(JORNADASESTADOMANAGER_STRING + "2", Jornadas[].class).getBody());
         Collections.sort(listaValidada, new Comparator<Jornadas>() {
             @Override
             public int compare(Jornadas j1, Jornadas j2) {
-                return j2.getFecha().compareTo(j1.getFecha()); 
+                return j2.getFecha().compareTo(j1.getFecha());
             }
-            });
+        });
         model.addAttribute("jornadasValidadas", listaValidada);
         model.addAttribute("opcionElegida", "Validada");
         model.addAttribute("tipoTitulo", "Validada");
@@ -110,34 +112,37 @@ public class JornadasController {
     }
 
     @GetMapping("/jornadas/especificas/{estado}/{incidencias}")
-    public String listaJornadasEspecificas(Principal principal, Model model, @PathVariable(value = "estado") String estado, @PathVariable(value = "incidencias") String incidencias) {
+    public String listaJornadasEspecificas(Principal principal, Model model,
+            @PathVariable(value = "estado") String estado, @PathVariable(value = "incidencias") String incidencias) {
 
-        List <Jornadas> listaEspecifica = new ArrayList<Jornadas>();
-        try{
-            listaEspecifica = Arrays.asList(restTemplate.getForEntity(JORNADASESTADOMANAGER_STRING + estado + "/" + incidencias, Jornadas[].class).getBody());
+        List<Jornadas> listaEspecifica = new ArrayList<Jornadas>();
+        try {
+            listaEspecifica = Arrays.asList(restTemplate
+                    .getForEntity(JORNADASESTADOMANAGER_STRING + estado + "/" + incidencias, Jornadas[].class)
+                    .getBody());
         } catch (HttpClientErrorException.NotFound e) {
             listaEspecifica = new ArrayList<>();
         } catch (Exception e) {
         }
-        
+
         Collections.sort(listaEspecifica, new Comparator<Jornadas>() {
-        @Override
-        public int compare(Jornadas j1, Jornadas j2) {
-            return j2.getFecha().compareTo(j1.getFecha()); 
-        }
+            @Override
+            public int compare(Jornadas j1, Jornadas j2) {
+                return j2.getFecha().compareTo(j1.getFecha());
+            }
         });
 
-        if(estado.equals("1") && incidencias.equals("f1")){
+        if (estado.equals("1") && incidencias.equals("f1")) {
             model.addAttribute("tipoTitulo", "porValidarNoFicho");
-        }else if (estado.equals("1") && incidencias.equals("f2")){
+        } else if (estado.equals("1") && incidencias.equals("f2")) {
             model.addAttribute("tipoTitulo", "porValidarFichoMal");
-        }else if (estado.equals("1") && incidencias.equals("f3")){
+        } else if (estado.equals("1") && incidencias.equals("f3")) {
             model.addAttribute("tipoTitulo", "porValidarFicho");
-        }else if (estado.equals("2") && incidencias.equals("f1")){
+        } else if (estado.equals("2") && incidencias.equals("f1")) {
             model.addAttribute("tipoTitulo", "ValidadoNoFicho");
-        }else if (estado.equals("2") && incidencias.equals("f2")){
+        } else if (estado.equals("2") && incidencias.equals("f2")) {
             model.addAttribute("tipoTitulo", "ValidadoFichoMal");
-        }else if (estado.equals("2") && incidencias.equals("f3")){
+        } else if (estado.equals("2") && incidencias.equals("f3")) {
             model.addAttribute("tipoTitulo", "ValidadoFicho");
         }
         model.addAttribute("jornadasEspecificas", listaEspecifica);
@@ -166,7 +171,8 @@ public class JornadasController {
     }
 
     @GetMapping("jornadas/validar/{idEmpleado}/{fecha}")
-    public String Validar(@PathVariable(value = "idEmpleado") String idEmpleado, @PathVariable(value = "fecha") String fecha) {
+    public String Validar(@PathVariable(value = "idEmpleado") String idEmpleado,
+            @PathVariable(value = "fecha") String fecha) {
         Jornadas jornada = new Jornadas();
         System.out.println(idEmpleado);
         try {
@@ -176,12 +182,13 @@ public class JornadasController {
 
         jornada.setEstado("2");
         restTemplate.put(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha, jornada, Jornadas.class);
-        
+
         return "redirect:/jornadas/lista";
     }
 
     @GetMapping("jornadas/revisar/{idEmpleado}/{fecha}")
-    public String Revisar(@PathVariable(value = "idEmpleado") String idEmpleado, @PathVariable(value = "fecha") String fecha) {
+    public String Revisar(@PathVariable(value = "idEmpleado") String idEmpleado,
+            @PathVariable(value = "fecha") String fecha) {
         Jornadas jornada = new Jornadas();
         try {
             jornada = restTemplate.getForObject(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha, Jornadas.class);
@@ -194,7 +201,8 @@ public class JornadasController {
     }
 
     @GetMapping("jornadas/delete/{idEmpleado}/{fecha}")
-    public String delete(@PathVariable(value = "idEmpleado") String idEmpleado, @PathVariable(value = "fecha") String fecha) {
+    public String delete(@PathVariable(value = "idEmpleado") String idEmpleado,
+            @PathVariable(value = "fecha") String fecha) {
         try {
             restTemplate.delete(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha);
         } catch (Exception e) {
@@ -203,7 +211,8 @@ public class JornadasController {
     }
 
     @GetMapping("jornadas/editar/{idEmpleado}/{fecha}")
-    public String editar(@PathVariable(value = "idEmpleado") String idEmpleado, @PathVariable(value = "fecha") String fecha,  Map<String, Object> model) {
+    public String editar(@PathVariable(value = "idEmpleado") String idEmpleado,
+            @PathVariable(value = "fecha") String fecha, Map<String, Object> model) {
         Jornadas jornada = new Jornadas();
         try {
             jornada = restTemplate.getForObject(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha, Jornadas.class);
@@ -232,7 +241,8 @@ public class JornadasController {
         String idEmpleado;
 
         try {
-            Empleado empleadoActual = restTemplate.getForObject(DATOSMANAGER_STRING + principal.getName(), Empleado.class);
+            Empleado empleadoActual = restTemplate.getForObject(DATOSMANAGER_STRING + principal.getName(),
+                    Empleado.class);
             idEmpleado = empleadoActual.getIdEmpleado();
         } catch (Exception e) {
             return "401";
@@ -242,9 +252,9 @@ public class JornadasController {
         String fechaString = fecha.toString();
 
         LocalTime horaActual = LocalTime.now(ZoneId.systemDefault());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss"); 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String horaActualString = horaActual.format(formatter);
-        
+
         Jornadas jornada;
 
         try {
@@ -256,7 +266,6 @@ public class JornadasController {
                 throw e;
             }
         }
-
         if (jornada == null) {
             jornada = new Jornadas();
             jornada.setIdEmpleado(idEmpleado);
@@ -265,26 +274,34 @@ public class JornadasController {
             jornada.setEstado("1");
             jornada.setIncidencia("f3");
             restTemplate.postForObject(JORNADASMANAGER_STRING, jornada, Jornadas.class);
-        } else if (jornada.getHora_entrada() == null){
+            // System.out.println(jornada);
+
+            model.addAttribute("jor", jornada);
+
+        } else if (jornada.getHora_entrada() == null) {
             jornada.setHora_entrada(horaActualString);
             jornada.setEstado("1");
             jornada.setIncidencia("f3");
             restTemplate.put(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha, jornada, Jornadas.class);
-        }else {
+            model.addAttribute("jor", jornada);
+
+        } else {
             model.addAttribute("error", "Ya ha fichado la entrada, no puede volver a fichar su entrada hasta mañana");
-            
+            model.addAttribute("jor", jornada);
+
         }
-    
-        return "redirect:/"; 
-    }  
+
+        return "home";
+    }
 
     @PostMapping("fichar/salida")
     public String ficharSalida(Principal principal, Model model) {
-        
+
         String idEmpleado;
 
         try {
-            Empleado empleadoActual = restTemplate.getForObject(DATOSMANAGER_STRING + principal.getName(), Empleado.class);
+            Empleado empleadoActual = restTemplate.getForObject(DATOSMANAGER_STRING + principal.getName(),
+                    Empleado.class);
             idEmpleado = empleadoActual.getIdEmpleado();
         } catch (Exception e) {
             return "401";
@@ -292,7 +309,7 @@ public class JornadasController {
 
         LocalDate fecha = LocalDate.now();
         LocalTime horaActual = LocalTime.now(ZoneId.systemDefault());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss"); 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         String horaActualString = horaActual.format(formatter);
 
         Jornadas jornada;
@@ -309,18 +326,22 @@ public class JornadasController {
 
         if (jornada == null || jornada.getHora_entrada() == null) {
             model.addAttribute("error", "Por favor fiche la entrada antes de fichar la salida.");
-           
-        } else if (jornada.getHora_salida() == null && horaActual.isAfter(LocalTime.parse(jornada.getHora_entrada(), formatter))) {
+
+        } else if (jornada.getHora_salida() == null
+                && horaActual.isAfter(LocalTime.parse(jornada.getHora_entrada(), formatter))) {
             jornada.setHora_salida(horaActualString);
             jornada.setIncidencia("f3");
             jornada.setEstado("1");
             restTemplate.put(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha, jornada, Jornadas.class);
+            model.addAttribute("jor", jornada);
+
         } else {
             model.addAttribute("error", "Por favor fiche la entrada antes de fichar la salida.");
-            
+            model.addAttribute("jor", jornada);
+
         }
 
-        return "redirect:/";
+        return "home";
     }
 
     @GetMapping("/incidencias")
@@ -329,7 +350,8 @@ public class JornadasController {
         String idEmpleado;
 
         try {
-            Empleado empleadoActual = restTemplate.getForObject(DATOSMANAGER_STRING + principal.getName(), Empleado.class);
+            Empleado empleadoActual = restTemplate.getForObject(DATOSMANAGER_STRING + principal.getName(),
+                    Empleado.class);
             idEmpleado = empleadoActual.getIdEmpleado();
         } catch (Exception e) {
             return "401";
@@ -341,40 +363,42 @@ public class JornadasController {
         LocalDate fecha = LocalDate.now();
 
         try {
-            jornadaHoy = restTemplate.getForObject(JORNADASMANAGER_STRING + idEmpleado + "/"+ fecha, Jornadas.class);
+            jornadaHoy = restTemplate.getForObject(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha, Jornadas.class);
 
         } catch (HttpClientErrorException.NotFound ex) {
         }
         model.put("jor", jornadaHoy);
         model.put("accion", "/incidencia/publicarIncidencia");
         return "incidencias";
-        
+
     }
 
     @PostMapping("/incidencia/publicarIncidencia")
     public String publicarIncidencia(@Validated Jornadas jornada, BindingResult result, Map<String, Object> model) {
-    if (result.hasErrors()) {
-        
-        model.put("org.springframework.validation.BindingResult.jor", result);
-        
-        return "incidencias";
-    }
-    
-    try {
-        jornada.setEstado(String.valueOf(1));
-        restTemplate.put(JORNADASMANAGER_STRING + jornada.getIdEmpleado() + "/"+ jornada.getFecha() , jornada, Jornadas.class);
-    } catch (Exception e) {
+        if (result.hasErrors()) {
 
+            model.put("org.springframework.validation.BindingResult.jor", result);
+
+            return "incidencias";
+        }
+
+        try {
+            jornada.setEstado(String.valueOf(1));
+            restTemplate.put(JORNADASMANAGER_STRING + jornada.getIdEmpleado() + "/" + jornada.getFecha(), jornada,
+                    Jornadas.class);
+        } catch (Exception e) {
+
+        }
+
+        return "redirect:/incidencias";
     }
-    
-    return "redirect:/incidencias";
-}
+
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
         model.addAttribute("incidenciaForm", new Jornadas());
         return "formulario";
     }
-    
+
     @PostMapping("/form")
     public String procesarFormulario(@ModelAttribute Jornadas incidenciaForm) {
         String incidencia = incidenciaForm.getIncidencia();

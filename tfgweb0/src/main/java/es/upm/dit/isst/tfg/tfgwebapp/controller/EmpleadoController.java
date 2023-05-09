@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,10 +21,12 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import es.upm.dit.isst.tfg.tfgwebapp.model.Empleado;
+import es.upm.dit.isst.tfg.tfgwebapp.model.Jornadas;
 
 @Controller
 public class EmpleadoController {
     public final String RHMANAGERGER_STRING = "http://localhost:8083/empleados/";
+    public final String JORNADASMANAGER_STRING = "http://localhost:8083/jornadas/";
 
     public static final String VISTA_LISTA = "lista";
 
@@ -34,7 +37,31 @@ public class EmpleadoController {
     @GetMapping("/")
 
     public String inicio(Principal principal, Model model) {
+        LocalDate fecha = LocalDate.now();
+        Jornadas jornada = new Jornadas();
+        String idEmpleado;
+        try {
+            Empleado empleadoActual = restTemplate.getForObject("http://localhost:8083/datos/" + principal.getName(),
+                    Empleado.class);
+            idEmpleado = empleadoActual.getIdEmpleado();
+        } catch (Exception e) {
+            return "401";
+        }
+        try {
+            jornada = restTemplate.getForObject(JORNADASMANAGER_STRING + idEmpleado + "/" + fecha, Jornadas.class);
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+                jornada = null;
+                model.addAttribute("date", ZonedDateTime.now());
+
+                return "home";
+            } else {
+                throw e;
+            }
+
+        }
         model.addAttribute("date", ZonedDateTime.now());
+        model.addAttribute("jor", jornada);
 
         return "home";
 

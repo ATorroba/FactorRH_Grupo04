@@ -15,8 +15,11 @@ public class Ausencias {
     private Integer idausencia;
 
     private String idempleado;
+    @NotBlank(message = "campo obligatorio")
 
     private String inicio;
+    @NotBlank(message = "campo obligatorio")
+
     private String fin;// date
     private String tipo_ausencia;
     private String autorizada;

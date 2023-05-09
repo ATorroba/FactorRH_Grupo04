@@ -9,12 +9,23 @@
 <body>
     <header th:replace="layouts/base::header(dark,${date})"></header>
 
-    <div class="FF">
-        <h1>Escoge una acción, y que no se te olvide fichar</h1>
+    <div style="padding-top: 1%;" class="FFF">
+        <h1>Registrar entrada y salida</h1>
+    
 
 
         <div class="container">
-            <h1 class="title-bar">Fichaje :</h1>
+            <p th:if="${error}" class="alert alert-danger" th:text="${error}?${error}:''"></p>
+            <h1 class="title-bar">Fichaje de hoy:</h1>
+            <div th:if="${jor}" style="display:flex;flex-direction: row;justify-content: space-around;" class="title-bar">
+                <span th:if="${jor.hora_entrada}">
+                <h4 class="title-bar" th:text=" ${jor}? 'Entrada: '+${jor.hora_entrada}:''"></h4></span>
+<span th:if="${jor.hora_salida}">
+                <h4 class="title-bar" th:text=" ${jor}?'Salida: '+ ${jor.hora_salida}:''"></h4></span>
+            </div> 
+           
+
+           
             <div class="button-container">
                 <form th:action="@{/fichar/entrada}" method="post">
                     <button type="submit" class="buttone">Fichar entrada</button>

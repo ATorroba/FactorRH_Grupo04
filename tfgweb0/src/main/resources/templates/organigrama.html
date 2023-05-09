@@ -40,7 +40,7 @@
     </style>
 </head>
 
-    <div th:object="${raiz}" class="tree-diagram">
+    <div th:if="${raiz.departamento}" th:object="${raiz}" class="tree-diagram">
         <ul >
             <li style=" 
             display: flex;   

@@ -9,7 +9,7 @@
     <h3 style="padding-left: 5%;padding-top: 1%;"> Gestión ausencias</h3>
 
     <div style="display: flex; flex-direction: row;justify-content: center;">
-        <div style="flex-grow:2;padding-left: 5%;" class="container">
+        <div style="flex-grow:1;padding-left: 5%;" class="container">
 
             <div class="card bg-light">
 
@@ -36,7 +36,6 @@
                    
                     
                     <form th:action="@{/guardarausencia}" th:object="${Ausencia}" method="post">
-                        <p th:text="${result}"></p>
                         <!-- <input type="hidden" th:field="*{email}" /> -->
             <!--p th:if="${result}" th.object="${result}" th:text="${result}" class="alert alert-danger" ></p-->
             <p class="alert alert-danger" th:each="error: ${result}"  th:text="${error.field}+': '+${error.defaultMessage}">
@@ -48,6 +47,8 @@
                 <li >
                     <input type="radio" th:field="*{tipo_ausencia}" th:value="VAC" />
                     <label  th:text="#{ausencias.tipo.vac}"></label>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('tipo_ausencia')}" th:errors="*{tipo_ausencia}"></small>
+
                 </li><li>
                     <input type="radio" th:field="*{tipo_ausencia}" th:value="BAJ" />
                     <label  th:text="#{ausencias.tipo.baj}"></label>
@@ -66,12 +67,16 @@
                 <label class="bold" th:text="#{ausencias.inicio}"></label></div>
                 <div >
                     <input type="date" th:field="*{inicio}">
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('inicio')}" th:errors="*{inicio}"></small>
+
                 </div>
             </div>
                         <div class="form-group column">
                             <label class="bold" th:text="#{ausencias.final}"></label>
                             <div >
                                 <input type="date" th:field="*{fin}">
+                                <small class="form-text text-danger" th:if="${#fields.hasErrors('fin')}" th:errors="*{fin}"></small>
+
                             </div>
                         </div>
                     </div>
@@ -93,10 +98,12 @@
                     </form>
                 </div>
             </div>
+
+            
         </div>
 
-
-        <div   class="container">
+<div  class="container" style="display:flex;flex-direction: column;flex-grow: 2;">
+        
            
 
             <div class="card bg-light">
@@ -167,8 +174,84 @@
                    
                     
           
-            </div>
+            
         </div>
+        
+           
+
+            <div class="card bg-light">
+
+                <div class="card-header">
+                    <div style="display: flex;justify-content: flex-start;gap:2%">
+                    <img th:src="@{/img/req.png}" width="30" height="30" alt="">
+
+                    <h4 >Ausencias pendientes</h4>
+                </div>
+
+
+
+
+
+
+                </div>
+              	<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<div class="wrap">
+                                <th >tipo</th>
+                                <th >inicio</th>
+                                <th >fin</th>
+							
+							</div>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="Aus: ${aus}">
+							<div th:if="${Aus.autorizada == '0'}" class="wrap">
+						
+                                <td th:text="${Aus.tipo_ausencia}"></td>
+                                <td th:text="${Aus.inicio}"></td>
+                                <td th:text="${Aus.fin}"></td>
+						
+								<!--td>
+									<a th:href="@{candidatos/} + ${Puesto.id_puesto}"
+										th:text="#{puestos.acciones.candidatos}" class="btn btn-outline-danger"></a>
+								</td-->
+							</div>
+						
+						</tr>
+					</tbody>
+					<!--tfoot>
+						<tr>
+							<td colspan="5">
+								<a th:href="@{crear}" class="btn btn-outline-primary btn-block"
+									th:text="#{puestos.acciones.anadir}"></a>
+							</td>
+						</tr>
+					</tfoot-->
+				</table>
+			</div>
+                    
+                    <!-- Mostrar los errores en una lista -->
+                    <!-- 
+                    <div th:object="${TFG}" th:remove="tag">
+                        <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                            <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+                        </ul>
+                    </div>
+                     -->
+                
+
+                     
+                   
+                    
+          
+           
+        </div>
+    </div>
+
+
     </div>
     </body>
 </div>

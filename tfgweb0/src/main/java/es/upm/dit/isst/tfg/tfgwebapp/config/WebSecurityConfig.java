@@ -46,9 +46,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/remesas/**").hasAnyRole("HABILITADO")
 				.antMatchers("/incidencias_n/**").hasAnyRole("HABILITADO")
-				
+
 				.antMatchers("/css/**", "/img/**", "/layouts/**").permitAll()
 				.antMatchers("/", "/lista").authenticated()
+				.antMatchers("/candidatos/**", "/procesos/**", "/puestos/**", "/IPS", "/roles", "/crearrol/**",
+						"/guardarrol/**", "/eliminarrol/**")
+				.hasRole("RECLUTADOR")
 				.antMatchers("/datos", "/vacaciones").hasRole("EMPLEADO")
 				.antMatchers("/permisos/**").hasRole("CONTROLADOR")
 				.antMatchers("/crear", "/guardar").permitAll()
