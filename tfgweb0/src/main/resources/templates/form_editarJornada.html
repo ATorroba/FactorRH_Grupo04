@@ -11,12 +11,12 @@
 		<div class="card bg-light">
 
 			<div class="card-header">
-				<h3 th:text="#{jornadas.crear.titulo.nueva}"></h3>
+				<h3 th:text="#{jornadas.editar.titulo.nueva}"></h3>
 			</div>
 			<div class="card-body">
 				<p th:each="error:${result}" th:text="${error.defaultMessage}" class="text-danger"></p>
 
-				<form th:action="@{/jornadas/guardar}" th:object="${jornada}" method="post">
+				<form th:action="@{/jornadas/actualizar}" th:object="${jornada}" method="post">
                     <input type="hidden" th:field="*{idEmpleado}" />
                     <input type="hidden" th:field="*{entrada_teorica}" />
 					<input type="hidden" th:field="*{salida_teorica}" />

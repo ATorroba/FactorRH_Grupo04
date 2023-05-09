@@ -38,12 +38,13 @@ public class JornadasController {
     public final String JORNADASMANAGER_STRING = "http://localhost:8083/jornadas/";
     public final String JORNADASESTADOMANAGER_STRING = "http://localhost:8083/jornadas/estado/";
     public final String DATOSMANAGER_STRING = "http://localhost:8083/datos/";
+    public final String RHMANAGER_STRING = "http://localhost:8083/empleados/";
+    public final String JORNADASINCIDENCIA_STRING = "http://localhost:8083/jornadas/empleadoIncidencias/";
     private RestTemplate restTemplate = new RestTemplate();
     public static final String VISTA_LISTA_JORNADAS = "lista_jornadas";
     public static final String VISTA_LISTA_JORNADAS_ESPECIFICAS = "lista_jornadas_especificas";
     public static final String VISTA_FORM_JORNADAS_NUEVA = "form_crearJornada";
     public static final String VISTA_FORM_JORNADAS_EDITAR = "form_editarJornada";
-    public final String JORNADASINCIDENCIA_STRING = "http://localhost:8083/jornadas/empleadoIncidencias/";
 
     @GetMapping("/jornadas/lista")
     public String listaJornadas(Principal principal, Model model) {
@@ -158,6 +159,7 @@ public class JornadasController {
         Jornadas jornada = new Jornadas();
         model.put("jornada", jornada);
         return VISTA_FORM_JORNADAS_NUEVA;
+
     }
 
     @PostMapping("jornadas/guardar")
@@ -227,10 +229,13 @@ public class JornadasController {
         return VISTA_FORM_JORNADAS_EDITAR;
     }
 
-    @PostMapping("jornadas/actualizar/{idEmpleado}/{fecha}")
+    @PostMapping("jornadas/actualizar")
     public String actualizar(@Validated Jornadas jornada, BindingResult result, Map<String, Object> model) {
         if (result.hasErrors()) {
             model.put("jornada", jornada);
+            List<ObjectError> r = result.getAllErrors();
+            model.put("result", r);
+            
             return VISTA_FORM_JORNADAS_EDITAR;
         }
         try {
@@ -384,6 +389,7 @@ public class JornadasController {
 
     @PostMapping("jornadas/incidencias/guardar")
     public String nuevaIncidencia(@Validated Jornadas incidencia, BindingResult result, Map<String, Object> model) {
+       
         if (result.hasErrors()) {
             model.put("incidenciaEmpleado", incidencia);
             List<ObjectError> r = result.getAllErrors();
