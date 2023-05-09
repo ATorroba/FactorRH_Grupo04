@@ -30,7 +30,7 @@ public class ControllerTurnos {
         return (List<Turnos>) turnosRepository.findAll();
     }
 
-    @GetMapping("/turnos/{idEmpleado}")
+    @GetMapping("/turnos/empleado/{idEmpleado}")
     List<Turnos> readByIdEmpleado(@PathVariable String idEmpleado) {
         return (List<Turnos>) turnosRepository.findByidEmpleado(idEmpleado);
     }

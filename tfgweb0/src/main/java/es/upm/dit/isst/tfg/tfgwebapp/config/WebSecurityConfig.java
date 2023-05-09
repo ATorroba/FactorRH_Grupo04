@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/guardarrol/**", "/eliminarrol/**")
 				.hasRole("RECLUTADOR")
 				.antMatchers("/datos", "/vacaciones").hasRole("EMPLEADO")
-				.antMatchers("/permisos/**").hasRole("CONTROLADOR")
+				.antMatchers("/permisos/**", "/gestiona_turnos/editar_turno/**", "/jornadas/**").hasRole("CONTROLADOR")
 				.antMatchers("/crear", "/guardar").permitAll()
 				.anyRequest().authenticated()
 				.and()
