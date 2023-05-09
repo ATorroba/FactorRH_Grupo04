@@ -112,7 +112,7 @@
 					<div class="form-group">
 						<div class="col-sm-6">
 							<input type="submit" th:value="#{candidatos.acciones.guardar}" class="btn btn-outline-primary">
-							<a th:href="@{${accion} == 'guardar' AND !${#fields.hasErrors('*')} ? 'candidatos/lista' : '/candidatos/crear'}"
+							<a th:href="@{${accion} == 'guardar' AND !${#fields.hasErrors('*')} ? '/candidatos/lista' : '/candidatos/crear'}"
 							class="btn btn-outline-danger" th:text="#{candidatos.acciones.cancelar}"></a>
 							<!-- a th:href="@{${accion} == 'guardar' OR ${#fields.hasErrors('*')} ? 'lista' : '../lista'}" class="btn btn-outline-danger" th:text="#{tfgs.acciones.cancelar}"></a-->
 						</div>
